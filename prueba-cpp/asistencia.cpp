@@ -6,55 +6,79 @@
 #include <strings.h>
 using namespace std;
 
+
+struct Datos{
+    Datos *sig;
+    char modalidad;
+    char asistencia;
+    Datos(){
+        sig = NULL;
+        modalidad = '$';
+        asistencia = '$';
+    }
+};
+
 class Alumno{
     private:
 	    string nombreApellidos;
-	    char modalidad;
-	    char asistencia;
+        Datos *registro;
+        Datos *hoy;
     public:
         Alumno(){
             nombreApellidos = "no_nombre";
-            modalidad = 'V';
-            asistencia = 'A';
+            registro = new Datos;
+            hoy = registro;
         }
-        
+
+        ~Alumno(){
+            while (hoy->sig != NULL){
+                Datos *aux = hoy;
+                hoy = hoy->sig;
+                delete aux;
+            }
+            
+        }
         
         void getDatos(){
             cout<<nombreApellidos<<"\n"
-            <<"Modalidad: "<<modalidad<<"\t"
-            <<"Asistencia: "<<asistencia<<endl<<endl;
+            <<"Modalidad: "<<hoy->modalidad<<"\t"
+            <<"Asistencia: "<<hoy->asistencia<<endl<<endl;
         }
 
         inline string getNombre(){return nombreApellidos;}
-        inline char getModalidad(){return modalidad;}
-        inline char getAsistencia(){return asistencia;}
+        inline char getModalidad(){return hoy->modalidad;}
+        inline char getAsistencia(){return hoy->asistencia;}
         
         void setNombre(string nombreApellidos){
             this->nombreApellidos = nombreApellidos;
         }
 
         void setModalidad(char modalidad){
-            this->modalidad = modalidad;
+            hoy->modalidad = modalidad;
         }
 
         void setAsistencia(char asistencia){
-            this->asistencia = asistencia;
+            hoy->asistencia = asistencia;
+        }
+
+
+        void setRegistro(char modalidad, char asistencia){
+            Datos *nuevo_dia = new Datos;
+            nuevo_dia->sig = registro;
+            hoy = nuevo_dia; // D -> A B C
+        }
+
+        Datos * getRegistro(){
+            return hoy;
         }
 };
-
-
-struct Datos{
-    char modalidad;
-    char asistencia;
-};
-
 
 // prototipo de funciones
 void menu();
 int leerCantAlumnos(string);
 void leerListaAlumnos(string,Alumno *&);
 void actualizarDatos(string,Alumno *,int);
-void parametrizarDatos(Datos &);
+void parametrizarDatos(Datos *&);
 
 int main(){
 
@@ -64,8 +88,14 @@ int main(){
     int totalAlumn = leerCantAlumnos(lista);
     Alumno *listaAlumnos = new Alumno[totalAlumn];
     leerListaAlumnos(lista,listaAlumnos);
-    actualizarDatos(datos,listaAlumnos,totalAlumn);
 
+    listaAlumnos[0].getDatos();
+    Datos * aux = listaAlumnos[0].getRegistro();
+    parametrizarDatos(aux);
+    listaAlumnos[0].getDatos();
+
+    /*
+    actualizarDatos(datos,listaAlumnos,totalAlumn);
     string opc;
     int aux1;
     char aux;
@@ -140,6 +170,7 @@ int main(){
         }
         cout<<"\033[2J\033[1;1H"; // limpiar pantalla
     }while(opc[0] != '4');
+    */
 
     delete [] listaAlumnos;
 
@@ -189,7 +220,7 @@ void actualizarDatos(string datos, Alumno *listaAlumnos, int totalAlumn){
     archivo2.close();
 }
 
-void parametrizarDatos(Datos &data){
+void parametrizarDatos(Datos *&data){
 
     string aux; 
 
@@ -197,28 +228,27 @@ void parametrizarDatos(Datos &data){
         cout<<"Digite su Modalidad: "; cin>>aux; 
         if(aux.length() == 1){
             aux = toupper(aux[0]);
-            if(aux[0] == 'V' || aux[0] == 'P') data.modalidad = aux[0];
+            if(aux[0] == 'V' || aux[0] == 'P') data->modalidad = aux[0];
             else cout<<"No es una modalidad válida"<<endl;
         }else{
-            if(aux == "Virtual" || aux == "virtual") data.modalidad == 'V';
-            else if(aux == "Presencial" || aux == "presencial") data.modalidad = 'P';
+            if(aux == "Virtual" || aux == "virtual") data->modalidad == 'V';
+            else if(aux == "Presencial" || aux == "presencial") data->modalidad = 'P';
             else cout<<"No es una modalidad válida"<<endl;
         }
-        cout<<"Modalidad: "<<data.modalidad<<endl;
-    }while (data.modalidad != '$');
+    }while (data->modalidad != '$');
     
     do{
         cout<<"Digite su Asistencia: "; cin>>aux;
         if(aux.length() == 1){
             aux = toupper(aux[0]);
-            if(aux[0] == 'A' || aux[0] == 'P' || aux[0] == 'T') data.asistencia = aux[0];
+            if(aux[0] == 'A' || aux[0] == 'P' || aux[0] == 'T') data->asistencia = aux[0];
             else cout<<"No es una asistencia válida"<<endl;    
         }else{
-            if(aux == "Presente" || aux == "presente") data.asistencia = 'P';
-            else if(aux == "Ausente" || aux == "ausente") data.asistencia = 'A';
-            else if(aux == "Tardanza" || aux == "tardanza") data.asistencia = 'T';
+            if(aux == "Presente" || aux == "presente") data->asistencia = 'P';
+            else if(aux == "Ausente" || aux == "ausente") data->asistencia = 'A';
+            else if(aux == "Tardanza" || aux == "tardanza") data->asistencia = 'T';
             else cout<<"No es una modalidad válida"<<endl;
         }
-    }while(data.asistencia != '$');
+    }while(data->asistencia != '$');
 
 }
