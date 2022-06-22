@@ -5,12 +5,11 @@
 <head>
 	<meta charset="UTF-8"/>
 	<title>Clases</title>
-	<link rel="stylesheet" href="formulario_carpeta.css">
-	<script type="text/javascript" src="formulario_carpeta.js"></script>
+	<link rel="stylesheet" href="../css/formulario_carpeta.css">
 </head>
 <body>
 	<h2 style="text-align: center;">Estudiantes Registrados<br><br></h2>
-	<form action="http://localhost/TrabajoInter/Proyecto.php" method="get">
+	<form action="Proyecto.php" method="get">
 		<p>Elegir Clase</p>
 		<select name="clase">
 			<option value="Elegir clase">Elegir Clase</option>;

@@ -10,12 +10,11 @@
 			echo "$clase";
 		?>
 	</title>
-	<link rel="stylesheet" href="formulario_carpeta.css">
-	<script type="text/javascript" src="formulario_carpeta.js"></script>
+	<link rel="stylesheet" href="../css/formulario_carpeta.css">
 </head>
 <body>
 	<h2 style="text-align: center;">Estudiantes Registrados<br><br></h2>
-	<form method="post" action="http://localhost/TrabajoInter/Proyecto.php?clase=trabajo_interdisciplinar_a">
+	<form method="post" action="Proyecto.php?clase=trabajo_interdisciplinar_a">
 		<button type="submit" id="btnTomarAssist"/>Guardar</button>
 		<table id="tablaUsuarios" class="tabla">
 			<?php

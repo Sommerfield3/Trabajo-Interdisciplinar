@@ -73,6 +73,7 @@ class base_datos {
 		mysqli_query($this->conexion, $comand);
 		$error = mysqli_error($this->conexion);
 
+		
 		if ($valor == 'P') {
 			$comand = "UPDATE $curso" . "_datos " . " SET total_Asistencia = total_Asistencia + 1 WHERE cui = '$ident'";
 			mysqli_query($this->conexion, $comand);

@@ -10,12 +10,12 @@
 			echo "$clase";
 		?>
 	</title>
-	<link rel="stylesheet" href="formulario_carpeta.css">
+	<link rel="stylesheet" href="../css/formulario_carpeta.css">
 	<script type="text/javascript" src="formulario_carpeta.js"></script>
 </head>
 <body>
 	<h2 style="text-align: center;">Estudiantes Registrados<br><br></h2>
-	<button type="button" id="btnTomarAssist" onclick ="location='/TrabajoInter/Proyecto_tomar-asist.php?clase=trabajo_interdisciplinar_a'"/>Tomar Asistencia</button>
+	<button type="button" id="btnTomarAssist" onclick ="location='Proyecto_tomar-asist.php?clase=trabajo_interdisciplinar_a'"/>Tomar Asistencia</button>
 	<table id="tablaUsuarios" class="tabla">
 		<?php
 		$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
