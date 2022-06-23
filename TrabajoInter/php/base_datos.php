@@ -139,6 +139,23 @@ class base_datos {
 		return null;
 	}
 
+	function getAsistenciaFinal($curso){
+		$result = mysqli_query($this->conexion,"SELECT cui, total_Asistencia FROM $curso");
+		$error = mysqli_error($this->conexion);
+		if(empty($error)){
+			if (mysqli_num_rows($result) > 0) {
+				while ($row = mysqli_fetch_assoc($result)){
+					$array[$row['cui']] = (int)$row['total_Asistencia'];
+				}
+			}
+
+			return json_encode($array);
+		}else{
+			echo "Error";
+		}
+		return null;
+	}
+
 	function cerrar() {
 		mysqli_close($this->conexion);
 	}
