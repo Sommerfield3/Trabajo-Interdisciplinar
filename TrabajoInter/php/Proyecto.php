@@ -16,6 +16,7 @@
 	<h2 style="text-align: center;">Estudiantes Registrados<br><br></h2>
 	<button type="button" id="btnTomarAssist" onclick ="location='Proyecto_tomar-asist.php?clase=<?php echo $_GET['clase'] ?>'"/>Tomar Asistencia</button>
 	<button type="button" id="btnMostrarAbandonos" class="'<?php echo $_GET['clase'] ?>'">Mostrar Asistencia Final</button>
+	<button type="button" id="btnMostrarAsistenciaPorDia" class="'<?php echo $_GET['clase'] ?>'">Mostrar Asistencia Por dia</button>
 	<table id="tablaUsuarios" class="tabla">
 		<?php
 		$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
@@ -86,4 +87,5 @@
 
 </body>
 	<script src="../js/abandono.js"></script>
+	<script src="../js/asistenciaPorClase.js"></script>
 </html>

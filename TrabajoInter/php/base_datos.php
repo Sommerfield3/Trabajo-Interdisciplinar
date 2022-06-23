@@ -156,6 +156,43 @@ class base_datos {
 		return null;
 	}
 
+	function getAsistenciaPorDia($curso){
+		$result = mysqli_query($this->conexion,"SHOW COLUMNS FROM trabajo_interdisciplinar_a_asistencia");
+		$error = mysqli_error($this->conexion);
+		if(empty($error)){
+			if (mysqli_num_rows($result) > 0) {
+				$i = 0;
+				while ($row = mysqli_fetch_assoc($result)){
+					$array[$i] = $row["Field"];
+					$i += 1;
+				}
+			}
+		}
+
+		$values = array_values($array);
+		foreach($values as $valor){
+			$result = mysqli_query($this->conexion,"SELECT $valor FROM trabajo_interdisciplinar_a_asistencia");
+			$error = mysqli_error($this->conexion);
+			if(empty($error)){
+				if(mysqli_num_rows($result) > 0){
+					$i = 0;
+					while($row = mysqli_fetch_assoc($result)){
+						foreach($row as $dato){
+							$datos[$i] = $dato;
+							$i++;
+						}
+					}
+					$obj[$valor] = $datos;
+					foreach($datos as $j => $dato){
+						unset($datos[$j]);
+					}
+				}
+			}
+		}
+
+		return json_encode($obj);
+	}
+
 	function cerrar() {
 		mysqli_close($this->conexion);
 	}

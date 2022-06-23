@@ -34,21 +34,6 @@ async function enviarDatos(clase){
         console.error(err);
     }
 
-
-/*
-        location = "../html/abandonos.html"
-        graficar(
-            [
-                {
-                    category: "Lithuania",
-                    value: 501.9
-                  }, {
-                    category: "UK",
-                    value: 99
-                }
-            ]
-        )
-    */
 }
 
 function graficar(obj){
