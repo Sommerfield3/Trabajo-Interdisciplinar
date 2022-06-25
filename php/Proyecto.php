@@ -17,6 +17,7 @@
 	<button type="button" id="btnTomarAssist" onclick ="location='Proyecto_tomar-asist.php?clase=<?php echo $_GET['clase'] ?>'"/>Tomar Asistencia</button>
 	<button type="button" id="btnMostrarAbandonos" class="'<?php echo $_GET['clase'] ?>'">Mostrar Asistencia Final</button>
 	<button type="button" id="btnMostrarAsistenciaPorDia" class="'<?php echo $_GET['clase'] ?>'">Mostrar Asistencia Por dia</button>
+	<button type="button" id="btnMostrarNroClases" class="'<?php echo $_GET['clase'] ?>'">Mostrar Nro Claes</button>
 	<table id="tablaUsuarios" class="tabla">
 		<?php
 		$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
@@ -88,4 +89,5 @@
 </body>
 	<script src="../js/abandono.js"></script>
 	<script src="../js/asistenciaPorClase.js"></script>
+	<script src="../js/numeroClases.js"></script>
 </html>

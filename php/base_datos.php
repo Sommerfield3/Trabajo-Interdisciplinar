@@ -193,6 +193,26 @@ class base_datos {
 		return json_encode($obj);
 	}
 
+
+	function numeroClases($clase){
+		$result = mysqli_query($this->conexion,"SELECT * FROM cursos WHERE nombre = 'trabajo_interdisciplinar_a'");
+		$error = mysqli_error($this->conexion);
+		if(empty($error)){
+			$i = 0;
+			if(mysqli_num_rows($result) > 0){
+				while($row = mysqli_fetch_assoc($result)){
+					foreach($row as $dato){
+						$datos[$i] = $dato;
+						$i++;
+					}
+				}
+			}
+		}
+
+		echo json_encode($datos);
+		return json_encode($datos);
+	}
+
 	function cerrar() {
 		mysqli_close($this->conexion);
 	}
