@@ -1,3 +1,4 @@
+
 function graficar(data){
     am5.ready(function() {
 
@@ -104,6 +105,15 @@ function graficar(data){
 }
 
 
+const container = document.getElementById("container");
+
+let texto = container.textContent
+
+let array = JSON.parse(texto)
+console.log(array)
+
+graficar(array);
+/*
 graficar(
     [{
       "fecha": "2021",
@@ -118,3 +128,4 @@ graficar(
       "presentes": 2.8,
       "faltos": 2.9
     }]);
+*/
