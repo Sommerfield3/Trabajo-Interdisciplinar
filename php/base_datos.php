@@ -157,7 +157,7 @@ class base_datos {
 	}
 
 	function getAsistenciaPorDia($curso){
-		$result = mysqli_query($this->conexion,"SHOW COLUMNS FROM trabajo_interdisciplinar_a_asistencia");
+		$result = mysqli_query($this->conexion,"SHOW COLUMNS FROM ".$curso."_asistencia");
 		$error = mysqli_error($this->conexion);
 		if(empty($error)){
 			if (mysqli_num_rows($result) > 0) {
@@ -171,7 +171,7 @@ class base_datos {
 
 		$values = array_values($array);
 		foreach($values as $valor){
-			$result = mysqli_query($this->conexion,"SELECT $valor FROM trabajo_interdisciplinar_a_asistencia");
+			$result = mysqli_query($this->conexion,"SELECT $valor FROM ".$curso."_asistencia");
 			$error = mysqli_error($this->conexion);
 			if(empty($error)){
 				if(mysqli_num_rows($result) > 0){
@@ -211,6 +211,20 @@ class base_datos {
 
 		echo json_encode($datos);
 		return json_encode($datos);
+	}
+
+	function asistenciaPorAlumno($curso,$cui){
+		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_datos WHERE cui = $cui");
+		$error = mysqli_error($this->conexion);
+		if(empty($error)){
+			if(mysqli_num_rows($result) > 0){
+				while($row = mysqli_fetch_assoc($result)){
+					return json_encode($row);
+				}
+			}
+		}
+
+		return null;
 	}
 
 	function cerrar() {

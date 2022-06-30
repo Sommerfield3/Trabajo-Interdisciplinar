@@ -77,7 +77,7 @@
 					}
 				}
 
-				echo "<td><button id=".$row["cui"]." >Asistencia</button></td>";
+				echo '<td><button id="'.$row["cui"].'" class="btnAsistenciaPorAlumno '.$_GET['clase'].'">Asistencia</button></td>';
 
 				echo "</tr>";
 			}
@@ -93,4 +93,5 @@
 	<script src="../js/abandono.js"></script>
 	<script src="../js/asistenciaPorClase.js"></script>
 	<script src="../js/numeroClases.js"></script>
+	<script src="../js/porAlumno.js"></script>
 </html>
