@@ -195,7 +195,7 @@ class base_datos {
 
 
 	function numeroClases($clase){
-		$result = mysqli_query($this->conexion,"SELECT * FROM cursos WHERE nombre = 'trabajo_interdisciplinar_a'");
+		$result = mysqli_query($this->conexion,"SELECT * FROM cursos WHERE nombre = '$clase'");
 		$error = mysqli_error($this->conexion);
 		if(empty($error)){
 			$i = 0;

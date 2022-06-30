@@ -4,10 +4,12 @@
     $BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
     $BaseDatos->conectar();
     
-
-    $datos = $BaseDatos->numeroClases("hola");
+    if(isset($_GET['clase'])){
+        $clase = $_GET['clase'];
+        $datos = $BaseDatos->numeroClases($clase);
+    }
 
     $BaseDatos->cerrar();
-    return $d1atos;
+    return $datos;
 
 ?>

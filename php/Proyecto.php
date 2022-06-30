@@ -53,7 +53,7 @@
 				}
 			}
 		}
-
+		echo "<th>Mostrar Porcentaje</th>";
 		echo "</tr>";
 		echo "</thead>";
 		echo "<tbody>";
@@ -64,6 +64,7 @@
 				echo "<td class='CUI'>" . $row["cui"] . "</td>";
 				echo "<td class='nombre'>" . $row["nombre"] . "</td>";
 				echo "<td class='apellido'>" . $row["apellido"] . "</td>";
+
 				
 				$asisxest = $BaseDatos->getinfoEstudiantes($clase . "_asistencia", $row["cui"]);
 				if(!is_null($asisxest)) {
@@ -75,6 +76,8 @@
 						}
 					}
 				}
+
+				echo "<td><button id=".$row["cui"]." >Asistencia</button></td>";
 
 				echo "</tr>";
 			}
