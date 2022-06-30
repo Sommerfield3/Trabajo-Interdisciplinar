@@ -9,7 +9,7 @@
 </head>
 <body>
 	<h2 style="text-align: center;">Estudiantes Registrados<br><br></h2>
-	<form action="Proyecto.php" method="get">
+	<form action="Clase.php" method="get">
 		<p>Elegir Clase</p>
 		<select name="clase">
 			<option value="Elegir clase">Elegir Clase</option>;

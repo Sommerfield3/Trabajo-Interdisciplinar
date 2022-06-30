@@ -14,7 +14,7 @@
 </head>
 <body>
 	<h2 style="text-align: center;">Estudiantes Registrados<br><br></h2>
-	<form method="post" action="Proyecto.php?clase=trabajo_interdisciplinar_a">
+	<form method="post" action="Proyecto_Asistencia.php?clase=<?php echo $_GET['clase'] ?>">
 		<button type="submit" id="btnTomarAssist"/>Guardar</button>
 		<table id="tablaUsuarios" class="tabla">
 			<?php

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-06-2022 a las 03:37:20
+-- Tiempo de generación: 01-07-2022 a las 01:27:47
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -41,7 +41,7 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`nombre`, `codigo`, `total_Horas`, `hora_1`, `hora_2`, `hora_3`) VALUES
-('trabajo_interdisciplinar_a', 1, 3, NULL, NULL, NULL);
+('trabajo_interdisciplinar_a', 1, 7, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -53,24 +53,59 @@ CREATE TABLE `trabajo_interdisciplinar_a_asistencia` (
   `cui` int(3) NOT NULL,
   `19_06_2022` char(1) DEFAULT NULL,
   `20_06_2022` char(1) DEFAULT NULL,
-  `22_06_2022` char(1) DEFAULT NULL
+  `22_06_2022` char(1) DEFAULT NULL,
+  `23_06_2022` char(1) DEFAULT NULL,
+  `25_06_2022` char(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `trabajo_interdisciplinar_a_asistencia`
 --
 
-INSERT INTO `trabajo_interdisciplinar_a_asistencia` (`cui`, `19_06_2022`, `20_06_2022`, `22_06_2022`) VALUES
-(1, 'P', 'F', 'F'),
-(2, 'F', 'F', 'P'),
-(3, 'P', 'F', 'P'),
-(4, 'P', 'P', 'P'),
-(5, 'P', 'P', 'P'),
-(6, 'P', 'P', 'P'),
-(7, 'P', 'P', 'F'),
-(8, 'P', 'P', 'P'),
-(9, 'P', 'P', 'P'),
-(10, 'P', 'P', 'P');
+INSERT INTO `trabajo_interdisciplinar_a_asistencia` (`cui`, `19_06_2022`, `20_06_2022`, `22_06_2022`, `23_06_2022`, `25_06_2022`) VALUES
+(1, 'F', 'F', 'F', 'F', 'F'),
+(2, 'F', 'F', 'P', 'P', 'F'),
+(3, 'P', 'F', 'P', 'P', 'P'),
+(4, 'P', 'P', 'P', 'F', 'P'),
+(5, 'P', 'P', 'P', 'P', 'F'),
+(6, 'P', 'P', 'P', 'P', 'F'),
+(7, 'F', 'F', 'F', 'F', 'F'),
+(8, 'P', 'P', 'P', 'P', 'P'),
+(9, 'P', 'P', 'P', 'P', 'P'),
+(10, 'P', 'P', 'P', 'P', 'P');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `trabajo_interdisciplinar_a_calificaciones`
+--
+
+CREATE TABLE `trabajo_interdisciplinar_a_calificaciones` (
+  `cui` int(8) NOT NULL,
+  `NC_1` int(2) DEFAULT NULL,
+  `EX_1` int(2) DEFAULT NULL,
+  `NC_2` int(2) DEFAULT NULL,
+  `EX_2` int(2) DEFAULT NULL,
+  `NC_3` int(2) DEFAULT NULL,
+  `EX_3` int(2) DEFAULT NULL,
+  `NF` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `trabajo_interdisciplinar_a_calificaciones`
+--
+
+INSERT INTO `trabajo_interdisciplinar_a_calificaciones` (`cui`, `NC_1`, `EX_1`, `NC_2`, `EX_2`, `NC_3`, `EX_3`, `NF`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(8, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(10, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -90,16 +125,16 @@ CREATE TABLE `trabajo_interdisciplinar_a_datos` (
 --
 
 INSERT INTO `trabajo_interdisciplinar_a_datos` (`cui`, `nombre`, `apellido`, `total_Asistencia`) VALUES
-(1, 'APAZA APAZA', 'NELZON JORGE', 1),
-(2, 'APAZA QUISPE', 'ANGEL ABRAHAM', 1),
-(3, 'BENAVENTE AGUIRRE', 'PAOLO DANIEL', 2),
-(4, 'CACSIRE SANCHEZ', 'JHOSEP ANGEL', 3),
-(5, 'CARAZAS QUISPE', 'ALESSANDER JESUS', 3),
-(6, 'CASTILLO SANCHO', 'SERGIO AHMED', 3),
-(7, 'CAYLLAHUA GUTIERREZ', 'DIEGO YAMPIER', 2),
-(8, 'CCAMA MARRON', 'GUSTAVO ALONSO', 3),
-(9, 'CERPA GARCIA', 'RANDU JEAN FRANCO', 3),
-(10, 'CONDORI CASQUINO', 'EBERT LUIS', 3);
+(1, 'APAZA APAZA', 'NELZON JORGE', 2),
+(2, 'APAZA QUISPE', 'ANGEL ABRAHAM', 2),
+(3, 'BENAVENTE AGUIRRE', 'PAOLO DANIEL', 4),
+(4, 'CACSIRE SANCHEZ', 'JHOSEP ANGEL', 4),
+(5, 'CARAZAS QUISPE', 'ALESSANDER JESUS', 4),
+(6, 'CASTILLO SANCHO', 'SERGIO AHMED', 4),
+(7, 'CAYLLAHUA GUTIERREZ', 'DIEGO YAMPIER', 3),
+(8, 'CCAMA MARRON', 'GUSTAVO ALONSO', 5),
+(9, 'CERPA GARCIA', 'RANDU JEAN FRANCO', 5),
+(10, 'CONDORI CASQUINO', 'EBERT LUIS', 5);
 
 --
 -- Índices para tablas volcadas
@@ -115,6 +150,12 @@ ALTER TABLE `cursos`
 -- Indices de la tabla `trabajo_interdisciplinar_a_asistencia`
 --
 ALTER TABLE `trabajo_interdisciplinar_a_asistencia`
+  ADD PRIMARY KEY (`cui`);
+
+--
+-- Indices de la tabla `trabajo_interdisciplinar_a_calificaciones`
+--
+ALTER TABLE `trabajo_interdisciplinar_a_calificaciones`
   ADD PRIMARY KEY (`cui`);
 
 --

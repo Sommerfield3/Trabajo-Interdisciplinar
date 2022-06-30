@@ -87,6 +87,18 @@ class base_datos {
 		return false;
 	}
 
+	function insnota($curso, $valor, $campo, $ident) {
+		$comand = "UPDATE $curso" . "_calificaciones " . "SET $campo = '$valor' WHERE cui = '$ident'";
+		mysqli_query($this->conexion, $comand);
+		$error = mysqli_error($this->conexion);
+
+		if (empty($error)) {
+			return true;
+		}
+		echo "Error al insertar valores!";
+		return false;
+	}
+
 	function getCantClases($tabla) {
 		$result = mysqli_query($this->conexion, "SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='$tabla'");
 		$error = mysqli_error($this->conexion);
