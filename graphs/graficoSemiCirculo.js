@@ -3,7 +3,7 @@ function graficar(obj){
 
     // Create root element
     // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-    var root = am5.Root.new("chartdiv");
+    var root = am5.Root.new("clasesTomadas");
     
     // Set themes
     // https://www.amcharts.com/docs/v5/concepts/themes/
@@ -55,9 +55,9 @@ function graficar(obj){
 }
 
 
-const container = document.getElementById("container")
+const container2 = document.getElementById("container2")
 
-let obj = JSON.parse(container.textContent)
+let obj = JSON.parse(container2.textContent)
 console.log(obj)
 
 /*

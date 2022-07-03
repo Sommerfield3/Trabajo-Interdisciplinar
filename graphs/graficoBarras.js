@@ -4,7 +4,7 @@ function graficar(data){
 
         // Create root element
         // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        var root = am5.Root.new("chartdiv");
+        var root = am5.Root.new("asistenciaPorClase");
         
         
         // Set themes
@@ -113,19 +113,3 @@ let array = JSON.parse(texto)
 console.log(array)
 
 graficar(array);
-/*
-graficar(
-    [{
-      "fecha": "2021",
-      "presentes": 2.5,
-      "faltos": 2.5
-    }, {
-      "fecha": "2022",
-      "presentes": 2.6,
-      "faltos": 2.7
-    }, {
-      "fecha": "2023",
-      "presentes": 2.8,
-      "faltos": 2.9
-    }]);
-*/
