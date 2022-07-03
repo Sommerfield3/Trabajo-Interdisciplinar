@@ -1,7 +1,7 @@
 const btn = document.getElementById("btnMostrarAbandonos")
 btn.addEventListener("click",e=>{
     let clase = btn.classList[0].slice(1,-1);
-    let datos = enviarDatos(clase)
+    let datos = recibirDatos(clase)
     formatearDatos(datos)
 })  
 
@@ -25,7 +25,7 @@ async function formatearDatos(datos){
     
 }
 
-async function enviarDatos(clase){
+async function recibirDatos(clase){
     try{
         const response = await fetch("../php/Abandonos.php?clase=" + clase)
         const data = await response.json()

@@ -8,7 +8,7 @@
     
 <!-- Chart code -->
 
-<div id="container">
+<div id="container" style="display:none">
     <?php echo $_GET['datos']?>
 </div>
     

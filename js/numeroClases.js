@@ -2,12 +2,12 @@ const btn3 = document.getElementById("btnMostrarNroClases")
 btn3.addEventListener("click",e=>{
    let clase = btn3.classList[0].slice(1,-1);
     console.log(clase)
-    datos = enviarDatos(clase)
+    datos = recibirNumeroClases(clase)
 
 })
 
 
-async function enviarDatos(clase){
+async function recibirNumeroClases(clase){
     try{
         const response = await fetch("../php/NumeroClases.php?clase=" + clase)
         const data = await response.json()

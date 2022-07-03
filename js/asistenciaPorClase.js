@@ -2,12 +2,12 @@ const btn2 = document.getElementById("btnMostrarAsistenciaPorDia");
 var array;
 btn2.addEventListener("click", e => {
     let clase = btn2.classList[0].slice(1,-1);
-    let datos = enviarDatosBarras(clase); 
-    formatearDatosBarras(datos)
+    let datos = recibirDatosPorClase(clase); 
+    formatearDatosPorClase(datos)
 })
 
 
-async function enviarDatosBarras(clase){
+async function recibirDatosPorClase(clase){
   try{
       const response = await fetch("../php/AsistenciaPorClase.php?clase=" + clase)
       const data = await response.json()
@@ -19,7 +19,7 @@ async function enviarDatosBarras(clase){
 }
 
 
-async function formatearDatosBarras(datos){
+async function formatearDatosPorClase(datos){
     let array = [];
     await datos.then(data => {
         let values = Object.values(data),
