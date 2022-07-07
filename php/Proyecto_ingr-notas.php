@@ -32,7 +32,7 @@
 			$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
 			if(!is_null($notas)) {
 				while ($row = mysqli_fetch_assoc($notas)) {
-					if ($row['column_name'] != 'cui') {
+					if ($row['column_name'] != 'cui' && $row['column_name'] != 'NF') {
 						echo "<th>" . $row['column_name'] . "</th>";
 					}
 				}
@@ -54,8 +54,12 @@
 						$row_nxe = mysqli_fetch_assoc($notxest);
 						$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
 						while ($row_not = mysqli_fetch_assoc($notas)) {
-							if ($row_not['column_name'] != 'cui') {
-								echo "<td><input name='". $row["cui"] . "_" . $row_not['column_name'] . "' type='text'></td>";
+							if ($row_not['column_name'] != 'cui' && $row_not['column_name'] != 'NF') {
+								if ($row_nxe[$row_not['column_name']]!=NULL){
+									echo "<td><input name='". $row["cui"] . "_" . $row_not['column_name'] . "'value='". floatval($row_nxe[$row_not['column_name']]) ."' type='text'></td>";//Convertimos el valor recibido a flotante
+								}else {
+									echo "<td><input name='". $row["cui"] . "_" . $row_not['column_name'] . "'value='". "' type='text'></td>";//Si es nulo, no escribe nada, porque no hay nota, si no se usa esto, va a convertir el NULL en 0 y entonces ese valor pasa a la base de datos como numérico.
+								}
 							}
 						}
 					}

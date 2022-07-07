@@ -27,7 +27,7 @@ class base_datos {
 		mysqli_query($this->conexion, $comand);
 		$error = mysqli_error($this->conexion);
 
-		$comand = "CREATE TABLE " . $curso . "_calificaciones (cui INT(8) PRIMARY KEY, nombres VARCHAR(100), apellidos VARCHAR(100));";
+		$comand = "CREATE TABLE " . $curso . "_calificaciones (cui INT(8) PRIMARY KEY, nombres VARCHAR(100), apellidos VARCHAR(100), EP_1 FLOAT(20), EP_2 FLOAT(20), EP_3 FLOAT(20), EC_1FLOAT(20), EC_2 FLOAT(20), EC_3 FLOAT(20), NF FLOAT(20));";
 		mysqli_query($this->conexion, $comand);
 		$error = mysqli_error($this->conexion);
 
@@ -127,6 +127,18 @@ class base_datos {
 
 	function getInfoEstudiantes($tabla, $cui) {
 		$result = mysqli_query($this->conexion, "SELECT * FROM `$tabla` WHERE cui = '" . $cui . "';");
+		$error = mysqli_error($this->conexion);
+		if (empty($error)) {
+			if (mysqli_num_rows($result) > 0) {
+				return $result;
+			}
+		} else {
+			echo "Error al obtener clases!";
+		}
+		return null;
+	}
+	function getInfoCursos($tabla, $curso) {/*Agregado*/
+		$result = mysqli_query($this->conexion, "SELECT * FROM `$tabla` WHERE nombre = '" . $curso . "';");
 		$error = mysqli_error($this->conexion);
 		if (empty($error)) {
 			if (mysqli_num_rows($result) > 0) {

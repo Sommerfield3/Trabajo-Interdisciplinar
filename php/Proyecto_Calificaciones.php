@@ -35,13 +35,13 @@
 					$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
 					if(!is_null($notas)) {
 						while ($row_not = mysqli_fetch_assoc($notas)) {
-							if ($row_not['column_name'] != 'cui') {
+							if ($row_not['column_name'] != 'cui' && $row_not['column_name'] != 'NF') {
 								$valor = $_POST[$row["cui"] . "_" .  $row_not['column_name']];
 
 								if ($valor != NULL) {
 									$campo = $row_not['column_name'];
 									$cui = $row["cui"];
-									$BaseDatos->insnota($clase, (int)$valor, $campo, (int)$cui);
+									$BaseDatos->insnota($clase, (float)$valor, $campo, (int)$cui);
 								}
 							}
 						}
@@ -50,7 +50,71 @@
 				$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
 			}
 		}
-
+		/*Agregado*/
+		$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+		if(!is_null($notas)) {
+			$porcentajesNotas=$BaseDatos->getInfoCursos("cursos",$clase);
+			/*if(!is_null($porcentajesNotas)) {
+				while ($row2=mysqli_fetch_assoc($porcentajesNotas)){
+					$parcial1porc=floatval($row2['EP_1']);
+					$parcial2porc=floatval($row2['EP_2']);
+					$parcial3porc=floatval($row2['EP_3']);
+					$continua1porc=floatval($row2['EC_1']);
+					$continua2porc=floatval($row2['EC_2']);
+					$continua3porc=floatval($row2['EC_3']);
+				}
+			}*/
+			while($row=mysqli_fetch_assoc($notas)){
+				if(!is_null($porcentajesNotas)) {/*Por si se actualiza.*/
+					while ($row2=mysqli_fetch_assoc($porcentajesNotas)){
+						$parcial1porc=floatval($row2['EP_1']);
+						$parcial2porc=floatval($row2['EP_2']);
+						$parcial3porc=floatval($row2['EP_3']);
+						$continua1porc=floatval($row2['EC_1']);
+						$continua2porc=floatval($row2['EC_2']);
+						$continua3porc=floatval($row2['EC_3']);
+					}
+				}/*Por si se actualiza*/
+				if(!is_null($estudiantes)) { 
+					while ($row3 = mysqli_fetch_assoc($estudiantes)) {
+						$notaFinalAux=0.00;/*Por cada alumno.*/
+						$notasDelEstudiante=$BaseDatos->getinfoEstudiantes($clase. "_calificaciones",$row3["cui"]);
+						if (!is_null($notasDelEstudiante)){
+							$row_notasDelEstudiante=mysqli_fetch_assoc($notasDelEstudiante);
+							$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+							while ($row_notas=mysqli_fetch_assoc($notas)){
+								if ($row_notas['column_name']!='cui' && $row_notas['column_name'] != 'NF'){
+									if (floatval($row_notasDelEstudiante[$row_notas['column_name']])!=NULL){
+										if ($row_notas['column_name']=='NC_1'){
+											$notaFinalAux+=floatval(floatval($row_notasDelEstudiante[$row_notas['column_name']])*floatval($continua1porc/100));
+										}else if ($row_notas['column_name']=='EX_1'){
+											$notaFinalAux+=floatval(floatval($row_notasDelEstudiante[$row_notas['column_name']])*floatval($parcial1porc/100));
+										}else if ($row_notas['column_name']=='NC_2'){
+											$notaFinalAux+=floatval(floatval($row_notasDelEstudiante[$row_notas['column_name']])*floatval($continua2porc/100));
+										}else if ($row_notas['column_name']=='EX_2'){
+											$notaFinalAux+=floatval(floatval($row_notasDelEstudiante[$row_notas['column_name']])*floatval($parcial2porc/100));
+										}else if ($row_notas['column_name']=='NC_3'){
+											$notaFinalAux+=floatval(floatval($row_notasDelEstudiante[$row_notas['column_name']])*floatval($continua3porc/100));
+										}else if ($row_notas['column_name']=='EX_3'){
+											$notaFinalAux+=floatval(floatval($row_notasDelEstudiante[$row_notas['column_name']])*floatval($parcial3porc/100));
+										}
+									}
+									else{
+										break;
+									}
+								}else if ($row_notas['column_name'] == 'NF'){
+									$notaFinalAux=floatval(round($notaFinalAux*2.00)/2.00);
+									$cui = $row3["cui"];
+									$BaseDatos->insnota($clase, (float)$notaFinalAux, "NF", (int)$cui);
+								}
+							}
+						}
+					}
+				}
+			}
+			$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
+		}
+		/*Agregado*/
 		$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
 		if(!is_null($notas)) {
 			while ($row = mysqli_fetch_assoc($notas)) {
@@ -63,7 +127,6 @@
 		echo "</tr>";
 		echo "</thead>";
 		echo "<tbody>";
-		
 		if(!is_null($estudiantes)) {
 			while ($row = mysqli_fetch_assoc($estudiantes)) {
 				echo "<tr>";
