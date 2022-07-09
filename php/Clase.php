@@ -22,6 +22,8 @@
 	<p>Elegir acción</p>
 	<button type="button" id="btnAsistencia" onclick ="location='Proyecto_Asistencia.php?clase=<?php echo $_GET['clase'] ?>'"/>Asistencia</button>
 	<button type="button" id="btnCalificaciones" onclick ="location='Proyecto_Calificaciones.php?clase=<?php echo $_GET['clase'] ?>'"/>Calificaciones</button>
+	<button type="button" id="btnInforme" class="'<?php echo $_GET['clase'] ?>'">Informe</button>
+
 	<table id="tablaUsuarios" class="tabla">
 		<h3>Estudiantes Registrados</h3>
 		<thead>
@@ -53,4 +55,5 @@
 		</tbody>
 	</table>
 </body>
+	<script src="../js/getInforme.js"></script>
 </html>

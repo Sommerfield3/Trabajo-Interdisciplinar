@@ -44,7 +44,11 @@ function graficar(obj){
 }
 
 const abandonos = document.getElementById("Abandonos"),
-  asistentes = document.getElementById("Asistentes");
+  asistentes = document.getElementById("Asistentes"),
+  tablaAbandonos = document.getElementById("tablaAbandonos").querySelectorAll("td")
+
+tablaAbandonos[1].textContent = asistentes.textContent
+tablaAbandonos[2].textContent = abandonos.textContent
 
 graficar(
 [

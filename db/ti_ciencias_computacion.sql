@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-07-2022 a las 01:27:47
+-- Tiempo de generación: 07-07-2022 a las 18:32:59
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -31,17 +31,21 @@ CREATE TABLE `cursos` (
   `nombre` varchar(100) NOT NULL,
   `codigo` int(6) NOT NULL,
   `total_Horas` int(11) NOT NULL DEFAULT 0,
-  `hora_1` varchar(50) DEFAULT NULL,
-  `hora_2` varchar(50) DEFAULT NULL,
-  `hora_3` varchar(50) DEFAULT NULL
+  `EP_1` float(3,1) DEFAULT NULL,
+  `EP_2` float(3,1) DEFAULT NULL,
+  `EP_3` float(3,1) DEFAULT NULL,
+  `EC_1` float(3,1) DEFAULT NULL,
+  `EC_2` float(3,1) DEFAULT NULL,
+  `EC_3` float(3,1) DEFAULT NULL,
+  `NF` float(4,1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `cursos`
 --
 
-INSERT INTO `cursos` (`nombre`, `codigo`, `total_Horas`, `hora_1`, `hora_2`, `hora_3`) VALUES
-('trabajo_interdisciplinar_a', 1, 7, NULL, NULL, NULL);
+INSERT INTO `cursos` (`nombre`, `codigo`, `total_Horas`, `EP_1`, `EP_2`, `EP_3`, `EC_1`, `EC_2`, `EC_3`, `NF`) VALUES
+('trabajo_interdisciplinar_a', 1, 7, 10.0, 10.0, 30.0, 10.0, 10.0, 30.0, 100.0);
 
 -- --------------------------------------------------------
 
@@ -82,13 +86,13 @@ INSERT INTO `trabajo_interdisciplinar_a_asistencia` (`cui`, `19_06_2022`, `20_06
 
 CREATE TABLE `trabajo_interdisciplinar_a_calificaciones` (
   `cui` int(8) NOT NULL,
-  `NC_1` int(2) DEFAULT NULL,
-  `EX_1` int(2) DEFAULT NULL,
-  `NC_2` int(2) DEFAULT NULL,
-  `EX_2` int(2) DEFAULT NULL,
-  `NC_3` int(2) DEFAULT NULL,
-  `EX_3` int(2) DEFAULT NULL,
-  `NF` int(2) DEFAULT NULL
+  `NC_1` float(4,2) DEFAULT NULL,
+  `EX_1` float(4,2) DEFAULT NULL,
+  `NC_2` float(4,2) DEFAULT NULL,
+  `EX_2` float(4,2) DEFAULT NULL,
+  `NC_3` float(4,2) DEFAULT NULL,
+  `EX_3` float(4,2) DEFAULT NULL,
+  `NF` float(4,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -96,11 +100,11 @@ CREATE TABLE `trabajo_interdisciplinar_a_calificaciones` (
 --
 
 INSERT INTO `trabajo_interdisciplinar_a_calificaciones` (`cui`, `NC_1`, `EX_1`, `NC_2`, `EX_2`, `NC_3`, `EX_3`, `NF`) VALUES
-(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(1, 10.00, 20.00, 20.00, 20.00, 20.00, 20.00, 19.00),
+(2, NULL, 2.00, 3.60, NULL, NULL, NULL, NULL),
 (3, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, NULL, 5.00, NULL, NULL, NULL, NULL, NULL),
+(5, NULL, NULL, 4.50, NULL, NULL, NULL, NULL),
 (6, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (7, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (8, NULL, NULL, NULL, NULL, NULL, NULL, NULL),

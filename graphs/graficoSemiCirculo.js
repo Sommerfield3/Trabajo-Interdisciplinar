@@ -55,7 +55,8 @@ function graficar(obj){
 }
 
 
-const container2 = document.getElementById("container2")
+const container2 = document.getElementById("container2"),
+  table2 = document.getElementById("tablaTotalClases")
 
 let obj = JSON.parse(container2.textContent)
 console.log(obj)
@@ -65,5 +66,16 @@ let obj = [
   { value: 10, category: "Clases Realizadas" },
   { value: 9, category: "Clases no Realizadas" }
 ]*/
+
+obj.forEach(element => {
+  const th = document.createElement("th")
+  th.textContent = element.category;
+  const td = document.createElement("td") 
+  td.textContent = element.value
+
+  table2.querySelector("thead").appendChild(th)
+  table2.querySelector("tbody").appendChild(td)
+});
+
 
 graficar(obj);

@@ -17,6 +17,20 @@
 </div>
 
 <h1>Asistencia final, abandonos</h1>
+
+<table id="tablaAbandonos">
+    <thead>
+        <th>Clases</th>
+        <th>Alumnos Asistentes</th>
+        <th>Alumnos en sitación de Abandono</th>
+    </thead>
+    <tbody>
+        <td>Nro. Alumnos</td>
+        <td></td>
+        <td></td>
+    </tbody>
+</table>
+
 <div id="asistenciaFinal"></div>
 <script src="graficoPie.js"></script>
 
@@ -28,6 +42,17 @@
 </div>
 
 <h1>Asistencia por Clase</h1>
+<table id="tablaAsistenciaPorClase">
+    <thead>
+        <th>Día</th>
+        <th>Presentes</th>
+        <th>Faltos</th>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
+
 <div id="asistenciaPorClase"></div>
 <script src="graficoBarras.js"></script>
 
@@ -38,8 +63,21 @@
 </div>
 
 <h1>Clases Realiadas y no Realizadas</h1>
+
+<table id="tablaTotalClases">
+    <thead>
+
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+
 <div id="clasesTomadas"></div>
 <script src="graficoSemiCirculo.js"></script>
 
-
 <!-- HTML -->
+
+
+<a href="ejemplo.php">hola</a>

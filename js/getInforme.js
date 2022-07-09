@@ -10,9 +10,7 @@ btn.addEventListener("click",e=>{
 })  
 
 
-async function formatearDatos(abandonos,asistenciaPorClase,totalClasesTomadas){
-
-    
+async function formatearDatos(abandonos,asistenciaPorClase,totalClasesTomadas){    
     let final = await getAbandonos(abandonos)
     let array = await getAsistenciaPorClase(asistenciaPorClase)
     let array2 = await getNumeroClases(totalClasesTomadas);
