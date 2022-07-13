@@ -2,27 +2,28 @@
 
 const btn = document.getElementById("btnInforme")
 btn.addEventListener("click",e=>{
-    let clase = btn.classList[0].slice(1,-1);
-    let abandonos = recibirDatos(clase,"Abandonos");
-    let asistenciaPorClase = recibirDatos(clase,"AsistenciaPorClase");
-    let totalClasesTomadas = recibirDatos(clase,"NumeroClases");
-    formatearDatos(abandonos,asistenciaPorClase,totalClasesTomadas)
+    let clase = btn.classList[0].slice(1,-1),
+    abandonos = recibirDatos(clase,"Abandonos"),
+    asistenciaPorClase = recibirDatos(clase,"AsistenciaPorClase"),
+    totalClasesTomadas = recibirDatos(clase,"NumeroClases"),
+    aprobadosYdesaprobados = recibirDatos(clase,"Aprobados");
+    formatearDatos(abandonos,asistenciaPorClase,totalClasesTomadas,aprobadosYdesaprobados)
 })  
 
 
-async function formatearDatos(abandonos,asistenciaPorClase,totalClasesTomadas){    
+async function formatearDatos(abandonos,asistenciaPorClase,totalClasesTomadas,aprobadosYdesaprobados){    
     let final = await getAbandonos(abandonos)
     let array = await getAsistenciaPorClase(asistenciaPorClase)
     let array2 = await getNumeroClases(totalClasesTomadas);
-
-    window.location.href = "../graphs/informe.php" + "?Asistentes=" + final.Asistentes + "&Abandonos=" + final.Abandonos + "&objeto=" + JSON.stringify(array) + "&datos=" + JSON.stringify(array2);
+    let array3 = await getAprobados(aprobadosYdesaprobados);
+    window.location.href = "../graphs/reporte.php" + "?Asistentes=" + final.Asistentes + "&Abandonos=" + final.Abandonos + "&objeto=" + JSON.stringify(array) + "&datos=" + JSON.stringify(array2) + "&aprobados=" + JSON.stringify(array3);
     
 }
 
 // recibir datos
 async function recibirDatos(clase,archivo){
     try{
-        const response = await fetch(`../php/${archivo}.php?clase=${clase}`)
+        const response = await fetch(`../php/getInfo/${archivo}.php?clase=${clase}`)
         const data = await response.json()
         return data;
     }catch(err){
@@ -97,4 +98,35 @@ async function getNumeroClases(totalClasesTomadas){
     })
 
     return array2;
+}
+
+async function getAprobados(aprobadosYdesaprobados){
+    
+    let array3 = [
+        {
+            category: "Aprobados",
+            value: 0
+        },
+        {
+            category: "Desaprobados",
+            value: 0
+        },
+        {
+            category: "Sin nota",
+            value: 0
+        }
+    ]
+
+    aprobadosYdesaprobados.then(data => {
+        data.forEach(nota => {
+            if(nota.NF){
+                if(nota.NF >= 11) array3[0].value++
+                else array3[1].value++
+            }else{
+                array3[2].value++;
+            }
+        })
+    })
+
+    return array3
 }

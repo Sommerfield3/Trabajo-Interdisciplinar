@@ -23,6 +23,7 @@
 	<button type="button" id="btnAsistencia" onclick ="location='Proyecto_Asistencia.php?clase=<?php echo $_GET['clase'] ?>'"/>Asistencia</button>
 	<button type="button" id="btnCalificaciones" onclick ="location='Proyecto_Calificaciones.php?clase=<?php echo $_GET['clase'] ?>'"/>Calificaciones</button>
 	<button type="button" id="btnInforme" class="'<?php echo $_GET['clase'] ?>'">Informe</button>
+	
 
 	<table id="tablaUsuarios" class="tabla">
 		<h3>Estudiantes Registrados</h3>

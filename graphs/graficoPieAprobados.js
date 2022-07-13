@@ -4,7 +4,7 @@ function graficar(obj){
     
         // Create root element
         // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        var root = am5.Root.new("aprobados");
+        var root = am5.Root.new("asistenciaFinal");
         
         // Set themes
         // https://www.amcharts.com/docs/v5/concepts/themes/
@@ -43,21 +43,5 @@ function graficar(obj){
         }); // end am5.ready()
 }
 
-const abandonos = document.getElementById("Abandonos"),
-  asistentes = document.getElementById("Asistentes"),
-  tablaAbandonos = document.getElementById("tablaAbandonos").querySelectorAll("td")
-
-tablaAbandonos[1].textContent = asistentes.textContent
-tablaAbandonos[2].textContent = abandonos.textContent
-
-graficar(
-[
-    {
-        category: "Abandonos",
-        value:  parseInt(abandonos.textContent)
-      }, {
-        category: "Asistentes",
-        value: parseInt(asistentes.textContent)
-    }
-]
-)
+const container3 = document.getElementById("container3")
+graficar(JSON.parse(container3.textContent))
