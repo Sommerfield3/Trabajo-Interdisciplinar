@@ -1,10 +1,10 @@
-function graficar(obj){
+function graficar(obj,div){
 
     am5.ready(function() {
     
         // Create root element
         // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        var root = am5.Root.new("aprobados");
+        var root = am5.Root.new(div);
         
         // Set themes
         // https://www.amcharts.com/docs/v5/concepts/themes/
@@ -59,5 +59,7 @@ graficar(
         category: "Asistentes",
         value: parseInt(asistentes.textContent)
     }
-]
+],
+"asistenciaFinal"
 )
+

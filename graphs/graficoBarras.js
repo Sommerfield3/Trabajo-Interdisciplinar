@@ -1,10 +1,9 @@
-
-function graficar(data){
+function graficar(data,div){
     am5.ready(function() {
 
         // Create root element
         // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        var root = am5.Root.new("asistenciaPorClase");
+        var root = am5.Root.new(div);
         
         
         // Set themes
@@ -124,4 +123,4 @@ array.forEach(element => {
   table.appendChild(tr)
 });
 
-graficar(array);
+graficar(array,"asistenciaPorClase");

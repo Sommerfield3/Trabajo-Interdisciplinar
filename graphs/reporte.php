@@ -18,25 +18,28 @@
 
 <h1>Asistencia final, abandonos</h1>
 
-<table id="tablaAbandonos">
-    <thead>
-        <th>Clases</th>
-        <th>Alumnos Asistentes</th>
-        <th>Alumnos en sitación de Abandono</th>
-    </thead>
-    <tbody>
-        <td>Nro. Alumnos</td>
-        <td></td>
-        <td></td>
-    </tbody>
-</table>
+<section>
+    <table id="tablaAbandonos">
+        <thead>
+            <th>Clases</th>
+            <th>Alumnos Asistentes</th>
+            <th>Alumnos en sitación de Abandono</th>
+        </thead>
+        <tbody>
+            <td>Nro. Alumnos</td>
+            <td></td>
+            <td></td>
+        </tbody>
+    </table>
 
-<div id="asistenciaFinal" class="chartdiv"></div>
+    <div id="asistenciaFinal" class="chartdiv"></div>
+</section>
 <script src="graficoPie.js"></script>
 
 
 
 <!--Grafico de barras, de clase por dia-->
+
 <div id="container" style="display:none">
     <?php echo $_GET["objeto"]?>
 </div>
@@ -58,11 +61,12 @@
 
 
 <!--Grafico de numero de clases tomadas en total-->
+
 <div id="container2" style="display:none">
   <?php echo $_GET['datos']?>
 </div>
 
-<h1>Clases Realiadas y no Realizadas</h1>
+<h1>Clases Realizadas y no Realizadas</h1>
 
 <table id="tablaTotalClases">
     <thead>
@@ -79,14 +83,28 @@
 
 
 <!--Grafico del total de aprobados y desaprobados--> 
-<div id="container3">
+
+
+<div id="container3" style="display:none">
     <?php echo $_GET['aprobados']?>
 </div>
+
+<table id="tablaAprobados">
+    <thead>
+        <th>Aprobados</th>
+        <th>Desaprobados</th>
+        <th>Sin nota</th>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
 
 <div id="aprobados" class="chartdiv"></div>
 <script src="graficoPieAprobados.js"></script>
 
 <!-- HTML -->
+
 
 <script src="toPdf/html2pdf.bundle.min.js"></script>
 <script src="toPdf/reporte.js"></script>

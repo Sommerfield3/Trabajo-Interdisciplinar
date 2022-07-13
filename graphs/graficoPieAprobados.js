@@ -1,10 +1,10 @@
-function graficar(obj){
+function graficar(obj,div){
 
     am5.ready(function() {
     
         // Create root element
         // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        var root = am5.Root.new("asistenciaFinal");
+        var root = am5.Root.new(div);
         
         // Set themes
         // https://www.amcharts.com/docs/v5/concepts/themes/
@@ -44,4 +44,14 @@ function graficar(obj){
 }
 
 const container3 = document.getElementById("container3")
-graficar(JSON.parse(container3.textContent))
+let data = JSON.parse(container3.textContent)
+graficar(data,"aprobados")
+
+const tablaAprobados = document.getElementById("tablaAprobados").querySelector("tbody")
+console.log(data)
+
+data.forEach(element => {
+   const td = document.createElement("td")
+   td.textContent = element.value
+   tablaAprobados.appendChild(td)
+});

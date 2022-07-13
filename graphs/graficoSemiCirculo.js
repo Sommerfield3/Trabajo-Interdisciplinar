@@ -1,9 +1,9 @@
-function graficar(obj){
+function graficar(obj,div){
   am5.ready(function() {
 
     // Create root element
     // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-    var root = am5.Root.new("clasesTomadas");
+    var root = am5.Root.new(div);
     
     // Set themes
     // https://www.amcharts.com/docs/v5/concepts/themes/
@@ -61,12 +61,6 @@ const container2 = document.getElementById("container2"),
 let obj = JSON.parse(container2.textContent)
 console.log(obj)
 
-/*
-let obj = [
-  { value: 10, category: "Clases Realizadas" },
-  { value: 9, category: "Clases no Realizadas" }
-]*/
-
 obj.forEach(element => {
   const th = document.createElement("th")
   th.textContent = element.category;
@@ -78,4 +72,4 @@ obj.forEach(element => {
 });
 
 
-graficar(obj);
+graficar(obj,"clasesTomadas");
