@@ -26,7 +26,6 @@ async function enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones){
         "&asistenciaPorClase=" + JSON.stringify(param2) + 
         "&numeroClases=" + JSON.stringify(param3) + 
         "&calificacionesFinales=" + JSON.stringify(param4);
-    
 }
 
 /* Función para recibir datos */
@@ -47,11 +46,11 @@ async function getAbandonos(tablaAsistencia){
     /* Se inicializan los valores en cero */
     let array = [
         {
-            category: "Abandonos",
-            value: 0
+            label: "Abandonos",
+            y: 0
         },{
-            category: "Asistentes",
-            value: 0
+            label: "Asistentes",
+            y: 0
         }
     ]
 
@@ -67,7 +66,7 @@ async function getAbandonos(tablaAsistencia){
                     if(value == 'P') contadorAsistencias++;
                 }
             }
-            contadorAsistencias == 0 ? array[0].value++ : array[1].value++
+            contadorAsistencias == 0 ? array[0].y++ : array[1].y++
         })
     })
 
@@ -108,32 +107,36 @@ async function getAsistenciaPorClase(tablaAsistencia){
         })
     })
 
-    return array;
+    return array
 }
 
 /* Función que obtiene el número de clases tomadas en el semestre */
 async function getNumeroClases(tablaCurso){
-    let array = [];
+    let array = [{
+        label: "",
+        y: 0
+    },{
+        label: "",
+        y: 0
+    }];
 
     /* Número de clases totales posibles (aproximación) */
     const clases = 17; 
 
-    tablaCurso.then(data => {
+    await tablaCurso.then(data => {
         
         /* Se construye el arreglo con dos objetos */
-        let obj1 = {}
-        obj1["category"] = "Clases Realizadas";
-        obj1["value"] = parseInt(data[0].total_Horas);
 
-        let obj2 = {}
-        obj2["category"] = "Clases no Realizadas";
-        obj2["value"] = clases - parseInt(data[0].total_Horas);
+        array[0].label = "Clases Realizadas"
+        array[0].y = parseInt(data[0].total_Horas)
 
-        array.push(obj1);
-        array.push(obj2)
+        array[1].label = "Clases no Realizadas"
+        array[1].y = clases - parseInt(data[0].total_Horas)
+        
     })
 
-    return array;
+    return array
+
 }
 
 /* Función que obtiene el número de aprobados y desaprobados */
@@ -142,28 +145,28 @@ async function getAprobados(tablaCalificaciones){
     /* Se incializa el arreglo de objetos */
     let array = [
         {
-            category: "Aprobados",
-            value: 0
+            label: "Aprobados",
+            y: 0
         },
         {
-            category: "Desaprobados",
-            value: 0
+            label: "Desaprobados",
+            y: 0
         },
         {
-            category: "Sin nota",
-            value: 0
+            label: "Sin nota",
+            y: 0
         }
     ]
 
-    tablaCalificaciones.then(data => {
+    await tablaCalificaciones.then(data => {
         data.forEach(nota => {
             /* NF: nota final, si esta es mayor a 11 esta aprobado */
             if(nota.NF){
-                if(nota.NF >= 11) array[0].value++
-                else array[1].value++
+                if(nota.NF >= 11) array[0].y++
+                else array[1].y++
             }else{
                 /* Sino no tiene nota final */
-                array[2].value++;
+                array[2].y++;
             }
         })
     })

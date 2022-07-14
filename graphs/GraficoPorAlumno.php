@@ -2,10 +2,8 @@
 <link rel="stylesheet" href="../css/charts.css">
     
 <!-- Resources -->
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-    
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
 <!-- Chart code -->
 
 <div id="container" style="display:none">

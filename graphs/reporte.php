@@ -2,10 +2,7 @@
 <link rel="stylesheet" href="../css/charts.css">
 
 <!-- Resources -->
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 <!-- Para el grafico de abandonos-->
 <div id="totalAsistencia" style="display:none">
@@ -30,9 +27,6 @@
 
 <div id="graficoTotalAsistencia" class="chartdiv"></div>
 </section>
-<script src="graficoPie.js"></script>
-
-
 
 <!--Grafico de barras, de clase por dia-->
 
@@ -53,8 +47,6 @@
 </table>
 
 <div id="graficoAsistenciaPorClase" class="chartdiv"></div>
-<script src="graficoBarras.js"></script>
-
 
 <!--Grafico de numero de clases tomadas en total-->
 
@@ -75,8 +67,6 @@
 
 
 <div id="graficoNumeroClases" class="chartdiv"></div>
-<script src="graficoSemiCirculo.js"></script>
-
 
 <!--Grafico del total de aprobados y desaprobados--> 
 
@@ -97,10 +87,8 @@
 </table>
 
 <div id="graficoCalificacionesFinales" class="chartdiv"></div>
-<script src="graficoPieAprobados.js"></script>
 
-<!-- HTML -->
-
+<script src="graficosReporte.js"></script>
 
 <script src="toPdf/html2pdf.bundle.min.js"></script>
 <script src="toPdf/reporte.js"></script>

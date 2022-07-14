@@ -1,47 +1,16 @@
-/* Función que grafica a traves de un arreglo de objetos */
-function graficar(obj){
+function graficar(obj,div){
 
-    am5.ready(function() {
-    
-        // Create root element
-        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        var root = am5.Root.new("chartdiv");
-        
-        // Set themes
-        // https://www.amcharts.com/docs/v5/concepts/themes/
-        root.setThemes([
-          am5themes_Animated.new(root)
-        ]);
-        
-        // Create chart
-        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
-        var chart = root.container.children.push(
-          am5percent.PieChart.new(root, {
-            endAngle: 270
-          })
-        );
-        
-        // Create series
-        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
-        var series = chart.series.push(
-          am5percent.PieSeries.new(root, {
-            valueField: "value",
-            categoryField: "category",
-            endAngle: 270
-          })
-        );
-        
-        series.states.create("hidden", {
-          endAngle: -90
-        });
-        
-        // Set data
-        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Setting_data
-        series.data.setAll(obj);
-        
-        series.appear(1000, 100);
-        
-        }); // end am5.ready()
+  var chart = new CanvasJS.Chart(div, {
+      animationEnabled: true,
+      data: [{
+          type: "pie",
+          startAngle: 240,
+          yValueFormatString: "##0.00\"%\"",
+          indexLabel: "{label} {y}",
+          dataPoints: obj
+      }]
+  });
+  chart.render();
 }
 
 /* Contenedor donde se dibujará el grafico */
@@ -50,14 +19,17 @@ const container = document.getElementById("container");
 let json = JSON.parse(container.textContent)
 
 /* Enviamos el arreglo como parámetro */
+let totalClases = json.presentes + json.faltos
+
 graficar(
 [
     {
-        category: "Presente",
-        value:  parseInt(json.presentes)
+        label: "Presente",
+        y:  parseInt(json.presentes) * (100/totalClases)
       }, {
-        category: "Falto",
-        value: parseInt(json.faltos)
+        label: "Falto",
+        y: parseInt(json.faltos) * (100/totalClases)
     }
 ]
+,"chartdiv"
 )
