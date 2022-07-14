@@ -43,15 +43,14 @@ function graficar(obj,div){
         }); // end am5.ready()
 }
 
-const container3 = document.getElementById("container3")
-let data = JSON.parse(container3.textContent)
-graficar(data,"aprobados")
+const calificacionesFinales = JSON.parse(document.getElementById("calificacionesFinales").textContent)
+const tablaCalificacionesFinales = document.getElementById("tablaCalificacionesFinales").querySelector("tbody")
 
-const tablaAprobados = document.getElementById("tablaAprobados").querySelector("tbody")
-console.log(data)
-
-data.forEach(element => {
+calificacionesFinales.forEach(element => {
    const td = document.createElement("td")
    td.textContent = element.value
-   tablaAprobados.appendChild(td)
+   tablaCalificacionesFinales.appendChild(td)
 });
+
+
+graficar(calificacionesFinales,"graficoCalificacionesFinales")

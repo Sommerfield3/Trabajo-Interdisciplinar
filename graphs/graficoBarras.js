@@ -104,23 +104,18 @@ function graficar(data,div){
 }
 
 
-const container = document.getElementById("container"),
-  table = document.getElementById("tablaAsistenciaPorClase").querySelector("tbody")
+const asistenciaPorClase = JSON.parse(document.getElementById("asistenciaPorClase").textContent),
+  tablaAsistenciaPorClase = document.getElementById("tablaAsistenciaPorClase").querySelector("tbody")
 
-let texto = container.textContent
 
-let array = JSON.parse(texto)
-
-console.log(table)
-
-array.forEach(element => {
+asistenciaPorClase.forEach(element => {
   const tr = document.createElement("tr")
   Object.values(element).forEach(attr => {
     const td = document.createElement("td")
     td.textContent = attr;
     tr.appendChild(td)
   })
-  table.appendChild(tr)
+  tablaAsistenciaPorClase.appendChild(tr)
 });
 
-graficar(array,"asistenciaPorClase");
+graficar(asistenciaPorClase,"graficoAsistenciaPorClase");

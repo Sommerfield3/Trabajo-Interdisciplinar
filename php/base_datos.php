@@ -163,16 +163,18 @@ class base_datos {
 		return null;
 	}
 
-	function getAsistenciaFinal($curso){
-		$result = mysqli_query($this->conexion,"SELECT cui, total_Asistencia FROM $curso");
+	// retornará todos los datos de la tabla asistencia de un curso
+	function getTablaAsistencia($curso){
+		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_asistencia");
 		$error = mysqli_error($this->conexion);
+		$i = 0;
 		if(empty($error)){
 			if (mysqli_num_rows($result) > 0) {
 				while ($row = mysqli_fetch_assoc($result)){
-					$array[$row['cui']] = (int)$row['total_Asistencia'];
+					$array[$i] = $row;
+					$i = $i + 1;
 				}
 			}
-
 			return json_encode($array);
 		}else{
 			echo "Error";
@@ -180,80 +182,43 @@ class base_datos {
 		return null;
 	}
 
-	function getAsistenciaPorDia($curso){
-		$result = mysqli_query($this->conexion,"SHOW COLUMNS FROM ".$curso."_asistencia");
-		$error = mysqli_error($this->conexion);
-		if(empty($error)){
-			if (mysqli_num_rows($result) > 0) {
-				$i = 0;
-				while ($row = mysqli_fetch_assoc($result)){
-					$array[$i] = $row["Field"];
-					$i += 1;
-				}
-			}
-		}
-
-		$values = array_values($array);
-		foreach($values as $valor){
-			$result = mysqli_query($this->conexion,"SELECT $valor FROM ".$curso."_asistencia");
-			$error = mysqli_error($this->conexion);
-			if(empty($error)){
-				if(mysqli_num_rows($result) > 0){
-					$i = 0;
-					while($row = mysqli_fetch_assoc($result)){
-						foreach($row as $dato){
-							$datos[$i] = $dato;
-							$i++;
-						}
-					}
-					$obj[$valor] = $datos;
-					foreach($datos as $j => $dato){
-						unset($datos[$j]);
-					}
-				}
-			}
-		}
-
-		return json_encode($obj);
-	}
-
-
-	function numeroClases($clase){
-		$result = mysqli_query($this->conexion,"SELECT * FROM cursos WHERE nombre = '$clase'");
+	function getTablaCurso($curso){
+		$result = mysqli_query($this->conexion,"SELECT * FROM cursos WHERE nombre = '$curso'");
 		$error = mysqli_error($this->conexion);
 		if(empty($error)){
 			$i = 0;
 			if(mysqli_num_rows($result) > 0){
 				while($row = mysqli_fetch_assoc($result)){
-					foreach($row as $dato){
-						$datos[$i] = $dato;
-						$i++;
-					}
+					$array[$i] = $row;
+					$i = $i + 1;
 				}
 			}
 		}
 
-		echo json_encode($datos);
-		return json_encode($datos);
+		echo json_encode($array);
+		return json_encode($array);
 	}
 
-	function asistenciaPorAlumno($curso,$cui){
-		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_datos WHERE cui = $cui");
+	function getTablaDatos($curso){
+		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_datos");
 		$error = mysqli_error($this->conexion);
 		if(empty($error)){
+			$i = 0;
 			if(mysqli_num_rows($result) > 0){
 				while($row = mysqli_fetch_assoc($result)){
-					return json_encode($row);
+					$array[$i] = $row;
+					$i = $i + 1;
 				}
 			}
+			return json_encode($array);
 		}
 
 		return null;
 	}
 
 
-	function aprobadosYdesaprobados($curso){
-		$result = mysqli_query($this->conexion,"SELECT cui, NF FROM ".$curso."_calificaciones");
+	function getTablaCalificaciones($curso){
+		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_calificaciones");
 		$error = mysqli_error($this->conexion);
 		$i = 0;
 		if(empty($error)){

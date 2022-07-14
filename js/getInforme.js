@@ -3,20 +3,28 @@
 const btn = document.getElementById("btnInforme")
 btn.addEventListener("click",e=>{
     let clase = btn.classList[0].slice(1,-1),
-    abandonos = recibirDatos(clase,"Abandonos"),
-    asistenciaPorClase = recibirDatos(clase,"AsistenciaPorClase"),
-    totalClasesTomadas = recibirDatos(clase,"NumeroClases"),
-    aprobadosYdesaprobados = recibirDatos(clase,"Aprobados");
-    formatearDatos(abandonos,asistenciaPorClase,totalClasesTomadas,aprobadosYdesaprobados)
+
+    tablaAsistencia = recibirDatos(clase,"getTablaAsistencia"),
+    tablaCurso = recibirDatos(clase,"getTablaCurso"),
+    tablaCalificaciones = recibirDatos(clase,"getTablaCalificaciones");
+    
+    
+    formatearDatos(tablaAsistencia,tablaCurso,tablaCalificaciones)
 })  
 
 
-async function formatearDatos(abandonos,asistenciaPorClase,totalClasesTomadas,aprobadosYdesaprobados){    
-    let final = await getAbandonos(abandonos)
-    let array = await getAsistenciaPorClase(asistenciaPorClase)
-    let array2 = await getNumeroClases(totalClasesTomadas);
-    let array3 = await getAprobados(aprobadosYdesaprobados);
-    window.location.href = "../graphs/reporte.php" + "?Asistentes=" + final.Asistentes + "&Abandonos=" + final.Abandonos + "&objeto=" + JSON.stringify(array) + "&datos=" + JSON.stringify(array2) + "&aprobados=" + JSON.stringify(array3);
+async function formatearDatos(tablaAsistencia,tablaCurso,tablaCalificaciones){    
+
+    let param1 = await getAbandonos(tablaAsistencia),
+    param2 = await getAsistenciaPorClase(tablaAsistencia),
+    param3 = await getNumeroClases(tablaCurso),
+    param4 = await getAprobados(tablaCalificaciones)
+
+    window.location.href = "../graphs/reporte.php" + 
+        "?totalAsistencia=" + JSON.stringify(param1) + 
+        "&asistenciaPorClase=" + JSON.stringify(param2) + 
+        "&numeroClases=" + JSON.stringify(param3) + 
+        "&calificacionesFinales=" + JSON.stringify(param4);
     
 }
 
@@ -31,78 +39,90 @@ async function recibirDatos(clase,archivo){
     }
 }
 
-
-async function getAbandonos(abandonos){
+async function getAbandonos(tablaAsistencia){
     // objeto para guardar datos de asistentes y abandonos
-    let final = {
-        "Asistentes" : 0,
-        "Abandonos" : 0
-      };
-  
-      await abandonos.then(data => {
-        let values = Object.values(data)
-        values.forEach(el => {
-          if(el > 0) final.Asistentes++;
-          else final.Abandonos++;
+    let array = [
+        {
+            category: "Abandonos",
+            value: 0
+        },{
+            category: "Asistentes",
+            value: 0
+        }
+    ]
+
+    tablaAsistencia.then(data => {
+        data.forEach(alumno => {
+            let contadorAsistencias = 0;
+            for(const [key,value] of Object.entries(alumno)){
+                if(key != "cui"){
+                    if(value == 'P') contadorAsistencias++;
+                }
+            }
+            contadorAsistencias == 0 ? array[0].value++ : array[1].value++
         })
-        return final;
-        
-      })
-    return final;     
+    })
+
+    return array;
+
 }
 
-async function getAsistenciaPorClase(asistenciaPorClase){
+async function getAsistenciaPorClase(tablaAsistencia){
     // arreglo para guardar la asistencia por clase
+    
     let array = [];
-    await asistenciaPorClase.then(data => {
-        let values = Object.values(data),
-        keys = Object.keys(data);
-        
-        for(let i = 1; i < keys.length; i++){
-        let obj = {};
-        obj["fecha"] = keys[i];
-        let P = 0, F = 0;
 
-        values[i].forEach(val => {
-            if(val == 'P') P++;
-            if(val == 'F') F++;
+    
+    await tablaAsistencia.then(data => {
+        // obtener solo las fechas
+        const fechas = Object.keys(data[0]).slice(1)
+        // obtener el arreglo de objeetos de las fechas
+        fechas.forEach(fecha => {
+            let obj = {
+                fecha: fecha,
+                presentes: 0,
+                faltos: 0
+            }
+            array.push(obj)
         })
 
-        obj["presentes"] = P;
-        obj["faltos"] = F;
-        array.push(obj)
-        }
+        data.forEach(alumno => {
+            array.forEach(obj => {
+                alumno[obj.fecha] == 'P' ? obj.presentes++ : obj.faltos++
+            })
+        })
     })
 
     return array;
 }
 
 
-async function getNumeroClases(totalClasesTomadas){
+async function getNumeroClases(tablaCurso){
     // arreglo para guardar las clases tomadas y aun no realizadas
 
-    let array2 = [];
-    const clases = 17;
+    let array = [];
+    const clases = 17; // constante del numero de clases
 
-    totalClasesTomadas.then(data => {
+    tablaCurso.then(data => {
+        
         let obj1 = {}
         obj1["category"] = "Clases Realizadas";
-        obj1["value"] = parseInt(data[2]);
+        obj1["value"] = parseInt(data[0].total_Horas);
 
         let obj2 = {}
         obj2["category"] = "Clases no Realizadas";
-        obj2["value"] = clases - parseInt(data[2]);
+        obj2["value"] = clases - parseInt(data[0].total_Horas);
 
-        array2.push(obj1);
-        array2.push(obj2)
+        array.push(obj1);
+        array.push(obj2)
     })
 
-    return array2;
+    return array;
 }
 
-async function getAprobados(aprobadosYdesaprobados){
+async function getAprobados(tablaCalificaciones){
     
-    let array3 = [
+    let array = [
         {
             category: "Aprobados",
             value: 0
@@ -117,16 +137,16 @@ async function getAprobados(aprobadosYdesaprobados){
         }
     ]
 
-    aprobadosYdesaprobados.then(data => {
+    tablaCalificaciones.then(data => {
         data.forEach(nota => {
             if(nota.NF){
-                if(nota.NF >= 11) array3[0].value++
-                else array3[1].value++
+                if(nota.NF >= 11) array[0].value++
+                else array[1].value++
             }else{
-                array3[2].value++;
+                array[2].value++;
             }
         })
     })
 
-    return array3
+    return array
 }

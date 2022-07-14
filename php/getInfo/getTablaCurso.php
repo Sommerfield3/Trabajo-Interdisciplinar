@@ -6,10 +6,11 @@
     
     if(isset($_GET['clase'])){
         $clase = $_GET['clase'];
-        $datos = $BaseDatos->numeroClases($clase);
+        $curso = $BaseDatos->getTablaCurso($clase);
     }
 
     $BaseDatos->cerrar();
-    return $datos;
+
+    return $curso;
 
 ?>

@@ -5,15 +5,15 @@
     $BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
     $BaseDatos->conectar();
 
-    if(isset($_GET['clase']) && isset($_GET['cui'])){
+    if(isset($_GET['clase'])){
         $clase = $_GET['clase'];
-        $cui =  $_GET['cui'];
         
-        $asistencia = $BaseDatos->asistenciaPorAlumno($clase,$cui);
-        echo $asistencia;
+        $datos = $BaseDatos->getTablaDatos($clase);
+        
     }else{
         echo "hola";
     }
 
-    return $asistencia;
+    echo $datos;
+    return $datos;
 ?>

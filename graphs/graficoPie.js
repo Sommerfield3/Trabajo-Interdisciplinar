@@ -43,23 +43,15 @@ function graficar(obj,div){
         }); // end am5.ready()
 }
 
-const abandonos = document.getElementById("Abandonos"),
-  asistentes = document.getElementById("Asistentes"),
-  tablaAbandonos = document.getElementById("tablaAbandonos").querySelectorAll("td")
+const totalAsistencia = JSON.parse(document.getElementById("totalAsistencia").textContent),
+  tablaTotalAsistencia = document.getElementById("tablaTotalAsistencia").querySelectorAll("td")
 
-tablaAbandonos[1].textContent = asistentes.textContent
-tablaAbandonos[2].textContent = abandonos.textContent
+graficar(totalAsistencia,"graficoTotalAsistencia")
 
-graficar(
-[
-    {
-        category: "Abandonos",
-        value:  parseInt(abandonos.textContent)
-      }, {
-        category: "Asistentes",
-        value: parseInt(asistentes.textContent)
-    }
-],
-"asistenciaFinal"
-)
+tablaTotalAsistencia[1].textContent = totalAsistencia[1].value
+tablaTotalAsistencia[2].textContent = totalAsistencia[0].value
+
+
+
+
 

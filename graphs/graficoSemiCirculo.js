@@ -55,21 +55,18 @@ function graficar(obj,div){
 }
 
 
-const container2 = document.getElementById("container2"),
-  table2 = document.getElementById("tablaTotalClases")
+const numeroClases = JSON.parse(document.getElementById("numeroClases").textContent),
+  tablaNumeroClases = document.getElementById("tablaNumeroClases")
 
-let obj = JSON.parse(container2.textContent)
-console.log(obj)
-
-obj.forEach(element => {
+numeroClases.forEach(element => {
   const th = document.createElement("th")
   th.textContent = element.category;
   const td = document.createElement("td") 
   td.textContent = element.value
 
-  table2.querySelector("thead").appendChild(th)
-  table2.querySelector("tbody").appendChild(td)
+  tablaNumeroClases.querySelector("thead").appendChild(th)
+  tablaNumeroClases.querySelector("tbody").appendChild(td)
 });
 
 
-graficar(obj,"clasesTomadas");
+graficar(numeroClases,"graficoNumeroClases");

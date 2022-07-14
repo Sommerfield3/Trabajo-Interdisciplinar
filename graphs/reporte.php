@@ -8,18 +8,14 @@
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
 <!-- Para el grafico de abandonos-->
-<div id="Abandonos" style="display:none">
-    <?php echo $_GET['Abandonos']?>
-</div>
-
-<div id="Asistentes" style="display:none">
-    <?php echo $_GET['Asistentes']?>
+<div id="totalAsistencia" style="display:none">
+    <?php echo $_GET['totalAsistencia']?>
 </div>
 
 <h1>Asistencia final, abandonos</h1>
 
 <section>
-    <table id="tablaAbandonos">
+    <table id="tablaTotalAsistencia">
         <thead>
             <th>Clases</th>
             <th>Alumnos Asistentes</th>
@@ -32,7 +28,7 @@
         </tbody>
     </table>
 
-    <div id="asistenciaFinal" class="chartdiv"></div>
+<div id="graficoTotalAsistencia" class="chartdiv"></div>
 </section>
 <script src="graficoPie.js"></script>
 
@@ -40,8 +36,8 @@
 
 <!--Grafico de barras, de clase por dia-->
 
-<div id="container" style="display:none">
-    <?php echo $_GET["objeto"]?>
+<div id="asistenciaPorClase" style="display:none">
+    <?php echo $_GET["asistenciaPorClase"]?>
 </div>
 
 <h1>Asistencia por Clase</h1>
@@ -56,19 +52,19 @@
     </tbody>
 </table>
 
-<div id="asistenciaPorClase" class="chartdiv"></div>
+<div id="graficoAsistenciaPorClase" class="chartdiv"></div>
 <script src="graficoBarras.js"></script>
 
 
 <!--Grafico de numero de clases tomadas en total-->
 
-<div id="container2" style="display:none">
-  <?php echo $_GET['datos']?>
+<div id="numeroClases" style="display:none">
+  <?php echo $_GET['numeroClases']?>
 </div>
 
 <h1>Clases Realizadas y no Realizadas</h1>
 
-<table id="tablaTotalClases">
+<table id="tablaNumeroClases">
     <thead>
 
     </thead>
@@ -78,18 +74,18 @@
 </table>
 
 
-<div id="clasesTomadas" class="chartdiv"></div>
+<div id="graficoNumeroClases" class="chartdiv"></div>
 <script src="graficoSemiCirculo.js"></script>
 
 
 <!--Grafico del total de aprobados y desaprobados--> 
 
 
-<div id="container3" style="display:none">
-    <?php echo $_GET['aprobados']?>
+<div id="calificacionesFinales" style="display:none">
+    <?php echo $_GET['calificacionesFinales']?>
 </div>
 
-<table id="tablaAprobados">
+<table id="tablaCalificacionesFinales">
     <thead>
         <th>Aprobados</th>
         <th>Desaprobados</th>
@@ -100,7 +96,7 @@
     </tbody>
 </table>
 
-<div id="aprobados" class="chartdiv"></div>
+<div id="graficoCalificacionesFinales" class="chartdiv"></div>
 <script src="graficoPieAprobados.js"></script>
 
 <!-- HTML -->

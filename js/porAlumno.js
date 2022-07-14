@@ -8,17 +8,25 @@ document.addEventListener("click",e => {
 
 async function recibirDatosDelAlumno(cui,clase){
     try{
-        const response = await fetch("../php/getInfo/AsistenciaPorAlumno.php?clase=" + clase + "&cui=" + cui);
-        const data = await response.json()
+        const response = await fetch("../php/getInfo/getTablaDatos.php?clase=" + clase);
+        response.json().then(data => {
+            data.forEach(alumno => {
+                if(alumno.cui == cui){
+
+                    let obj = {}
+                    const clases = 17;
+
+                    obj['faltos'] = clases - parseInt(alumno.total_Asistencia)
+                    obj['presentes'] = parseInt(alumno.total_Asistencia)
+            
+                    window.location.href = "../graphs/GraficoPorAlumno.php?datos="+ JSON.stringify(obj);
+                }
+            });
+        })
+
         
-        const clases = 17;
-        let obj = {}
-
-        obj['faltos'] = clases - await parseInt(data.total_Asistencia)
-        obj['presentes'] = await parseInt(data.total_Asistencia)
-
-        window.location.href = "../graphs/GraficoPorAlumno.php?datos="+ JSON.stringify(obj);
-
+        /*
+*/
     }catch(err){
         console.error(err);
     }
