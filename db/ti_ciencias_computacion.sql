@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-07-2022 a las 06:09:09
+-- Tiempo de generación: 14-07-2022 a las 17:17:51
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -92,24 +92,27 @@ CREATE TABLE `trabajo_interdisciplinar_a_calificaciones` (
   `EX_2` float(4,2) DEFAULT NULL,
   `NC_3` float(4,2) DEFAULT NULL,
   `EX_3` float(4,2) DEFAULT NULL,
-  `NF` float(4,2) DEFAULT NULL
+  `NF` float(4,2) DEFAULT NULL,
+  `NC_1_PRAC_1` float(4,2) DEFAULT NULL,
+  `NC_1_PRAC_2` float(4,2) DEFAULT NULL,
+  `NC_2_PRAC_3` float(4,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `trabajo_interdisciplinar_a_calificaciones`
 --
 
-INSERT INTO `trabajo_interdisciplinar_a_calificaciones` (`cui`, `NC_1`, `EX_1`, `NC_2`, `EX_2`, `NC_3`, `EX_3`, `NF`) VALUES
-(1, 10.00, 20.00, 20.00, 20.00, 20.00, 20.00, 19.00),
-(2, NULL, 2.00, 3.60, NULL, NULL, NULL, NULL),
-(3, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, NULL, 5.00, NULL, NULL, NULL, NULL, NULL),
-(5, NULL, NULL, 4.50, NULL, NULL, NULL, NULL),
-(6, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(7, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(8, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(9, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `trabajo_interdisciplinar_a_calificaciones` (`cui`, `NC_1`, `EX_1`, `NC_2`, `EX_2`, `NC_3`, `EX_3`, `NF`, `NC_1_PRAC_1`, `NC_1_PRAC_2`, `NC_2_PRAC_3`) VALUES
+(1, NULL, 15.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, 13.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, NULL, 2.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, NULL, 20.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, NULL, 1.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, NULL, 14.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -168,10 +171,13 @@ INSERT INTO `trabajo_interdisciplinar_a_informacion_y_estadistica` (`ID`, `notas
 (1, 'NC_1', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
 (2, 'NC_2', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
 (3, 'NC_3', 'NF', 30.0, NULL, '', '', NULL, '', '', NULL),
-(4, 'NP_1', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
-(5, 'NP_2', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
-(6, 'NP_3', 'NF', 30.0, NULL, '', '', NULL, '', '', NULL),
-(7, 'NF', 'NF', 100.0, NULL, '', '', NULL, '', '', NULL);
+(4, 'EX_1', 'NF', 10.0, 20, 'CACSIRE SANCHEZ', '4', 1, 'CARAZAS QUISPE', '5', NULL),
+(5, 'EX_2', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
+(6, 'EX_3', 'NF', 30.0, NULL, '', '', NULL, '', '', NULL),
+(7, 'NF', 'NF', 100.0, NULL, '', '', NULL, '', '', NULL),
+(23, 'NC_1_PRAC_1', 'NC_1', 50.0, NULL, '', '', NULL, '', '', NULL),
+(24, 'NC_1_PRAC_2', 'NC_1', 50.0, NULL, '', '', NULL, '', '', NULL),
+(25, 'NC_2_PRAC_3', 'NC_2', 100.0, NULL, '', '', NULL, '', '', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -222,7 +228,7 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de la tabla `trabajo_interdisciplinar_a_informacion_y_estadistica`
 --
 ALTER TABLE `trabajo_interdisciplinar_a_informacion_y_estadistica`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

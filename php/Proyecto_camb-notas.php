@@ -23,9 +23,9 @@
 			<div>
 				<label>Nota Superior</label>
 				<select name="notaSuperiornewnota" id="notaSuperiornewnota">
-					<option value="EC_1">EC_1</option>
-					<option value="EC_2">EC_2</option>
-					<option value="EC_3">EC_3</option>
+					<option value="NC_1">NC_1</option>
+					<option value="NC_2">NC_2</option>
+					<option value="NC_3">NC_3</option>
 				</select>
 			</div>
 			<div>

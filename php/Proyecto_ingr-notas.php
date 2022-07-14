@@ -55,10 +55,45 @@
 						$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
 						while ($row_not = mysqli_fetch_assoc($notas)) {
 							if ($row_not['column_name'] != 'cui' && $row_not['column_name'] != 'NF') {
-								if ($row_nxe[$row_not['column_name']]!=NULL){
-									echo "<td><input name='". $row["cui"] . "_" . $row_not['column_name'] . "'value='". floatval($row_nxe[$row_not['column_name']]) ."' type='text'></td>";//Convertimos el valor recibido a flotante
-								}else {
-									echo "<td><input name='". $row["cui"] . "_" . $row_not['column_name'] . "'value='". "' type='text'></td>";//Si es nulo, no escribe nada, porque no hay nota, si no se usa esto, va a convertir el NULL en 0 y entonces ese valor pasa a la base de datos como numérico.
+								if ($row_not['column_name'] == 'NC_1') {
+									$camposxnot = $BaseDatos->getCamposNota($row_not['column_name'], $clase);
+									if(!is_null($camposxnot)) {
+										echo "<td>";
+										if ($row_nxe[$row_not['column_name']] != NULL) {
+											echo floatval($row_nxe[$row_not['column_name']]);
+										}
+										echo "</td>";
+									} else {
+										echo "<td><input name='". $row["cui"] . "_" . $row_not['column_name'] . "'value='". "' type='text'></td>";
+									}
+								} else if ($row_not['column_name'] == 'NC_2') {
+									$camposxnot = $BaseDatos->getCamposNota($row_not['column_name'], $clase);
+									if(!is_null($camposxnot)) {
+										echo "<td>";
+										if ($row_nxe[$row_not['column_name']] != NULL) {
+											echo floatval($row_nxe[$row_not['column_name']]);
+										}
+										echo "</td>";
+									} else {
+										echo "<td><input name='". $row["cui"] . "_" . $row_not['column_name'] . "'value='". "' type='text'></td>";
+									}
+								} else if ($row_not['column_name'] == 'NC_3') {
+									$camposxnot = $BaseDatos->getCamposNota($row_not['column_name'], $clase);
+									if(!is_null($camposxnot)) {
+										echo "<td>";
+										if ($row_nxe[$row_not['column_name']] != NULL) {
+											echo floatval($row_nxe[$row_not['column_name']]);
+										}
+										echo "</td>";
+									} else {
+										echo "<td><input name='". $row["cui"] . "_" . $row_not['column_name'] . "'value='". "' type='text'></td>";
+									}
+								} else {
+									if ($row_nxe[$row_not['column_name']]!=NULL){
+										echo "<td><input name='". $row["cui"] . "_" . $row_not['column_name'] . "'value='". floatval($row_nxe[$row_not['column_name']]) ."' type='text'></td>";//Convertimos el valor recibido a flotante
+									} else {
+										echo "<td><input name='". $row["cui"] . "_" . $row_not['column_name'] . "'value='". "' type='text'></td>";//Si es nulo, no escribe nada, porque no hay nota, si no se usa esto, va a convertir el NULL en 0 y entonces ese valor pasa a la base de datos como numérico.
+									}
 								}
 							}
 						}
