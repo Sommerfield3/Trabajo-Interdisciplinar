@@ -99,6 +99,33 @@ class base_datos {
 		return false;
 	}
 
+	function getInfoNotas($campo1,$campo2,$campo3,$tabla) {
+		$result = mysqli_query($this->conexion, "SELECT ".$campo1.",".$campo2.",".$campo3." FROM `$tabla`");
+		$error = mysqli_error($this->conexion);
+		if (empty($error)) {
+			if (mysqli_num_rows($result) > 0) {
+				return $result;
+			}
+		} else {
+			echo "Error al obtener campos de Notas!";
+		}
+		return null;
+	}
+
+	function insCampoNota($nombre,$notaSup,$porcentaje,$clase) {
+		$comand = "INSERT INTO `".$clase."_informacion_y_estadistica` (`notas`, `notaSuperior`, `porcentaje`) VALUES ('".$notaSup."_".$nombre."', '$notaSup', '$porcentaje')";
+		mysqli_query($this->conexion, $comand);
+		$comand = "ALTER TABLE `".$clase."_calificaciones` ADD `".$notaSup."_".$nombre."` FLOAT(4,2) NULL";
+		mysqli_query($this->conexion, $comand);
+
+		$error = mysqli_error($this->conexion);
+		if (empty($error)) {
+			return true;
+		}
+		echo "Error al insertar nuevo campo de nota!";
+		return false;
+	}
+
 	function getCantClases($tabla) {
 		$result = mysqli_query($this->conexion, "SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='$tabla'");
 		$error = mysqli_error($this->conexion);
@@ -137,6 +164,7 @@ class base_datos {
 		}
 		return null;
 	}
+
 	function getInfoCursos($tabla, $curso) {/*Agregado*/
 		$result = mysqli_query($this->conexion, "SELECT * FROM `$tabla` WHERE nombre = '" . $curso . "';");
 		$error = mysqli_error($this->conexion);

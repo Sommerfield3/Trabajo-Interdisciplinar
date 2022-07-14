@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-07-2022 a las 18:32:59
+-- Tiempo de generación: 14-07-2022 a las 06:09:09
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -140,6 +140,39 @@ INSERT INTO `trabajo_interdisciplinar_a_datos` (`cui`, `nombre`, `apellido`, `to
 (9, 'CERPA GARCIA', 'RANDU JEAN FRANCO', 5),
 (10, 'CONDORI CASQUINO', 'EBERT LUIS', 5);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `trabajo_interdisciplinar_a_informacion_y_estadistica`
+--
+
+CREATE TABLE `trabajo_interdisciplinar_a_informacion_y_estadistica` (
+  `ID` int(11) NOT NULL,
+  `notas` varchar(100) NOT NULL,
+  `notaSuperior` varchar(100) NOT NULL,
+  `porcentaje` float(4,1) DEFAULT NULL,
+  `mejorNota` int(2) DEFAULT NULL,
+  `nomMejorNota` varchar(100) NOT NULL,
+  `cuiMejorNota` varchar(8) NOT NULL,
+  `peorNota` int(2) DEFAULT NULL,
+  `nomPeorNota` varchar(100) NOT NULL,
+  `cuiPeorNota` varchar(8) NOT NULL,
+  `notaPromedio` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `trabajo_interdisciplinar_a_informacion_y_estadistica`
+--
+
+INSERT INTO `trabajo_interdisciplinar_a_informacion_y_estadistica` (`ID`, `notas`, `notaSuperior`, `porcentaje`, `mejorNota`, `nomMejorNota`, `cuiMejorNota`, `peorNota`, `nomPeorNota`, `cuiPeorNota`, `notaPromedio`) VALUES
+(1, 'NC_1', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
+(2, 'NC_2', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
+(3, 'NC_3', 'NF', 30.0, NULL, '', '', NULL, '', '', NULL),
+(4, 'NP_1', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
+(5, 'NP_2', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
+(6, 'NP_3', 'NF', 30.0, NULL, '', '', NULL, '', '', NULL),
+(7, 'NF', 'NF', 100.0, NULL, '', '', NULL, '', '', NULL);
+
 --
 -- Índices para tablas volcadas
 --
@@ -170,6 +203,12 @@ ALTER TABLE `trabajo_interdisciplinar_a_datos`
   ADD KEY `cui` (`cui`);
 
 --
+-- Indices de la tabla `trabajo_interdisciplinar_a_informacion_y_estadistica`
+--
+ALTER TABLE `trabajo_interdisciplinar_a_informacion_y_estadistica`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -178,6 +217,12 @@ ALTER TABLE `trabajo_interdisciplinar_a_datos`
 --
 ALTER TABLE `cursos`
   MODIFY `codigo` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `trabajo_interdisciplinar_a_informacion_y_estadistica`
+--
+ALTER TABLE `trabajo_interdisciplinar_a_informacion_y_estadistica`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
