@@ -1,19 +1,20 @@
-// boton para mostrar abandonos y por clase
-
+/* Boton que lleva al informe */
 const btn = document.getElementById("btnInforme")
 btn.addEventListener("click",e=>{
+    /* Se obtiene la clase */
     let clase = btn.classList[0].slice(1,-1),
 
+    /* Se obtienen las tablas de asistencia, cursos y calificaciones */
     tablaAsistencia = recibirDatos(clase,"getTablaAsistencia"),
     tablaCurso = recibirDatos(clase,"getTablaCurso"),
     tablaCalificaciones = recibirDatos(clase,"getTablaCalificaciones");
     
-    
-    formatearDatos(tablaAsistencia,tablaCurso,tablaCalificaciones)
+    /* Se envian los datos obtenidos */
+    enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones)
 })  
 
-
-async function formatearDatos(tablaAsistencia,tablaCurso,tablaCalificaciones){    
+/* Función para enviar datos */
+async function enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones){    
 
     let param1 = await getAbandonos(tablaAsistencia),
     param2 = await getAsistenciaPorClase(tablaAsistencia),
@@ -28,9 +29,10 @@ async function formatearDatos(tablaAsistencia,tablaCurso,tablaCalificaciones){
     
 }
 
-// recibir datos
+/* Función para recibir datos */
 async function recibirDatos(clase,archivo){
     try{
+        /* Se necesita del archivo al que queremos acceder y también la correspondiente clase */
         const response = await fetch(`../php/getInfo/${archivo}.php?clase=${clase}`)
         const data = await response.json()
         return data;
@@ -39,8 +41,10 @@ async function recibirDatos(clase,archivo){
     }
 }
 
+/* Función para obtener la cantidad de alumnos en situación de abandono */
 async function getAbandonos(tablaAsistencia){
-    // objeto para guardar datos de asistentes y abandonos
+
+    /* Se inicializan los valores en cero */
     let array = [
         {
             category: "Abandonos",
@@ -53,6 +57,10 @@ async function getAbandonos(tablaAsistencia){
 
     tablaAsistencia.then(data => {
         data.forEach(alumno => {
+            /* 
+                Contador que alamcenará el número de clases asistidas
+                en el semestre por alumno
+            */
             let contadorAsistencias = 0;
             for(const [key,value] of Object.entries(alumno)){
                 if(key != "cui"){
@@ -67,16 +75,22 @@ async function getAbandonos(tablaAsistencia){
 
 }
 
+/* Función para obtener cantidad de asistentes y ausentes por clase */
 async function getAsistenciaPorClase(tablaAsistencia){
-    // arreglo para guardar la asistencia por clase
-    
     let array = [];
-
     
     await tablaAsistencia.then(data => {
-        // obtener solo las fechas
+
+        /* Se obtienen las fechas */
+
         const fechas = Object.keys(data[0]).slice(1)
-        // obtener el arreglo de objeetos de las fechas
+
+        /* 
+            Incialiamos el arreglo con objetos que guarden los siguentes datos:
+            - fecha (extraida anteriormente)
+            - presentes (inicializado en cero)
+            - ausentes (inicializado en cero)
+        */
         fechas.forEach(fecha => {
             let obj = {
                 fecha: fecha,
@@ -87,6 +101,7 @@ async function getAsistenciaPorClase(tablaAsistencia){
         })
 
         data.forEach(alumno => {
+            /* Se evalua si esta presente o ausente */
             array.forEach(obj => {
                 alumno[obj.fecha] == 'P' ? obj.presentes++ : obj.faltos++
             })
@@ -96,15 +111,16 @@ async function getAsistenciaPorClase(tablaAsistencia){
     return array;
 }
 
-
+/* Función que obtiene el número de clases tomadas en el semestre */
 async function getNumeroClases(tablaCurso){
-    // arreglo para guardar las clases tomadas y aun no realizadas
-
     let array = [];
-    const clases = 17; // constante del numero de clases
+
+    /* Número de clases totales posibles (aproximación) */
+    const clases = 17; 
 
     tablaCurso.then(data => {
         
+        /* Se construye el arreglo con dos objetos */
         let obj1 = {}
         obj1["category"] = "Clases Realizadas";
         obj1["value"] = parseInt(data[0].total_Horas);
@@ -120,8 +136,10 @@ async function getNumeroClases(tablaCurso){
     return array;
 }
 
+/* Función que obtiene el número de aprobados y desaprobados */
 async function getAprobados(tablaCalificaciones){
     
+    /* Se incializa el arreglo de objetos */
     let array = [
         {
             category: "Aprobados",
@@ -139,10 +157,12 @@ async function getAprobados(tablaCalificaciones){
 
     tablaCalificaciones.then(data => {
         data.forEach(nota => {
+            /* NF: nota final, si esta es mayor a 11 esta aprobado */
             if(nota.NF){
                 if(nota.NF >= 11) array[0].value++
                 else array[1].value++
             }else{
+                /* Sino no tiene nota final */
                 array[2].value++;
             }
         })

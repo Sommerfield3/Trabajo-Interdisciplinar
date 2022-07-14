@@ -1,4 +1,5 @@
 document.addEventListener("click",e => {
+    /* Si hacemos click en cualquier boton a la clase .btnAsistenciaPorAlumno */
     if(e.target.matches(".btnAsistenciaPorAlumno")){
         const btnPressed = document.getElementById(e.target.id);
         let clase = btnPressed.classList[1]

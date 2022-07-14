@@ -14,11 +14,14 @@
 		<select name="clase">
 			<option value="Elegir clase">Elegir Clase</option>;
 			<?php
+
+			/* Conexion con la base de datos */
 			$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
 			$BaseDatos->conectar();
 
 			$clases = $BaseDatos->getClases("cursos");
-
+			
+			/* Se genera el menú de opciones de clases disponibles*/
 			if(!is_null($clases)) {
 				while ($row = mysqli_fetch_assoc($clases)) {
 					echo "<option value='" . $row["nombre"] . "'>" . $row["nombre"] . "</option>";

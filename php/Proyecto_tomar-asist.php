@@ -15,11 +15,15 @@
 <body>
 	<h2 style="text-align: center;">Estudiantes Registrados<br><br></h2>
 	<form method="post" action="Proyecto_Asistencia.php?clase=<?php echo $_GET['clase'] ?>">
-		<button type="submit" id="btnTomarAssist"/>Guardar</button>
+		<button type="submit" id="btnTomarAssist">Guardar</button>
 		<table id="tablaUsuarios" class="tabla">
 			<?php
+	
+			/* Conexion con la base de datos */
 			$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
 			$BaseDatos->conectar();
+
+			/* Se extreae la información de los estudiantes y sus asistencia */
 			$clase = $_GET["clase"];
 			$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
 			$sesiones = $BaseDatos->getColumnasClases($clase . "_asistencia");
@@ -30,7 +34,7 @@
 			echo "<th>CUI</th>";
 			echo "<th>Nombre</th>";
 			echo "<th>Apellidos</th>";
-
+			
 			if(!is_null($sesiones)) {
 				while ($row = mysqli_fetch_assoc($sesiones)) {
 					if ($row['column_name'] != 'cui') {

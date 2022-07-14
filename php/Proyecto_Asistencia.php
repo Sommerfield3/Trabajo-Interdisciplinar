@@ -17,12 +17,19 @@
 	<button type="button" id="btnTomarAssist" onclick ="location='Proyecto_tomar-asist.php?clase=<?php echo $_GET['clase'] ?>'"/>Tomar Asistencia</button>
 	<table id="tablaUsuarios" class="tabla">
 		<?php
+
+		/* Conexion con la base de datos */
 		$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
 		$BaseDatos->conectar();
+
+		/* Se obtiene la clase en la que nos encontramos */
 		$clase = $_GET["clase"];
+		/* Se obtiene lista de estudiantes */
 		$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
+		/* Se obtiene la fecha */
 		$Date = date('d_m_Y',time());
 
+		/* Se itera dentro de la lista de estudiantes */
 		if(!is_null($estudiantes)) {
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$BaseDatos->inssesion($clase);
@@ -30,11 +37,16 @@
 				while ($row = mysqli_fetch_assoc($estudiantes)) {
 					$valor = $_POST[$row["cui"]];
 					$cui = $row["cui"];
+					/* Se inserta la nueva asistencia según la fecha correspondiente */
 					$BaseDatos->insasistenciaclase($clase, $valor, $Date, (int)$cui);
 				}
+
+				/* Se actualiza la lista de asistencia */
 				$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
 			}
 		}
+
+		/* Estructuración de la tabla de la lista de alumnos */
 
 		echo "<thead>";
 		echo "<tr>";
@@ -87,5 +99,6 @@
 	</table>
 
 </body>
+	<!--Archivo js necesario para mostrar los graficos de asistencia por alumno-->
 	<script src="../js/porAlumno.js"></script>
 </html>

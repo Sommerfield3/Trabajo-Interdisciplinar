@@ -20,6 +20,13 @@
 		?><br><br>
 	</h2>
 	<p>Elegir acción</p>
+
+	<!--
+		Botones :
+		- Apartado de asistencia
+		- Apartado de calificaciones
+		- Mostrar el informe total del curso
+	-->
 	<button type="button" id="btnAsistencia" onclick ="location='Proyecto_Asistencia.php?clase=<?php echo $_GET['clase'] ?>'"/>Asistencia</button>
 	<button type="button" id="btnCalificaciones" onclick ="location='Proyecto_Calificaciones.php?clase=<?php echo $_GET['clase'] ?>'"/>Calificaciones</button>
 	<button type="button" id="btnInforme" class="'<?php echo $_GET['clase'] ?>'">Informe</button>
@@ -36,11 +43,15 @@
 		</thead>
 		<tbody>
 		<?php
+		
+		/* Conexion con la base de datos */
+		
 		$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
 		$BaseDatos->conectar();
 		$clase = $_GET["clase"];
 		$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
 		
+		/* Se muestran los datos de los alumnos en una tabla */
 		if(!is_null($estudiantes)) {
 			while ($row = mysqli_fetch_assoc($estudiantes)) {
 				echo "<tr>";
@@ -56,5 +67,6 @@
 		</tbody>
 	</table>
 </body>
+	<!--Archivo js necesario para mostrar el informe-->
 	<script src="../js/getInforme.js"></script>
 </html>

@@ -1,3 +1,4 @@
+/* Función que grafica a traves de un arreglo de objetos */
 function graficar(obj){
 
     am5.ready(function() {
@@ -43,10 +44,12 @@ function graficar(obj){
         }); // end am5.ready()
 }
 
+/* Contenedor donde se dibujará el grafico */
 const container = document.getElementById("container");
-
+/* Obtenemos la información en json */
 let json = JSON.parse(container.textContent)
 
+/* Enviamos el arreglo como parámetro */
 graficar(
 [
     {
