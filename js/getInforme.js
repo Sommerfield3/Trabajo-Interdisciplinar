@@ -8,24 +8,27 @@ btn.addEventListener("click",e=>{
     tablaAsistencia = recibirDatos(clase,"getTablaAsistencia"),
     tablaCurso = recibirDatos(clase,"getTablaCurso"),
     tablaCalificaciones = recibirDatos(clase,"getTablaCalificaciones");
+    tablaDatos = recibirDatos(clase,"getTablaDatos");    
     
     /* Se envian los datos obtenidos */
-    enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones)
+    enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones,tablaDatos)
 })  
 
 /* Función para enviar datos */
-async function enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones){    
+async function enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones,tablaDatos){    
 
     let param1 = await getAbandonos(tablaAsistencia),
     param2 = await getAsistenciaPorClase(tablaAsistencia),
     param3 = await getNumeroClases(tablaCurso),
-    param4 = await getAprobados(tablaCalificaciones)
+    param4 = await getAprobados(tablaCalificaciones),
+    param5 = await getDatosCalificaciones(tablaCalificaciones,tablaDatos)
 
     window.location.href = "../graphs/reporte.php" + 
         "?totalAsistencia=" + JSON.stringify(param1) + 
         "&asistenciaPorClase=" + JSON.stringify(param2) + 
         "&numeroClases=" + JSON.stringify(param3) + 
-        "&calificacionesFinales=" + JSON.stringify(param4);
+        "&calificacionesFinales=" + JSON.stringify(param4) + 
+        "&datosCalificaciones=" + JSON.stringify(param5);
 }
 
 /* Función para recibir datos */
@@ -112,16 +115,22 @@ async function getAsistenciaPorClase(tablaAsistencia){
 
 /* Función que obtiene el número de clases tomadas en el semestre */
 async function getNumeroClases(tablaCurso){
+
+    /* Número de clases totales posibles (aproximación) */
+    const clases = 17; 
+
+
     let array = [{
         label: "",
         y: 0
     },{
         label: "",
         y: 0
+    },{
+        label: "Clases totales",
+        y: clases
     }];
 
-    /* Número de clases totales posibles (aproximación) */
-    const clases = 17; 
 
     await tablaCurso.then(data => {
         
@@ -172,4 +181,19 @@ async function getAprobados(tablaCalificaciones){
     })
 
     return array
+}
+
+
+/* Funcion para obtener otros datos sobre califaciones */
+async function getDatosCalificaciones(tablaCalificaciones,tablaDatos){
+    let calificaciones = await tablaCalificaciones
+    let datos = await tablaDatos
+
+    calificaciones.forEach((alumno,index) => {
+        alumno["nombre"] = datos[index].nombre
+        alumno["apellido"] = datos[index].apellido
+
+    })
+
+    return calificaciones
 }

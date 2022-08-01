@@ -67,6 +67,7 @@ function graficarPie(obj,div){
     chart.render();
 }
 
+/* Tabla y grafico de alumnos asistentes y alumnos en situacion de abandono */
 const totalAsistencia = JSON.parse(document.getElementById("totalAsistencia").textContent),
   tablaTotalAsistencia = document.getElementById("tablaTotalAsistencia").querySelectorAll("td")
   
@@ -81,6 +82,7 @@ totalAsistencia[1].y *= (100/total)
 
 graficarPie(totalAsistencia,"graficoTotalAsistencia")
 
+/* Tabla y grafico de total de asistencia por clase */
 const asistenciaPorClase = JSON.parse(document.getElementById("asistenciaPorClase").textContent),
   tablaAsistenciaPorClase = document.getElementById("tablaAsistenciaPorClase").querySelector("tbody")
 
@@ -115,25 +117,9 @@ arrayGlobal.push(faltos)
 graficarBarras(arrayGlobal,"graficoAsistenciaPorClase");
 
 
-const calificacionesFinales = JSON.parse(document.getElementById("calificacionesFinales").textContent)
-const tablaCalificacionesFinales = document.getElementById("tablaCalificacionesFinales").querySelector("tbody")
-
-let total3 =  calificacionesFinales[0].y + calificacionesFinales[1].y + calificacionesFinales[2].y
-
-calificacionesFinales.forEach(element => {
- const td = document.createElement("td")
- td.textContent = element.y
- tablaCalificacionesFinales.appendChild(td)
- element.y *= (100/total3)
-});
-
-graficarPie(calificacionesFinales,"graficoCalificacionesFinales")
-
-
-
+/* Tabla y grafico de numero de clases*/
 const numeroClases = JSON.parse(document.getElementById("numeroClases").textContent),
   tablaNumeroClases = document.getElementById("tablaNumeroClases")
-
 
 numeroClases.forEach(element => {
   const th = document.createElement("th")
@@ -150,6 +136,46 @@ let total2 = numeroClases[0].y + numeroClases[1].y
 numeroClases[0].y *= (100/total2)
 numeroClases[1].y *= (100/total2)
 
+numeroClases.pop()
+
 graficarPie(numeroClases,"graficoNumeroClases");
 
 
+
+/* Tabla y grafico de calificaciones finales */
+const calificacionesFinales = JSON.parse(document.getElementById("calificacionesFinales").textContent)
+const tablaCalificacionesFinales = document.getElementById("tablaCalificacionesFinales").querySelector("tbody")
+
+let total3 =  calificacionesFinales[0].y + calificacionesFinales[1].y + calificacionesFinales[2].y
+
+calificacionesFinales.forEach(element => {
+ const td = document.createElement("td")
+ td.textContent = element.y
+ tablaCalificacionesFinales.appendChild(td)
+ element.y *= (100/total3)
+});
+
+graficarPie(calificacionesFinales,"graficoCalificacionesFinales")
+
+/* Tabla de datos de calificaciones */
+
+const datosCalificaciones = JSON.parse(document.getElementById("datosCalificaciones").textContent)
+const tablaDatosCalificaciones = document.getElementById("tablaDatosCalificaciones")
+
+Object.keys(datosCalificaciones[0]).forEach(key => {
+    let th = document.createElement("th")
+    th.textContent = key 
+    tablaDatosCalificaciones.querySelector("thead").appendChild(th)
+})
+
+datosCalificaciones.forEach(alumno => {
+    let tr = document.createElement("tr")
+    
+    for(const [key,value] of Object.entries(alumno)){
+        let td = document.createElement("td")
+        value ? td.textContent = value : td.textContent = "---";
+        tr.appendChild(td)
+    }
+    tablaDatosCalificaciones.querySelector("tbody").appendChild(tr)
+
+})

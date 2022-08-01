@@ -88,6 +88,21 @@
 
 <div id="graficoCalificacionesFinales" class="chartdiv"></div>
 
+<!--Tabla Calificaciones-->
+<div id="datosCalificaciones" style="display:none" >
+    <?php echo $_GET["datosCalificaciones"] ?>
+</div>
+
+<table id="tablaDatosCalificaciones">
+    <thead>
+
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+<!--PDF-->
 <script src="graficosReporte.js"></script>
 
 <script src="toPdf/html2pdf.bundle.min.js"></script>

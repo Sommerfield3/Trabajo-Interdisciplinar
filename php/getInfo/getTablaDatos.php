@@ -6,8 +6,7 @@
     $BaseDatos->conectar();
 
     if(isset($_GET['clase'])){
-        $clase = $_GET['clase'];
-        
+        $clase = $_GET['clase'];        
         $datos = $BaseDatos->getTablaDatos($clase);
         
     }else{
