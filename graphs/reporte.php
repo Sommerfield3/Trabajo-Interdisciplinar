@@ -102,9 +102,25 @@
     </tbody>
 </table>
 
-<!--PDF-->
+<!--Limites de Notas-->
+<div id="limitesCalificaciones" style="display:none">
+    <?php echo $_GET["limitesCalificaciones"] ?>
+</div>
+<table id="tablaLimitesCalificaciones">
+    <thead>
+        <th>Nota</th>
+        <th>Mejor Nota</th>
+        <th>Peor Nota</th>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+<!--JS-->
 <script src="graficosReporte.js"></script>
 
+<!--PDF-->
 <script src="toPdf/html2pdf.bundle.min.js"></script>
 <script src="toPdf/reporte.js"></script>
 <strong>Presiona el siguiente botón para crear un PDF:</strong>

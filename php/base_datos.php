@@ -329,6 +329,24 @@ class base_datos {
 		return null;
 	}
 
+	function getTablaEstadistica($curso){
+		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_informacion_y_estadistica");
+		$error = mysqli_error($this->conexion);
+		$i = 0;
+		if(empty($error)){
+			if (mysqli_num_rows($result) > 0) {
+				while ($row = mysqli_fetch_assoc($result)){
+					$array[$i] = $row;
+					$i = $i + 1;
+				}
+			}
+			return json_encode($array);
+		}else{
+			echo "Error";
+		}
+		return null;
+	}
+
 	function cerrar() {
 		mysqli_close($this->conexion);
 	}

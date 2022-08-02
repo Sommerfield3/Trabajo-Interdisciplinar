@@ -179,3 +179,30 @@ datosCalificaciones.forEach(alumno => {
     tablaDatosCalificaciones.querySelector("tbody").appendChild(tr)
 
 })
+
+/* Tabla de los limites de calificaciones */
+
+const limitesCalificaciones = JSON.parse(document.getElementById("limitesCalificaciones").textContent)
+const tablaLimitesCalificaciones = document.getElementById("tablaLimitesCalificaciones").querySelector("tbody")
+
+limitesCalificaciones.forEach(nota => {
+    let tr = document.createElement("tr");
+
+    let td1 = document.createElement("td");
+    td1.textContent = nota.nota;
+    tr.appendChild(td1)
+
+    let td2 = document.createElement("td");
+    if(nota.mejorNota[0])
+        td2.textContent = `${nota.mejorNota[1]}(${nota.mejorNota[0]})`
+    else td2.textContent = "---";
+    tr.appendChild(td2)
+
+    let td3 = document.createElement("td");
+    if(nota.peorNota[0])
+        td3.textContent = `${nota.peorNota[1]}(${nota.peorNota[0]})`
+    else td3.textContent = "---";
+    tr.appendChild(td3)
+
+    tablaLimitesCalificaciones.appendChild(tr)
+})

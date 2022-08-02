@@ -9,26 +9,29 @@ btn.addEventListener("click",e=>{
     tablaCurso = recibirDatos(clase,"getTablaCurso"),
     tablaCalificaciones = recibirDatos(clase,"getTablaCalificaciones");
     tablaDatos = recibirDatos(clase,"getTablaDatos");    
+    tablaEstadistica = recibirDatos(clase,"getTablaEstadistica");
     
     /* Se envian los datos obtenidos */
-    enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones,tablaDatos)
+    enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones,tablaDatos,tablaEstadistica)
 })  
 
 /* Función para enviar datos */
-async function enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones,tablaDatos){    
+async function enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones,tablaDatos,tablaEstadistica){    
 
     let param1 = await getAbandonos(tablaAsistencia),
     param2 = await getAsistenciaPorClase(tablaAsistencia),
     param3 = await getNumeroClases(tablaCurso),
     param4 = await getAprobados(tablaCalificaciones),
-    param5 = await getDatosCalificaciones(tablaCalificaciones,tablaDatos)
+    param5 = await getDatosCalificaciones(tablaCalificaciones,tablaDatos),
+    param6 = await getLimitesCalificaciones(tablaEstadistica);
 
     window.location.href = "../graphs/reporte.php" + 
         "?totalAsistencia=" + JSON.stringify(param1) + 
         "&asistenciaPorClase=" + JSON.stringify(param2) + 
         "&numeroClases=" + JSON.stringify(param3) + 
         "&calificacionesFinales=" + JSON.stringify(param4) + 
-        "&datosCalificaciones=" + JSON.stringify(param5);
+        "&datosCalificaciones=" + JSON.stringify(param5) + 
+        "&limitesCalificaciones=" + JSON.stringify(param6);
 }
 
 /* Función para recibir datos */
@@ -196,4 +199,22 @@ async function getDatosCalificaciones(tablaCalificaciones,tablaDatos){
     })
 
     return calificaciones
+}
+
+
+/* Funcion para obtener mejor y peor nota */
+async function getLimitesCalificaciones(tablaEstadistica){
+    let estadistica = await tablaEstadistica;
+    
+    let array = [];
+    estadistica.forEach(nota => {
+        let obj = {}
+        obj["nota"] = nota.notas;
+        obj["mejorNota"] = [nota.mejorNota,nota.nomMejorNota];
+        obj["peorNota"] = [nota.peorNota,nota.nomPeorNota];
+
+        array.push(obj)
+    })
+
+    return array;
 }
