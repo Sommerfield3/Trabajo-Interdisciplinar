@@ -71,6 +71,10 @@ h1 {
 	margin: auto;
 }
 
+.tabla .nota {
+	text-align: center;
+}
+
 .tabla .CUI {
 	text-align: center;
 }

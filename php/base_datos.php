@@ -232,6 +232,20 @@ class base_datos {
 		return null;
 	}
 	/**/
+
+	function getNotasEstadistica($curso) {
+		$result = mysqli_query($this->conexion,"SELECT notas,mejorNota,cuiMejorNota,nomMejorNota,peorNota,cuiPeorNota,nomPeorNota FROM `".$curso."_informacion_y_estadistica`");
+		$error = mysqli_error($this->conexion);
+		if (empty($error)) {
+			if (mysqli_num_rows($result) > 0) {
+				return $result;
+			}
+		} else {
+			echo "Error al obtener estadísticas de Notas!";
+		}
+		return null;
+	}
+
 	function getInfoCursos($tabla, $curso) {/*Agregado*/
 		$result = mysqli_query($this->conexion, "SELECT * FROM `$tabla` WHERE nombre = '" . $curso . "';");
 		$error = mysqli_error($this->conexion);

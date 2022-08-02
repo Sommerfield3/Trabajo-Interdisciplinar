@@ -16,7 +16,7 @@
 	<h2 style="text-align: center;">Estudiantes Registrados<br><br></h2>
 	<button type="button" id="btnTomarAssist" onclick ="location='Proyecto_ingr-notas.php?clase=<?php echo $_GET['clase'] ?>'"/>Ingresar Notas</button>
 	<button type="button" id="btnTomarAssist" onclick ="location='Proyecto_camb-notas.php?clase=<?php echo $_GET['clase'] ?>'"/>Agregar/Editar Campos</button>
-	<table id="tablaUsuarios" class="tabla">
+	<table id="tablaNotasEstudiantes" class="tabla">
 		<?php
 		$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
 		$BaseDatos->conectar();
@@ -265,6 +265,44 @@
 
 		$BaseDatos->cerrar();
 		?>
+	</table>
+	<br><br>
+	<table id="tablaDatosRelevantes" class="tabla">
+		<thead>
+			<tr>
+				<th>Nota</th>
+				<th>Mejor Nota</th>
+				<th>CUI</th>
+				<th>Nombre</th>
+				<th>Peor Nota</th>
+				<th>CUI</th>
+				<th>Nombre</th>
+			</tr>
+		</thead>
+		<tbody id="contenido">
+		<?php
+			$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
+			$BaseDatos->conectar();
+			$clase = $_GET["clase"];
+			$datosestadisticos = $BaseDatos->getNotasEstadistica($clase);
+			echo "<tbody>";
+			if(!is_null($datosestadisticos)) {
+				while ($row = mysqli_fetch_assoc($datosestadisticos)) {
+					echo "<tr>";
+					echo "<td>" . $row["notas"] . "</td>";
+					echo "<td class='nota'>" . $row["mejorNota"] . "</td>";
+					echo "<td class='CUI'>" . $row["cuiMejorNota"] . "</td>";
+					echo "<td class='nombre'>" . $row["nomMejorNota"] . "</td>";
+					echo "<td>" . $row["peorNota"] . "</td>";
+					echo "<td class='nota'>	" . $row["cuiPeorNota"] . "</td>";
+					echo "<td class='nombre'>" . $row["nomPeorNota"] . "</td>";
+					echo "</tr>";
+				}
+			}
+			echo "</tbody>";
+			$BaseDatos->cerrar();
+		?>
+		</tbody>
 	</table>
 </body>
 </html>
