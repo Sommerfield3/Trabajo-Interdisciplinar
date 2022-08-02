@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-08-2022 a las 16:23:38
+-- Tiempo de generación: 02-08-2022 a las 16:34:02
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -45,7 +45,7 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`nombre`, `codigo`, `total_Horas`, `EP_1`, `EP_2`, `EP_3`, `EC_1`, `EC_2`, `EC_3`, `NF`) VALUES
-('trabajo_interdisciplinar_a', 1, 10, 10.0, 10.0, 30.0, 10.0, 10.0, 30.0, 100.0);
+('trabajo_interdisciplinar_a', 1, 5, 10.0, 10.0, 30.0, 10.0, 10.0, 30.0, 100.0);
 
 -- --------------------------------------------------------
 
@@ -102,12 +102,12 @@ CREATE TABLE `trabajo_interdisciplinar_a_calificaciones` (
 --
 
 INSERT INTO `trabajo_interdisciplinar_a_calificaciones` (`cui`, `NC_1`, `EX_1`, `NC_2`, `EX_2`, `NC_3`, `EX_3`, `NF`, `NC_1_PRAC_1`, `NC_1_PRAC_2`) VALUES
-(1, 10.00, 15.00, 10.00, NULL, NULL, NULL, NULL, 10.00, 10.00),
-(2, NULL, 13.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, NULL, 2.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, NULL, 20.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, NULL, 1.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, NULL, 14.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -167,15 +167,15 @@ CREATE TABLE `trabajo_interdisciplinar_a_informacion_y_estadistica` (
 --
 
 INSERT INTO `trabajo_interdisciplinar_a_informacion_y_estadistica` (`ID`, `notas`, `notaSuperior`, `porcentaje`, `mejorNota`, `nomMejorNota`, `cuiMejorNota`, `peorNota`, `nomPeorNota`, `cuiPeorNota`, `notaPromedio`) VALUES
-(1, 'NC_1', 'NF', 10.0, 10, 'APAZA APAZA', '1', 10, 'APAZA APAZA', '1', NULL),
-(2, 'NC_2', 'NF', 10.0, 10, 'APAZA APAZA', '1', 10, 'APAZA APAZA', '1', NULL),
+(1, 'NC_1', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
+(2, 'NC_2', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
 (3, 'NC_3', 'NF', 30.0, NULL, '', '', NULL, '', '', NULL),
-(4, 'EX_1', 'NF', 10.0, 20, 'CACSIRE SANCHEZ', '4', 1, 'CARAZAS QUISPE', '5', NULL),
+(4, 'EX_1', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
 (5, 'EX_2', 'NF', 10.0, NULL, '', '', NULL, '', '', NULL),
 (6, 'EX_3', 'NF', 30.0, NULL, '', '', NULL, '', '', NULL),
 (7, 'NF', 'NF', 100.0, NULL, '', '', NULL, '', '', NULL),
-(23, 'NC_1_PRAC_1', 'NC_1', 50.0, 10, 'APAZA APAZA', '1', 10, 'APAZA APAZA', '1', NULL),
-(24, 'NC_1_PRAC_2', 'NC_1', 50.0, 10, 'APAZA APAZA', '1', 10, 'APAZA APAZA', '1', NULL);
+(23, 'NC_1_PRAC_1', 'NC_1', 50.0, NULL, '', '', NULL, '', '', NULL),
+(24, 'NC_1_PRAC_2', 'NC_1', 50.0, NULL, '', '', NULL, '', '', NULL);
 
 --
 -- Índices para tablas volcadas
