@@ -9,7 +9,7 @@ document.addEventListener("click",e => {
 
 async function recibirDatosDelAlumno(cui,clase){
     try{
-        const response = await fetch("../php/getInfo/getTablaAsistencia.php?clase=" + clase);
+        const response = await fetch(`../php/getTabla.php?clase=${clase}&tabla=asistencia`);
         response.json().then(data => {
             data.forEach(alumno => {
                 if(alumno.cui == cui){

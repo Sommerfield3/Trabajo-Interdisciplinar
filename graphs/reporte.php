@@ -9,7 +9,7 @@
     <?php echo $_GET['totalAsistencia']?>
 </div>
 
-<h1>Asistencia final, abandonos</h1>
+<h2>Asistencia final, abandonos</h2>
 
 <section>
     <table id="tablaTotalAsistencia">
@@ -34,7 +34,7 @@
     <?php echo $_GET["asistenciaPorClase"]?>
 </div>
 
-<h1>Asistencia por Clase</h1>
+<h2>Asistencia por Clase</h2>
 <table id="tablaAsistenciaPorClase">
     <thead>
         <th>Día</th>
@@ -54,7 +54,7 @@
   <?php echo $_GET['numeroClases']?>
 </div>
 
-<h1>Clases Realizadas y no Realizadas</h1>
+<h2>Clases Realizadas y no Realizadas</h2>
 
 <table id="tablaNumeroClases">
     <thead>
@@ -75,6 +75,7 @@
     <?php echo $_GET['calificacionesFinales']?>
 </div>
 
+<h2>Calificaciones finales</h2>
 <table id="tablaCalificacionesFinales">
     <thead>
         <th>Aprobados</th>
@@ -93,6 +94,7 @@
     <?php echo $_GET["datosCalificaciones"] ?>
 </div>
 
+<h2>Calificaciones</h2>
 <table id="tablaDatosCalificaciones">
     <thead>
 
@@ -106,6 +108,8 @@
 <div id="limitesCalificaciones" style="display:none">
     <?php echo $_GET["limitesCalificaciones"] ?>
 </div>
+
+<h2>Mejor y peor calificacion</h2>
 <table id="tablaLimitesCalificaciones">
     <thead>
         <th>Nota</th>

@@ -118,6 +118,7 @@ graficarBarras(arrayGlobal,"graficoAsistenciaPorClase");
 
 
 /* Tabla y grafico de numero de clases*/
+
 const numeroClases = JSON.parse(document.getElementById("numeroClases").textContent),
   tablaNumeroClases = document.getElementById("tablaNumeroClases")
 

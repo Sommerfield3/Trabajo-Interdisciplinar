@@ -1,4 +1,5 @@
-<?php
-$Date = date('d_m_Y',time());  
-echo "The current date and time are $Date.";
-?>
+<h1 class="hola">Hola mundo</h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+
+
+<script src="app.js"></script>

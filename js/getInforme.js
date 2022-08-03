@@ -5,12 +5,12 @@ btn.addEventListener("click",e=>{
     let clase = btn.classList[0].slice(1,-1),
 
     /* Se obtienen las tablas de asistencia, cursos y calificaciones */
-    tablaAsistencia = recibirDatos(clase,"getTablaAsistencia"),
-    tablaCurso = recibirDatos(clase,"getTablaCurso"),
-    tablaCalificaciones = recibirDatos(clase,"getTablaCalificaciones");
-    tablaDatos = recibirDatos(clase,"getTablaDatos");    
-    tablaEstadistica = recibirDatos(clase,"getTablaEstadistica");
-    
+    tablaAsistencia = recibirDatos(clase,"asistencia"),
+    tablaCurso = recibirDatos(clase),
+    tablaCalificaciones = recibirDatos(clase,"calificaciones");
+    tablaDatos = recibirDatos(clase,"datos");    
+    tablaEstadistica = recibirDatos(clase,"informacion_y_estadistica");
+
     /* Se envian los datos obtenidos */
     enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones,tablaDatos,tablaEstadistica)
 })  
@@ -18,6 +18,7 @@ btn.addEventListener("click",e=>{
 /* Función para enviar datos */
 async function enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones,tablaDatos,tablaEstadistica){    
 
+    
     let param1 = await getAbandonos(tablaAsistencia),
     param2 = await getAsistenciaPorClase(tablaAsistencia),
     param3 = await getNumeroClases(tablaCurso),
@@ -25,6 +26,7 @@ async function enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones,tablaD
     param5 = await getDatosCalificaciones(tablaCalificaciones,tablaDatos),
     param6 = await getLimitesCalificaciones(tablaEstadistica);
 
+    
     window.location.href = "../graphs/reporte.php" + 
         "?totalAsistencia=" + JSON.stringify(param1) + 
         "&asistenciaPorClase=" + JSON.stringify(param2) + 
@@ -35,10 +37,11 @@ async function enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones,tablaD
 }
 
 /* Función para recibir datos */
-async function recibirDatos(clase,archivo){
+async function recibirDatos(clase,tabla){
     try{
         /* Se necesita del archivo al que queremos acceder y también la correspondiente clase */
-        const response = await fetch(`../php/getInfo/${archivo}.php?clase=${clase}`)
+        tabla ? path = `../php/getTabla.php?clase=${clase}&tabla=${tabla}` : path = `../php/getTabla.php?clase=${clase}`
+        const response = await fetch(path)
         const data = await response.json()
         return data;
     }catch(err){

@@ -272,9 +272,10 @@ class base_datos {
 		return null;
 	}
 
-	// retornará todos los datos de la tabla asistencia de un curso
-	function getTablaAsistencia($curso){
-		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_asistencia");
+	// retornará todos los datos de una tabla
+
+	function getTabla($curso,$tabla){
+		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_".$tabla);
 		$error = mysqli_error($this->conexion);
 		$i = 0;
 		if(empty($error)){
@@ -291,6 +292,7 @@ class base_datos {
 		return null;
 	}
 
+	
 	function getTablaCurso($curso){
 		$result = mysqli_query($this->conexion,"SELECT * FROM cursos WHERE nombre = '$curso'");
 		$error = mysqli_error($this->conexion);
@@ -303,62 +305,8 @@ class base_datos {
 				}
 			}
 		}
-
 		echo json_encode($array);
 		return json_encode($array);
-	}
-
-	function getTablaDatos($curso){
-		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_datos");
-		$error = mysqli_error($this->conexion);
-		if(empty($error)){
-			$i = 0;
-			if(mysqli_num_rows($result) > 0){
-				while($row = mysqli_fetch_assoc($result)){
-					$array[$i] = $row;
-					$i = $i + 1;
-				}
-			}
-			return json_encode($array);
-		}
-
-		return null;
-	}
-
-
-	function getTablaCalificaciones($curso){
-		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_calificaciones");
-		$error = mysqli_error($this->conexion);
-		$i = 0;
-		if(empty($error)){
-			if(mysqli_num_rows($result) > 0){
-				while($row = mysqli_fetch_assoc($result)){
-					$array[$i] = $row;
-					$i = $i +1;
-				}
-			}
-			return json_encode($array);
-		}
-
-		return null;
-	}
-
-	function getTablaEstadistica($curso){
-		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_informacion_y_estadistica");
-		$error = mysqli_error($this->conexion);
-		$i = 0;
-		if(empty($error)){
-			if (mysqli_num_rows($result) > 0) {
-				while ($row = mysqli_fetch_assoc($result)){
-					$array[$i] = $row;
-					$i = $i + 1;
-				}
-			}
-			return json_encode($array);
-		}else{
-			echo "Error";
-		}
-		return null;
 	}
 
 	function cerrar() {
