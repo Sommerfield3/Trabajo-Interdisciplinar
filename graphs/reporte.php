@@ -3,15 +3,15 @@
 
 <!-- Resources -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 
 <!-- Para el grafico de abandonos-->
 <div id="totalAsistencia" style="display:none">
     <?php echo $_GET['totalAsistencia']?>
 </div>
 
-<h2>Asistencia final, abandonos</h2>
-
-<section>
+<section class="content">
+    <h2>Asistencia final, abandonos</h2>
     <table id="tablaTotalAsistencia">
         <thead>
             <th>Clases</th>
@@ -24,9 +24,8 @@
             <td></td>
         </tbody>
     </table>
-
-<div id="graficoTotalAsistencia" class="chartdiv"></div>
 </section>
+<div id="graficoTotalAsistencia" class="chartdiv"></div>
 
 <!--Grafico de barras, de clase por dia-->
 
@@ -34,17 +33,19 @@
     <?php echo $_GET["asistenciaPorClase"]?>
 </div>
 
-<h2>Asistencia por Clase</h2>
-<table id="tablaAsistenciaPorClase">
-    <thead>
-        <th>Día</th>
-        <th>Presentes</th>
-        <th>Faltos</th>
-    </thead>
-    <tbody>
-        
-    </tbody>
-</table>
+<section class="content">
+    <h2>Asistencia por Clase</h2>
+    <table id="tablaAsistenciaPorClase">
+        <thead>
+            <th>Día</th>
+            <th>Presentes</th>
+            <th>Faltos</th>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</section>
 
 <div id="graficoAsistenciaPorClase" class="chartdiv"></div>
 
@@ -54,18 +55,18 @@
   <?php echo $_GET['numeroClases']?>
 </div>
 
-<h2>Clases Realizadas y no Realizadas</h2>
-
-<table id="tablaNumeroClases">
-    <thead>
-
-    </thead>
-    <tbody>
-
-    </tbody>
-</table>
-
-
+<section class="content">
+    <h2>Clases Realizadas y no Realizadas</h2>
+    
+    <table id="tablaNumeroClases">
+        <thead>
+    
+        </thead>
+        <tbody>
+    
+        </tbody>
+    </table>
+</section>
 <div id="graficoNumeroClases" class="chartdiv"></div>
 
 <!--Grafico del total de aprobados y desaprobados--> 
@@ -75,17 +76,19 @@
     <?php echo $_GET['calificacionesFinales']?>
 </div>
 
-<h2>Calificaciones finales</h2>
-<table id="tablaCalificacionesFinales">
-    <thead>
-        <th>Aprobados</th>
-        <th>Desaprobados</th>
-        <th>Sin nota</th>
-    </thead>
-    <tbody>
-
-    </tbody>
-</table>
+<section class="content">
+    <h2>Calificaciones finales</h2>
+    <table id="tablaCalificacionesFinales">
+        <thead>
+            <th>Aprobados</th>
+            <th>Desaprobados</th>
+            <th>Sin nota</th>
+        </thead>
+        <tbody>
+    
+        </tbody>
+    </table>
+</section>
 
 <div id="graficoCalificacionesFinales" class="chartdiv"></div>
 
@@ -94,38 +97,42 @@
     <?php echo $_GET["datosCalificaciones"] ?>
 </div>
 
-<h2>Calificaciones</h2>
-<table id="tablaDatosCalificaciones">
-    <thead>
-
-    </thead>
-    <tbody>
-
-    </tbody>
-</table>
+<section class="content">
+    <h2>Calificaciones</h2>
+    <table id="tablaDatosCalificaciones">
+        <thead>
+    
+        </thead>
+        <tbody>
+    
+        </tbody>
+    </table>
+</section>
 
 <!--Limites de Notas-->
 <div id="limitesCalificaciones" style="display:none">
     <?php echo $_GET["limitesCalificaciones"] ?>
 </div>
 
-<h2>Mejor y peor calificacion</h2>
-<table id="tablaLimitesCalificaciones">
-    <thead>
-        <th>Nota</th>
-        <th>Mejor Nota</th>
-        <th>Peor Nota</th>
-    </thead>
-    <tbody>
-
-    </tbody>
-</table>
+<section class="content">
+    <h2>Mejor y peor calificacion</h2>
+    <table id="tablaLimitesCalificaciones">
+        <thead>
+            <th>Nota</th>
+            <th>Mejor Nota</th>
+            <th>Peor Nota</th>
+        </thead>
+        <tbody>
+    
+        </tbody>
+    </table>
+</section>
 
 <!--JS-->
 <script src="graficosReporte.js"></script>
 
 <!--PDF-->
-<script src="toPdf/html2pdf.bundle.min.js"></script>
-<script src="toPdf/reporte.js"></script>
+
 <strong>Presiona el siguiente botón para crear un PDF:</strong>
-    <button id="btnCrearPdf">Click aquí</button>
+<button id="export">Click aquí</button>
+<script src="pdf.js"></script>

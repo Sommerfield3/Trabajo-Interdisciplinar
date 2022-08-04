@@ -1,7 +1,18 @@
-console.log("gola")
+import jsPDF from 'jspdf'
 
-var doc = new jsPDF();
+var doc = new jsPDF();          
+var elementHandler = {
+  '#ignorePDF': function (element, renderer) {
+    return true;
+  }
+};
+var source = window.document.getElementsByTagName("body")[0];
+doc.fromHTML(
+    source,
+    15,
+    15,
+    {
+      'width': 180,'elementHandlers': elementHandler
+    });
 
-doc.text("hello world", 10, 10);
-doc.fromHtml($('.hola').get(0), 15, 15);
-doc.save("a.pdf")
+doc.output("dataurlnewwindow");
