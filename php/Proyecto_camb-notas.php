@@ -76,4 +76,6 @@
 	</form> -->
 </body>
 	<script src="../js/Proyecto_camb-notas.js"></script>
+	<!--Archivo js necesario para mostrar el informe-->
+	<script src="../js/getInforme.js"></script>
 </html>

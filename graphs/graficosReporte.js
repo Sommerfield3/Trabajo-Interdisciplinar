@@ -165,6 +165,7 @@ const tablaDatosCalificaciones = document.getElementById("tablaDatosCalificacion
 
 Object.keys(datosCalificaciones[0]).forEach(key => {
     let th = document.createElement("th")
+    key = key.replace(" ","_");
     th.textContent = key 
     tablaDatosCalificaciones.querySelector("thead").appendChild(th)
 })
