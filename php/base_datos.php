@@ -57,6 +57,19 @@ class base_datos {
 		return null;
 	}
 
+	function getUsuarios() {
+		$result = mysqli_query($this->conexion, "SELECT * FROM usuarios");
+		$error = mysqli_error($this->conexion);
+		if (empty($error)) {
+			if (mysqli_num_rows($result) > 0) {
+				return $result;
+			}
+		} else {
+			echo "Error al obtener usuarios!";
+		}
+		return null;
+	}
+
 	//Insertamos un nuevo día para tomar asistencia
 	function inssesion($curso) {
 		$Date = date('d_m_Y',time());
