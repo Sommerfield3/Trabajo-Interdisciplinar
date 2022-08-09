@@ -91,6 +91,9 @@ asistenciaPorClase.forEach(element => {
   const tr = document.createElement("tr")
   Object.values(element).forEach(attr => {
     const td = document.createElement("td")
+    try{
+        attr = attr.replace(/_/g," ");
+    }catch(e){}
     td.textContent = attr;
     tr.appendChild(td)
   })
@@ -101,10 +104,10 @@ asistenciaPorClase.forEach(element => {
 let arrayGlobal = [], presentes = [], faltos = []
 asistenciaPorClase.forEach(element => {
     let obj1 = {}, obj2 = {}
-    obj1.label = element.fecha;
+    obj1.label = element.fecha.replace(/_/g," ");
     obj1.y = element.presentes;
 
-    obj2.label = element.fecha;
+    obj2.label = element.fecha.replace(/_/g," ");
     obj2.y = element.faltos;
 
     presentes.push(obj1)
@@ -165,7 +168,7 @@ const tablaDatosCalificaciones = document.getElementById("tablaDatosCalificacion
 
 Object.keys(datosCalificaciones[0]).forEach(key => {
     let th = document.createElement("th")
-    key = key.replace(" ","_");
+    key = key.replace(/_/g," ");
     th.textContent = key 
     tablaDatosCalificaciones.querySelector("thead").appendChild(th)
 })
@@ -191,6 +194,7 @@ limitesCalificaciones.forEach(nota => {
     let tr = document.createElement("tr");
 
     let td1 = document.createElement("td");
+    nota.nota = nota.nota.replace(/_/g," ");
     td1.textContent = nota.nota;
     tr.appendChild(td1)
 
