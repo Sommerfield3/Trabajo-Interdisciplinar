@@ -338,11 +338,104 @@
 				
 				$notxest = $BaseDatos->getinfoEstudiantes($clase . "_calificaciones", $row["cui"]);
 				if(!is_null($notxest)) {
+					/*EXTRA VLHADSA*/
+					$cont=0;
 					$row_nxe = mysqli_fetch_assoc($notxest);
 					$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
 					while ($row_not = mysqli_fetch_assoc($notas)) {
 						if ($row_not['column_name'] != 'cui') {
-							echo "<td>".$row_nxe[$row_not['column_name']]."</td>";
+							if($row_nxe[$row_not['column_name']]!=NULL){
+								if ($row_not['column_name']=='NC_1'){
+									$cont++;
+								}
+								else if ($row_not['column_name']=='EX_1'){
+									$cont++;
+								}
+								else if ($row_not['column_name']=='NC_2'){
+									$cont++;
+								}
+								else if ($row_not['column_name']=='EX_2'){
+									$cont++;
+								}
+								else if ($row_not['column_name']=='NC_3'){
+									$cont++;
+								}
+								else if ($row_not['column_name']=='EX_3'){
+									$cont++;
+								}
+							}
+						}
+					}
+					$color="";
+					if ($row10["NF"]!=NULL){
+						if (((float)($row10["NF"]))>=10.5) {
+							$color="#D4FFCB";
+						}
+						else{
+							$color="#FE6D61";
+						}
+					}
+					else{
+						if (cont>=2){
+							$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+							$porcentajesNotas=$BaseDatos->getInfoCursos("cursos",$clase);
+							while($row=mysqli_fetch_assoc($notas)){
+								if(!is_null($porcentajesNotas)) {
+									while ($row2=mysqli_fetch_assoc($porcentajesNotas)){
+										$par1porc=floatval($row2['EP_1']);
+										$par2porc=floatval($row2['EP_2']);
+										$par3porc=floatval($row2['EP_3']);
+										$cont1porc=floatval($row2['EC_1']);
+										$cont2porc=floatval($row2['EC_2']);
+										$cont3porc=floatval($row2['EC_3']);
+									}
+								}
+							}
+							$notaParcialTotal=0.00;
+							$PorcentajeCumplido=0.00;
+							$row_notas_del_estudiante=mysqli_fetch_assoc($notxest);
+							$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+							while ($row_notas=mysqli_fetch_assoc($notas)){
+								if (floatval($row_notas_del_estudiante[$row_notas['column_name']])!=NULL){
+									if ($row_notas['column_name']=='NC_1'){
+										$notaParTotal+=floatval(floatval($row_notas_del_estudiante[$row_notas['column_name']])*floatval($cont1porc/100));
+										$PorcentajeCumplido+=floatval($cont1porc);
+
+									}else if ($row_notas['column_name']=='EX_1'){
+										$notaParcialTotal+=floatval(floatval($row_notas_del_estudiante[$row_notas['column_name']])*floatval($par1porc/100));
+										$PorcentajeCumplido+=floatval($par1porc);
+									}else if ($row_notas['column_name']=='NC_2'){
+										$notaParcialTotal+=floatval(floatval($row_notas_del_estudiante[$row_notas['column_name']])*floatval($cont2porc/100));
+										$PorcentajeCumplido+=floatval($cont2porc);
+									}else if ($row_notas['column_name']=='EX_2'){
+										$notaParcialTotal+=floatval(floatval($row_notas_del_estudiante[$row_notas['column_name']])*floatval($par2porc/100));
+										$PorcentajeCumplido+=floatval($par2porc);
+									}else if ($row_notas['column_name']=='NC_3'){
+										$notaParcialTotal+=floatval(floatval($row_notas_del_estudiante[$row_notas['column_name']])*floatval($cont3porc/100));
+										$PorcentajeCumplido+=floatval($cont3porc);
+									}else if ($row_notas['column_name']=='EX_3'){
+										$notaParcialTotal+=floatval(floatval($row_notas_del_estudiante[$row_notas['column_name']])*floatval($par3porc/100));
+										$PorcentajeCumplido+=floatval($par3porc);
+									}
+								}	
+							}
+							$notaParcialTotal=floatval(round($notaFinalAux*2.00)/2.00);
+							$puede_desaprob=FALSE;
+							$parcial_vs_total=floatval(floatval(($notaParcialTotal)*5)+floatval((100-floatval($PorcentajeCumplido))/1.25));/*Nota actual + 80% (16 en todo) del total de nota restante.*/
+							if ($parcial_vs_total<52.5){
+								$puede_desaprob=TRUE;
+							}
+							if ($puede_desaprob==TRUE){
+								$color="#FFF1A5";
+							}
+						}
+					}
+					/*EXTRA VLHADSA*/
+					$row_nxe = mysqli_fetch_assoc($notxest);
+					$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+					while ($row_not = mysqli_fetch_assoc($notas)) {
+						if ($row_not['column_name'] != 'cui') {
+							echo "<td bgcolor='$color'>".$row_nxe[$row_not['column_name']]."</td>";
 						}
 					}
 				}

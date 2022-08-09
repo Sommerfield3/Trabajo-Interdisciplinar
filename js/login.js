@@ -23,7 +23,7 @@ function acceder() {
     ajax.onreadystatechange = function() {
         if(ajax.readyState == 4 && ajax.status == 200) {
             if(ajax.responseText.trim() == "OK") {
-            	window.location.href = "../php/portada.php";
+            	window.location.href = "../php/Portada.php";
             } else {
             	contenido.innerHTML = ajax.responseText;
             }
