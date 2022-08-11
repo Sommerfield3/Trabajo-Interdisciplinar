@@ -1,22 +1,6 @@
-<?php include("../Utils/base_datos.php"); ?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-	<meta charset="UTF-8"/>
-	<title>
-		<?php
-		$clase = $_GET["clase"];
-		echo "$clase";
-		?>
-	</title>
-	<link rel="stylesheet" href="../../css/clase.css">
-	<link rel="stylesheet" href="../../css/formulario_carpeta.css">
-	
-</head>
+<?php include "Includes/Header.php" ?>
 
 <body>
-    <?php include "Includes/NavBar.php" ?>
 
     <h2 style="text-align: center;">Clase de
 		<?php

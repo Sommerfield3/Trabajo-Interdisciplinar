@@ -1,3 +1,20 @@
+<?php include("../Utils/base_datos.php"); ?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8"/>
+	<title>
+		<?php
+		$clase = $_GET["clase"];
+		echo "$clase";
+		?>
+	</title>
+	<link rel="stylesheet" href="../../css/clase.css">
+	<link rel="stylesheet" href="../../css/formulario_carpeta.css">
+</head>
+
+
 <header class="header">
 		<div class="container">
 		<div class="btn-menu">
@@ -32,7 +49,7 @@
                         <a href="#" class="nav__link nav__link--inside" id="btnAsistencia" onclick ="location='Asistencia.php?clase=<?php echo $_GET['clase'] ?>'"/>Ver asistencia</a>
                     </li>
                     <li class="list__inside">
-                        <a href="#" class="nav__link nav__link--inside" id="btnTomarAssist" onclick ="location='Proyecto_tomar-asist.php?clase=<?php echo $_GET['clase'] ?>'"/>Tomar asitencia</a>
+                        <a href="#" class="nav__link nav__link--inside" id="btnTomarAssist" onclick ="location='Tomar_Asistencia.php?clase=<?php echo $_GET['clase'] ?>'"/>Tomar asitencia</a>
                     </li>
                      </ul>
 
@@ -46,15 +63,14 @@
 
                 <ul class="list__show">
                 	<li class="list__inside">
-                        <a href="#" class="nav__link nav__link--inside" id="btnCalificaciones" onclick ="location='Proyecto_Calificaciones.php?clase=<?php echo $_GET['clase'] ?>'"/>Ver Notas</a>
+                        <a href="#" class="nav__link nav__link--inside" id="btnCalificaciones" onclick ="location='Calificaciones.php?clase=<?php echo $_GET['clase'] ?>'"/>Ver Notas</a>
                     </li>
                     <li class="list__inside">
-                        <a href="#" class="nav__link nav__link--inside" id="btnTomarAssist" onclick ="location='Proyecto_ingr-notas.php?clase=<?php echo $_GET['clase'] ?>'"/>Ingresar Notas</a>
+                        <a href="#" class="nav__link nav__link--inside" id="btnTomarAssist" onclick ="location='Ingresar_Notas.php?clase=<?php echo $_GET['clase'] ?>'"/>Ingresar Notas</a>
                     </li>
 
                     <li class="list__inside">
-                        <a href="#" class="nav__link nav__link--inside" id="btnTomarAssist" onclick ="location='Proyecto_camb-notas.php?clase=<?php echo $_GET['clase'] ?>'"/>Editar/Agregar Campos</a>
-                    </li>href="#" class="nav__link nav__link--inside">Editar/Agregar Coampos</a>
+                        <a href="#" class="nav__link nav__link--inside" id="btnTomarAssist" onclick ="location='Editar_Notas.php?clase=<?php echo $_GET['clase'] ?>'"/>Editar/Agregar Campos</a>
                     </li>
                 </ul>
 
@@ -70,7 +86,7 @@
             <li class="list__item">
                 <div class="list__button">
                     <img src="../../img/cerrar-sesion.png" width="30" height="30">
-                    <a href="../Portada.php" class="nav__link">Salir</a>
+                    <a href="../Profesor/Portada.php" class="nav__link">Salir</a>
                 </div>
             </li>
 
@@ -79,5 +95,7 @@
 		<label for="btn-menu"><img src="../../img/eliminar.png" width="30" height="30"></label>
 	</div>
 </div>
+
 <script src="Includes/menu.js"></script>
+
 <br>
