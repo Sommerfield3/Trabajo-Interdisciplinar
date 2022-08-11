@@ -330,13 +330,12 @@
 		echo "</thead>";
 		echo "<tbody>";
 		if(!is_null($estudiantes)) {
-			while ($row = mysqli_fetch_assoc($estudiantes)) {
+			while ($row10 = mysqli_fetch_assoc($estudiantes)) {
 				echo "<tr>";
-				echo "<td class='CUI'>" . $row["cui"] . "</td>";
-				echo "<td class='nombre'>" . $row["nombre"] . "</td>";
-				echo "<td class='apellido'>" . $row["apellido"] . "</td>";
-				
-				$notxest = $BaseDatos->getinfoEstudiantes($clase . "_calificaciones", $row["cui"]);
+				echo "<td class='CUI'>" . $row10["cui"] . "</td>";
+				echo "<td class='nombre'>" . $row10["nombre"] . "</td>";
+				echo "<td class='apellido'>" . $row10["apellido"] . "</td>";
+				$notxest = $BaseDatos->getinfoEstudiantes($clase . "_calificaciones", $row10["cui"]);
 				if(!is_null($notxest)) {
 					/*EXTRA VLHADSA*/
 					$cont=0;
@@ -367,8 +366,11 @@
 						}
 					}
 					$color="";
-					if ($row10["NF"]!=NULL){
-						if (((float)($row10["NF"]))>=10.5) {
+					$notxest = $BaseDatos->getinfoEstudiantes($clase . "_calificaciones", $row10["cui"]);
+					$row_nxe = mysqli_fetch_assoc($notxest);
+					$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+					if ($row_nxe['NF']!=NULL){
+						if (((float)($row_nxe['NF']))>=10.5){
 							$color="#D4FFCB";
 						}
 						else{
@@ -376,7 +378,7 @@
 						}
 					}
 					else{
-						if (cont>=2){
+						if ($cont>=2){
 							$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
 							$porcentajesNotas=$BaseDatos->getInfoCursos("cursos",$clase);
 							while($row=mysqli_fetch_assoc($notas)){
@@ -393,14 +395,15 @@
 							}
 							$notaParcialTotal=0.00;
 							$PorcentajeCumplido=0.00;
+
+							$notxest = $BaseDatos->getinfoEstudiantes($clase . "_calificaciones", $row10["cui"]);
 							$row_notas_del_estudiante=mysqli_fetch_assoc($notxest);
 							$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
 							while ($row_notas=mysqli_fetch_assoc($notas)){
-								if (floatval($row_notas_del_estudiante[$row_notas['column_name']])!=NULL){
+								if ($row_notas['column_name']!='cui' && floatval($row_notas_del_estudiante[$row_notas['column_name']])!=NULL){
 									if ($row_notas['column_name']=='NC_1'){
-										$notaParTotal+=floatval(floatval($row_notas_del_estudiante[$row_notas['column_name']])*floatval($cont1porc/100));
+										$notaParcialTotal+=floatval(floatval($row_notas_del_estudiante[$row_notas['column_name']])*floatval($cont1porc/100));
 										$PorcentajeCumplido+=floatval($cont1porc);
-
 									}else if ($row_notas['column_name']=='EX_1'){
 										$notaParcialTotal+=floatval(floatval($row_notas_del_estudiante[$row_notas['column_name']])*floatval($par1porc/100));
 										$PorcentajeCumplido+=floatval($par1porc);
@@ -419,7 +422,7 @@
 									}
 								}	
 							}
-							$notaParcialTotal=floatval(round($notaFinalAux*2.00)/2.00);
+							$notaParcialTotal=floatval(round($notaParcialTotal*2.00)/2.00);
 							$puede_desaprob=FALSE;
 							$parcial_vs_total=floatval(floatval(($notaParcialTotal)*5)+floatval((100-floatval($PorcentajeCumplido))/1.25));/*Nota actual + 80% (16 en todo) del total de nota restante.*/
 							if ($parcial_vs_total<52.5){
@@ -431,6 +434,7 @@
 						}
 					}
 					/*EXTRA VLHADSA*/
+					$notxest = $BaseDatos->getinfoEstudiantes($clase . "_calificaciones", $row10["cui"]);
 					$row_nxe = mysqli_fetch_assoc($notxest);
 					$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
 					while ($row_not = mysqli_fetch_assoc($notas)) {

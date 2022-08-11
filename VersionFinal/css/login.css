@@ -1,0 +1,47 @@
+* {
+	font-family: verdana, sans-serif;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+}
+
+.login-page {
+	display: flex;
+	justify-content: center;
+	padding: 25px 0px 25px 0px;
+}
+
+.form {
+	width: 300px;
+	background: #B2FFFF;
+	padding: 25px 15px 25px 15px;
+}
+
+.login-form {
+	display: block;
+}
+
+.col_100 {
+	clear: left;
+	width: 100%;
+	padding: 5px 0px;
+}
+
+.col_100 .campos {
+	width: 85%;
+	padding: 5px;
+}
+
+.message_error {
+	color: red;
+}
+
+.btn {
+	width: 75%;
+	background: blue;
+	color: white;
+	width: 50%;
+	padding: 5px;
+	border: 0px;
+	border-radius: 5px;
+}
