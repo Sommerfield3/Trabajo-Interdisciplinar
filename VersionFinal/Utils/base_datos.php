@@ -23,16 +23,40 @@ class base_datos {
 	}
 
 	//Esta funcion crea tablas si le damos el nombre del curso
-	function crear($curso) {
-		$comand = "CREATE TABLE " . $curso . "_asistencia (cui INT(8) PRIMARY KEY, nombres VARCHAR(100), apellidos VARCHAR(100), hora_1 VARCHAR(100), hora_2 VARCHAR(100));";
+	function crearcurso($codigo,$turno,$semestre,$year,$curso,$ep_1,$ep_2,$ep_3,$ec_1,$ec_2,$ec_3,$key_1,$key_2,$key_3) {
+		$comand = "CREATE TABLE " . $codigo . $turno . "_asistencia (cui VARCHAR(11) PRIMARY KEY);";
 		mysqli_query($this->conexion, $comand);
 		$error = mysqli_error($this->conexion);
 
-		$comand = "CREATE TABLE " . $curso . "_calificaciones (cui INT(8) PRIMARY KEY, nombres VARCHAR(100), apellidos VARCHAR(100), EP_1 FLOAT(20), EP_2 FLOAT(20), EP_3 FLOAT(20), EC_1FLOAT(20), EC_2 FLOAT(20), EC_3 FLOAT(20), NF FLOAT(20));";
+		$comand = "CREATE TABLE " . $codigo . $turno . "_calificaciones (cui VARCHAR(11) PRIMARY KEY, NC_1 FLOAT(4,2), EX_1 FLOAT(4,2), NC_2 FLOAT(4,2), EX_2 FLOAT(4,2), NC_3 FLOAT(4,2), EX_3 FLOAT(4,2), NF FLOAT(4,2));";
 		mysqli_query($this->conexion, $comand);
 		$error = mysqli_error($this->conexion);
 
-		$comand = "INSERT INTO `cursos`(`nombre`) VALUES ('". $curso . "')";
+		$comand = "CREATE TABLE " . $codigo . $turno . "_datos (cui VARCHAR(11) PRIMARY KEY, nombre VARCHAR(100), apellido VARCHAR(100), total_Asistencia int(3));";
+		mysqli_query($this->conexion, $comand);
+		$error = mysqli_error($this->conexion);
+
+		$comand = "CREATE TABLE " . $codigo . $turno . "_informacion_y_estadistica (
+		  `ID` INT PRIMARY KEY AUTO_INCREMENT,
+		  `notas` varchar(100) NOT NULL,
+		  `notaSuperior` varchar(100) NOT NULL,
+		  `porcentaje` float(4,1) DEFAULT NULL,
+		  `mejorNota` int(2) DEFAULT NULL,
+		  `nomMejorNota` varchar(100) NOT NULL,
+		  `cuiMejorNota` varchar(11) NOT NULL,
+		  `peorNota` int(2) DEFAULT NULL,
+		  `nomPeorNota` varchar(100) NOT NULL,
+		  `cuiPeorNota` varchar(11) NOT NULL,
+		  `notaPromedio` int(2) DEFAULT NULL
+		)";
+		mysqli_query($this->conexion, $comand);
+		$error = mysqli_error($this->conexion);
+
+		$comand = "INSERT INTO `cursos` (`codigo`, `semestre`, `año`, `nombre`, `turno`, `total_Horas`, `EP_1`, `EP_2`, `EP_3`, `EC_1`, `EC_2`, `EC_3`, `NF`, `cui_docente_1`, `cui_docente_2`, `curso_1`, `curso_2`, `curso_3`) VALUES ('" . $codigo . $turno . "', '$semestre', '$year', '$curso', '$turno', '0', '$ep_1', '$ep_2', '$ep_3', '$ec_1', '$ec_2', '$ec_3', '100', NULL, NULL, '$key_1', '$key_2', '$key_3');";
+		mysqli_query($this->conexion, $comand);
+		$error = mysqli_error($this->conexion);
+
+		$comand = "ALTER TABLE `semestre_actual` ADD `". $codigo . $turno . "` BOOLEAN NOT NULL;";
 		mysqli_query($this->conexion, $comand);
 		$error = mysqli_error($this->conexion);
 
