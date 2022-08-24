@@ -43,9 +43,9 @@ class base_datos {
 		return false;
 	}
 
-	//Obtiene toda a información de estudiantes de una tabla
-	function getEstudiantes($tabla) {
-		$result = mysqli_query($this->conexion, "SELECT * FROM `$tabla`");
+	//Obtiene todos los datos de los estudiantes de la tabla de datos, se le brinda el código del curso y el turno
+	function getEstudiantes($codcursoturn) {
+		$result = mysqli_query($this->conexion, "SELECT * FROM `" . $codcursoturn ."_datos`");
 		$error = mysqli_error($this->conexion);
 		if (empty($error)) {
 			if (mysqli_num_rows($result) > 0) {
@@ -57,6 +57,7 @@ class base_datos {
 		return null;
 	}
 
+	//Obtiene los usuarios de la base de datos
 	function getUsuarios() {
 		$result = mysqli_query($this->conexion, "SELECT * FROM usuarios");
 		$error = mysqli_error($this->conexion);
@@ -70,11 +71,11 @@ class base_datos {
 		return null;
 	}
 
-	//Insertamos un nuevo día para tomar asistencia
-	function inssesion($curso) {
+	//Insertamos un nuevo día para tomar asistencia y aumentamos las horas en la tabla cursos
+	function inssesion($codcursoturn) {
 		$Date = date('d_m_Y',time());
-		mysqli_query($this->conexion, "ALTER TABLE $curso" . "_asistencia" ." ADD $Date CHARACTER NULL");
-		mysqli_query($this->conexion, "UPDATE cursos SET total_Horas = total_Horas + 1 WHERE nombre = '$curso'");
+		mysqli_query($this->conexion, "ALTER TABLE $codcursoturn" . "_asistencia" ." ADD $Date CHARACTER NULL");
+		mysqli_query($this->conexion, "UPDATE cursos SET total_Horas = total_Horas + 1 WHERE codigo = '$codcursoturn'");
 		$error = mysqli_error($this->conexion);
 
 		if (empty($error)) {
@@ -85,14 +86,14 @@ class base_datos {
 	}
 
 	//Inserta la asistencia de un alumno en una clase
-	function insasistenciaclase($curso, $valor, $sesion, $ident) {
-		$comand = "UPDATE $curso" . "_asistencia " . "SET $sesion = '$valor' WHERE cui = '$ident'";
+	function insasistenciaclase($codcursoturn, $valor, $sesion, $ident) {
+		$comand = "UPDATE $codcursoturn" . "_asistencia " . "SET $sesion = '$valor' WHERE cui = '$ident'";
 		mysqli_query($this->conexion, $comand);
 		$error = mysqli_error($this->conexion);
 
 		
 		if ($valor == 'P') {
-			$comand = "UPDATE $curso" . "_datos " . " SET total_Asistencia = total_Asistencia + 1 WHERE cui = '$ident'";
+			$comand = "UPDATE $codcursoturn" . "_datos " . " SET total_Asistencia = total_Asistencia + 1 WHERE cui = '$ident'";
 			mysqli_query($this->conexion, $comand);
 			$error = mysqli_error($this->conexion);
 		}
@@ -105,38 +106,38 @@ class base_datos {
 	}
 
 	//Ingresa una sola nota de un alumno a un solo campo, además compara con las mayor y menor nota
-	function insnota($curso, $valor, $campo, $ident) {
+	function insnota($codcursoturn, $valor, $campo, $ident) {
 		if ($valor === NULL) {
-			$comand = "UPDATE $curso" . "_calificaciones SET $campo = NULL WHERE cui = '$ident'";
+			$comand = "UPDATE $codcursoturn" . "_calificaciones SET $campo = NULL WHERE cui = '$ident'";
 		} else {
-			$comand = "UPDATE $curso" . "_calificaciones SET $campo = '$valor' WHERE cui = '$ident'";
+			$comand = "UPDATE $codcursoturn" . "_calificaciones SET $campo = '$valor' WHERE cui = '$ident'";
 		}
 		mysqli_query($this->conexion, $comand);
 		
 		if ($valor !== NULL) {
-			$result = mysqli_query($this->conexion, "SELECT mejorNota, peorNota FROM `".$curso."_informacion_y_estadistica` WHERE notas ='".$campo."'");
+			$result = mysqli_query($this->conexion, "SELECT mejorNota, peorNota FROM `".$codcursoturn."_informacion_y_estadistica` WHERE notas ='".$campo."'");
 			$maxmin = mysqli_fetch_assoc($result);
 
 					if ($maxmin["mejorNota"]!== NULL && $maxmin["peorNota"]!== NULL) {
 						if ($maxmin["mejorNota"] < $valor) {
-							$nom = mysqli_query($this->conexion, "SELECT nombre FROM `".$curso."_datos` WHERE cui = '$ident'");
+							$nom = mysqli_query($this->conexion, "SELECT nombre FROM `".$codcursoturn."_datos` WHERE cui = '$ident'");
 							$nombre = mysqli_fetch_assoc($nom);
-							$comand = "UPDATE `".$curso."_informacion_y_estadistica` SET `mejorNota` = '$valor', `nomMejorNota` = '".$nombre["nombre"]."', `cuiMejorNota` = '$ident' WHERE notas = '$campo'";
+							$comand = "UPDATE `".$codcursoturn."_informacion_y_estadistica` SET `mejorNota` = '$valor', `nomMejorNota` = '".$nombre["nombre"]."', `cuiMejorNota` = '$ident' WHERE notas = '$campo'";
 							mysqli_query($this->conexion, $comand);
 						} else if ($maxmin["peorNota"] > $valor) {
-							$nom = mysqli_query($this->conexion, "SELECT nombre FROM `".$curso."_datos` WHERE cui = '$ident'");
+							$nom = mysqli_query($this->conexion, "SELECT nombre FROM `".$codcursoturn."_datos` WHERE cui = '$ident'");
 							$nombre = mysqli_fetch_assoc($nom);
-							$comand = "UPDATE `".$curso."_informacion_y_estadistica` SET `peorNota` = '$valor', `nomPeorNota` = '".$nombre["nombre"]."', `cuiPeorNota` = '$ident' WHERE notas = '$campo'";
+							$comand = "UPDATE `".$codcursoturn."_informacion_y_estadistica` SET `peorNota` = '$valor', `nomPeorNota` = '".$nombre["nombre"]."', `cuiPeorNota` = '$ident' WHERE notas = '$campo'";
 							mysqli_query($this->conexion, $comand);
 						}
 					} else {
-						$nom = mysqli_query($this->conexion, "SELECT nombre FROM `".$curso."_datos` WHERE cui = '$ident'");
+						$nom = mysqli_query($this->conexion, "SELECT nombre FROM `".$codcursoturn."_datos` WHERE cui = '$ident'");
 						$nombre = mysqli_fetch_assoc($nom);
-						$comand = "UPDATE `".$curso."_informacion_y_estadistica` SET `mejorNota` = '$valor', `nomMejorNota` = '".$nombre["nombre"]."', `cuiMejorNota` = '$ident' WHERE notas = '$campo'";
+						$comand = "UPDATE `".$codcursoturn."_informacion_y_estadistica` SET `mejorNota` = '$valor', `nomMejorNota` = '".$nombre["nombre"]."', `cuiMejorNota` = '$ident' WHERE notas = '$campo'";
 						mysqli_query($this->conexion, $comand);
-						$nom = mysqli_query($this->conexion, "SELECT nombre FROM `".$curso."_datos` WHERE cui = '$ident'");
+						$nom = mysqli_query($this->conexion, "SELECT nombre FROM `".$codcursoturn."_datos` WHERE cui = '$ident'");
 						$nombre = mysqli_fetch_assoc($nom);
-						$comand = "UPDATE `".$curso."_informacion_y_estadistica` SET `peorNota` = '$valor', `nomPeorNota` = '".$nombre["nombre"]."', `cuiPeorNota` = '$ident' WHERE notas = '$campo'";
+						$comand = "UPDATE `".$codcursoturn."_informacion_y_estadistica` SET `peorNota` = '$valor', `nomPeorNota` = '".$nombre["nombre"]."', `cuiPeorNota` = '$ident' WHERE notas = '$campo'";
 						mysqli_query($this->conexion, $comand);
 					}
 		}
@@ -149,9 +150,9 @@ class base_datos {
 		return false;
 	}
 
-	//Obtiene la info de una nota, nota superior y porcentaje
-	function getInfoNotas($campo1,$campo2,$campo3,$tabla) {
-		$result = mysqli_query($this->conexion, "SELECT ".$campo1.",".$campo2.",".$campo3." FROM `$tabla`");
+	//Obtiene los campos nota, nota superior y porcentaje de la tabla de de informacion y estadistica de un curso
+	function getInfoNotas($codcursoturn) {
+		$result = mysqli_query($this->conexion, "SELECT notas,notaSuperior,porcentaje FROM `" . $codcursoturn . "__informacion_y_estadistica`");
 		$error = mysqli_error($this->conexion);
 		if (empty($error)) {
 			if (mysqli_num_rows($result) > 0) {
@@ -163,11 +164,11 @@ class base_datos {
 		return null;
 	}
 
-	//Inserta una nueva nota secuandaria
-	function insCampoNota($nombre,$notaSup,$porcentaje,$clase) {
-		$comand = "INSERT INTO `".$clase."_informacion_y_estadistica` (`notas`, `notaSuperior`, `porcentaje`) VALUES ('".$notaSup."_".$nombre."', '$notaSup', '$porcentaje')";
+	//Inserta una nueva nota secundaria
+	function insCampoNota($nombrenota,$notaSup,$porcentaje,$codcursoturn) {
+		$comand = "INSERT INTO `". $codcursoturn ."_informacion_y_estadistica` (`notas`, `notaSuperior`, `porcentaje`) VALUES ('".$notaSup."_".$nombrenota."', '$notaSup', '$porcentaje')";
 		mysqli_query($this->conexion, $comand);
-		$comand = "ALTER TABLE `".$clase."_calificaciones` ADD `".$notaSup."_".$nombre."` FLOAT(4,2) NULL";
+		$comand = "ALTER TABLE `".$codcursoturn."_calificaciones` ADD `".$notaSup."_".$nombrenota."` FLOAT(4,2) NULL";
 		mysqli_query($this->conexion, $comand);
 
 		$error = mysqli_error($this->conexion);
@@ -179,8 +180,8 @@ class base_datos {
 	}
 
 	//Obtiene todas las notas secundarias de una nota
-	function getCamposNota($campo,$clase) {
-		$result = mysqli_query($this->conexion, "SELECT notas,notaSuperior,porcentaje FROM `".$clase."_informacion_y_estadistica` WHERE notaSuperior ='".$campo."'");
+	function getCamposNota($nota,$codcursoturn) {
+		$result = mysqli_query($this->conexion, "SELECT notas,notaSuperior,porcentaje FROM `".$codcursoturn."_informacion_y_estadistica` WHERE notaSuperior ='".$nota."'");
 		$error = mysqli_error($this->conexion);
 		if (empty($error)) {
 			if (mysqli_num_rows($result) > 0) {
@@ -192,9 +193,23 @@ class base_datos {
 		return null;
 	}
 
-	//Obtiene la cantidad de Clases
-	function getCantClases($tabla) {
-		$result = mysqli_query($this->conexion, "SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='$tabla'");
+	//Obtiene la cantidad de Clases de un curso
+	function getCantClases($codcursoturn) {
+		$result = mysqli_query($this->conexion, "SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='".$codcursoturn."_asistencia'");
+		$error = mysqli_error($this->conexion);
+		if (empty($error)) {
+			if (mysqli_num_rows($result) > 0) {
+				return $result;
+			}
+		} else {
+			echo "Error al obtener número de clases!";
+		}
+		return null;
+	}
+
+	//Obtiene los nombres de columna (dias de asistencia) de un curso
+	function getColumnasClases($codcursoturn) {
+		$result = mysqli_query($this->conexion, "SELECT column_name FROM information_schema.columns WHERE table_name='".$codcursoturn."_asistencia'");
 		$error = mysqli_error($this->conexion);
 		if (empty($error)) {
 			if (mysqli_num_rows($result) > 0) {
@@ -206,8 +221,10 @@ class base_datos {
 		return null;
 	}
 
-	function getColumnasClases($tabla) {
-		$result = mysqli_query($this->conexion, "SELECT column_name FROM information_schema.columns WHERE table_name='$tabla';");
+	//Obtiene las calificaciones de un estudiante según su CUI
+	//function getInfoEstudiantes
+	function getCalifEstudiantes($codcursoturn, $cui) {
+		$result = mysqli_query($this->conexion, "SELECT * FROM `" . $codcursoturn . "_calificaciones` WHERE cui = '" . $cui . "';");
 		$error = mysqli_error($this->conexion);
 		if (empty($error)) {
 			if (mysqli_num_rows($result) > 0) {
@@ -219,35 +236,24 @@ class base_datos {
 		return null;
 	}
 
-	function getInfoEstudiantes($tabla, $cui) {
-		$result = mysqli_query($this->conexion, "SELECT * FROM `$tabla` WHERE cui = '" . $cui . "';");
+	//Obtiene la informacion de un nota, todo lo que tenga en su fila
+	function getInfoRowEstadistica($codcursoturn, $nota) {
+		$result = mysqli_query($this->conexion, "SELECT * FROM `" . $codcursoturn . "_informacion_y_estadistica` WHERE notas = '" . $nota . "';");
 		$error = mysqli_error($this->conexion);
 		if (empty($error)) {
 			if (mysqli_num_rows($result) > 0) {
 				return $result;
 			}
 		} else {
-			echo "Error al obtener clases!";
+			echo "Error al obtener informacion de la nota!";
 		}
 		return null;
 	}
 	/**/
-	function getInfoRowEstadistica($tabla, $nota) {
-		$result = mysqli_query($this->conexion, "SELECT * FROM `$tabla` WHERE notas = '" . $nota . "';");
-		$error = mysqli_error($this->conexion);
-		if (empty($error)) {
-			if (mysqli_num_rows($result) > 0) {
-				return $result;
-			}
-		} else {
-			echo "Error al obtener clases!";
-		}
-		return null;
-	}
-	/**/
 
-	function getNotasEstadistica($curso) {
-		$result = mysqli_query($this->conexion,"SELECT notas,mejorNota,cuiMejorNota,nomMejorNota,peorNota,cuiPeorNota,nomPeorNota FROM `".$curso."_informacion_y_estadistica`");
+	//Obtiene toda la informacion de la tabla de notas y estadistica
+	function getNotasEstadistica($codcursoturn) {
+		$result = mysqli_query($this->conexion,"SELECT notas,mejorNota,cuiMejorNota,nomMejorNota,peorNota,cuiPeorNota,nomPeorNota FROM `".$codcursoturn."_informacion_y_estadistica`");
 		$error = mysqli_error($this->conexion);
 		if (empty($error)) {
 			if (mysqli_num_rows($result) > 0) {
@@ -259,8 +265,9 @@ class base_datos {
 		return null;
 	}
 
-	function getInfoCursos($tabla, $curso) {/*Agregado*/
-		$result = mysqli_query($this->conexion, "SELECT * FROM `$tabla` WHERE nombre = '" . $curso . "';");
+	//Obtiene la informacion de un curso de la tabla general de cursos
+	function getInfoCursos($codcursoturn) {/*Agregado*/
+		$result = mysqli_query($this->conexion, "SELECT * FROM cursos WHERE codigo = '" . $codcursoturn . "';");
 		$error = mysqli_error($this->conexion);
 		if (empty($error)) {
 			if (mysqli_num_rows($result) > 0) {
@@ -287,8 +294,8 @@ class base_datos {
 
 	// retornará todos los datos de una tabla
 
-	function getTabla($curso,$tabla){
-		$result = mysqli_query($this->conexion,"SELECT * FROM ".$curso."_".$tabla);
+	function getTabla($codcursoturn,$tabla){
+		$result = mysqli_query($this->conexion,"SELECT * FROM ".$codcursoturn."_".$tabla);
 		$error = mysqli_error($this->conexion);
 		$i = 0;
 		if(empty($error)){
@@ -306,8 +313,8 @@ class base_datos {
 	}
 
 	
-	function getTablaCurso($curso){
-		$result = mysqli_query($this->conexion,"SELECT * FROM cursos WHERE nombre = '$curso'");
+	function getTablaCurso($codcursoturn){
+		$result = mysqli_query($this->conexion,"SELECT * FROM cursos WHERE codigo = '$codcursoturn'");
 		$error = mysqli_error($this->conexion);
 		if(empty($error)){
 			$i = 0;
