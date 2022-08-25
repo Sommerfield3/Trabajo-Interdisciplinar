@@ -339,6 +339,23 @@ class base_datos {
 
 	}
 
+	function getHistoria($cui){
+		
+		$result = mysqli_query($this->conexion, "SELECT * FROM cursos");
+		$error = mysqli_error($this->conexion);
+		
+		if (empty($error)) {
+			while ($row = mysqli_fetch_assoc($result)){
+				if($row["codigo"] == $codcursoturn){
+					return $row["nombre"]." ".$row["turno"];
+				}
+			}
+		} else {
+			echo "Error al obtener clases!";
+		}
+		return null;
+	}
+
 	// retornará todos los datos de una tabla
 
 

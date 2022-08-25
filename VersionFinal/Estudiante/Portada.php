@@ -37,21 +37,21 @@ include("../Utils/base_datos.php");
 			$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
 			$BaseDatos->conectar();
 
-			$clases_profesor = $BaseDatos->getClases("semestre_actual");
+			$clases_estudiante = $BaseDatos->getClases("semestre_actual");
 			$clases_codigo = $BaseDatos->getEncabezados("semestre_actual");
 			
 			$i = 0;
 			if(!is_null($clases_codigo)){
 				while($row = mysqli_fetch_assoc($clases_codigo)){
-					$codigos[$i] = $row["Field"];
+					$codigos[$i] = strtolower($row["Field"]);
 					$i = $i + 1;
 				}
 			}
 
 			$i = 1;
-			if(!is_null($clases_profesor)){
-				while ($row = mysqli_fetch_assoc($clases_profesor)) {
-					if($row["cui"] == $_SESSION["usuario"]){
+			if(!is_null($clases_estudiante)){
+				while ($row = mysqli_fetch_assoc($clases_estudiante)) {
+					if($row["cui"] == "est".$_SESSION["usuario"]){
 						foreach ($row as $key => $value) {
 							if($value == 1){
 								echo "<option value='" . $codigos[$i] . "'>" . $BaseDatos->getNombreClase($codigos[$i]) . "</option>";

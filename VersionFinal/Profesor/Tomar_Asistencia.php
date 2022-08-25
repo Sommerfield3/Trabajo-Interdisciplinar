@@ -4,7 +4,7 @@
 	<h2 style="text-align: center;">Estudiantes Registrados<br><br></h2>
 	<button style="margin: 0 auto;" onclick ="location='Asistencia.php?clase=<?php echo $_GET['clase'] ?>'">Volver</button>
 
-	<form method="post" action="Proyecto_Asistencia.php?clase=<?php echo $_GET['clase'] ?>">
+	<form method="post" action="Asistencia.php?clase=<?php echo $_GET['clase'] ?>">
 		<button type="submit" id="btnTomarAssist">Guardar</button>
 		<table id="tablaUsuarios" class="tabla">
 			<?php
