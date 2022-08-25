@@ -14,6 +14,8 @@
 		?><br><br>
 	</h2>
 
+	<button id="btn-informe" class="<?php $_GET['clase']?>">Informe</button>
+
 	<div class="capa"></div>
 <!--	--------------->
 
@@ -50,7 +52,8 @@
             ?>
 		</tbody>
 	</table>
+
 	<!--Archivo js necesario para mostrar el informe-->
-	<script src="../js/getInforme.js"></script>
+	<script src="Informe/getInforme.js"></script>
 </body>
 </html>
