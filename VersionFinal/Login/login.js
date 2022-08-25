@@ -22,8 +22,11 @@ function acceder() {
 
     ajax.onreadystatechange = function() {
         if(ajax.readyState == 4 && ajax.status == 200) {
-            if(ajax.responseText.trim() == "OK") {
-            	window.location.href = "../Profesor/Portada.php";
+            if(ajax.responseText.trim() == "estudiante") {
+            	window.location.href = "../Estudiante/Portada.php";
+            } else if(ajax.responseText.trim() == "docente") {
+                ajax.open("POST","../Profesor/Portada.php")
+                window.location.href = "../Profesor/Portada.php";
             } else {
             	contenido.innerHTML = ajax.responseText;
             }

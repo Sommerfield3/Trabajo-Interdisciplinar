@@ -32,22 +32,41 @@ include("../Utils/base_datos.php");
 			<option value="Elegir clase">Elegir Clase</option>;
 			<?php
 
+			
 			/* Conexion con la base de datos */
+			
 			$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
 			$BaseDatos->conectar();
 
-			$clases = $BaseDatos->getClases("cursos");
+			$clases_profesor = $BaseDatos->getClases("semestre_actual");
+			$clases_codigo = $BaseDatos->getEncabezados("semestre_actual");
 			
-			/* Se genera el menú de opciones de clases disponibles*/
-			if(!is_null($clases)) {
-				while ($row = mysqli_fetch_assoc($clases)) {
-					echo "<option value='" . $row["nombre"] . "'>" . $row["nombre"] . "</option>";
+			$i = 0;
+			if(!is_null($clases_codigo)){
+				while($row = mysqli_fetch_assoc($clases_codigo)){
+					$codigos[$i] = $row["Field"];
+					$i = $i + 1;
 				}
 			}
+
+			$i = 1;
+			if(!is_null($clases_profesor)){
+				while ($row = mysqli_fetch_assoc($clases_profesor)) {
+					if($row["cui"] == $_SESSION["usuario"]){
+						foreach ($row as $key => $value) {
+							if($value == 1){
+								echo "<option value='" . $codigos[$i] . "'>" . $BaseDatos->getNombreClase($codigos[$i]) . "</option>";
+								$i = $i + 1;
+							}
+						}			
+					}
+				}
+			}
+
 			?>
 			</select>
 			<i></i>
-		<button id="btnAgregar" class="btn" type="submit">Enviar</button>
+				<button id="btnAgregar" class="btn" type="submit">Enviar</button>
             </form>
         </div>
     </div>

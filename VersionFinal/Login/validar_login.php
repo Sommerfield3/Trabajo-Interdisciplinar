@@ -17,7 +17,7 @@ if(!is_null($usuarios)) {
 			if ($row["clave"] == md5($clav)) {
 				$_SESSION["usuario"] = $usua;
 				$BaseDatos->cerrar();
-				$mensaje = "OK";
+				$mensaje = $row["permisos"];
 				echo $mensaje;
 				return;
 			} else {
