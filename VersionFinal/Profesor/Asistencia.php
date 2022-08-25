@@ -13,9 +13,9 @@
 		$BaseDatos->conectar();
 
 		/* Se obtiene la clase en la que nos encontramos */
-		$clase = $_GET["clase"];
+		$clase = strtolower($_GET["clase"]);
 		/* Se obtiene lista de estudiantes */
-		$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
+		$estudiantes = $BaseDatos->getEstudiantes($clase);
 		/* Se obtiene la fecha */
 		$Date = date('d_m_Y',time());
 
@@ -28,11 +28,11 @@
 					$valor = $_POST[$row["cui"]];
 					$cui = $row["cui"];
 					/* Se inserta la nueva asistencia según la fecha correspondiente */
-					$BaseDatos->insasistenciaclase($clase, $valor, $Date, (int)$cui);
+					$BaseDatos->insasistenciaclase($clase, $valor, $Date, $cui);
 				}
 
 				/* Se actualiza la lista de asistencia */
-				$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
+				$estudiantes = $BaseDatos->getEstudiantes($clase);
 			}
 		}
 
@@ -44,7 +44,7 @@
 		echo "<th>Nombre</th>";
 		echo "<th>Apellidos</th>";
 
-		$sesiones = $BaseDatos->getColumnasClases($clase . "_asistencia");
+		$sesiones = $BaseDatos->getColumnasClases($clase);
 		if(!is_null($sesiones)) {
 			while ($row = mysqli_fetch_assoc($sesiones)) {
 				if ($row['column_name'] != 'cui') {
@@ -65,10 +65,10 @@
 				echo "<td class='apellido'>" . $row["apellido"] . "</td>";
 
 				
-				$asisxest = $BaseDatos->getinfoEstudiantes($clase . "_asistencia", $row["cui"]);
+				$asisxest = $BaseDatos->getAsistEstudiantes($clase, $row["cui"]);
 				if(!is_null($asisxest)) {
 					$row_axe = mysqli_fetch_assoc($asisxest);
-					$sesiones = $BaseDatos->getColumnasClases($clase . "_asistencia");
+					$sesiones = $BaseDatos->getColumnasClases($clase);
 					while ($row_ses = mysqli_fetch_assoc($sesiones)) {
 						if ($row_ses['column_name'] != 'cui') {
 							echo "<td>".$row_axe[$row_ses['column_name']]."</td>";
@@ -85,7 +85,6 @@
 		?>
 	</table>
 
-	
 
 </body>
 </html>

@@ -31,7 +31,6 @@ include("../Utils/base_datos.php");
            		<select name="clase" class="elegir">
 			<option value="Elegir clase">Elegir Clase</option>;
 			<?php
-
 			
 			/* Conexion con la base de datos */
 			

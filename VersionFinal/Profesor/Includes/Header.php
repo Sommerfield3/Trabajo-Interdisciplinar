@@ -6,8 +6,13 @@
 	<meta charset="UTF-8"/>
 	<title>
 		<?php
-		$clase = $_GET["clase"];
+		$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
+		$BaseDatos->conectar();
+
+		$clase = $BaseDatos->getNombreClase($_GET["clase"]);
 		echo "$clase";
+
+		$BaseDatos->cerrar();
 		?>
 	</title>
 	<link rel="stylesheet" href="../../css/clase.css">

@@ -14,9 +14,9 @@
 			$BaseDatos->conectar();
 
 			/* Se extreae la información de los estudiantes y sus asistencia */
-			$clase = $_GET["clase"];
-			$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
-			$sesiones = $BaseDatos->getColumnasClases($clase . "_asistencia");
+			$clase = strtolower($_GET["clase"]);
+			$estudiantes = $BaseDatos->getEstudiantes($clase);
+			$sesiones = $BaseDatos->getColumnasClases($clase);
 			$Date = date('d_m_Y',time());
 
 			echo "<thead>";
@@ -46,10 +46,10 @@
 					echo "<td class='nombre'>" . $row["nombre"] . "</td>";
 					echo "<td class='apellido'>" . $row["apellido"] . "</td>";
 
-					$asisxest = $BaseDatos->getinfoEstudiantes($clase . "_asistencia", $row["cui"]);
+					$asisxest = $BaseDatos->getAsistEstudiantes($clase, $row["cui"]);
 					if(!is_null($asisxest)) {
 						$row_axe = mysqli_fetch_assoc($asisxest);
-						$sesiones = $BaseDatos->getColumnasClases($clase . "_asistencia");
+						$sesiones = $BaseDatos->getColumnasClases($clase);
 						while ($row_ses = mysqli_fetch_assoc($sesiones)) {
 							if ($row_ses['column_name'] != 'cui') {
 								echo "<td>".$row_axe[$row_ses['column_name']]."</td>";

@@ -4,10 +4,16 @@
 
     <h2 style="text-align: center;">Clase de
 		<?php
-		$clase = $_GET["clase"];
+		$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
+		$BaseDatos->conectar();
+
+		$clase = $BaseDatos->getNombreClase($_GET["clase"]);
 		echo "$clase";
+
+		$BaseDatos->cerrar();
 		?><br><br>
 	</h2>
+
 	<div class="capa"></div>
 <!--	--------------->
 
@@ -26,9 +32,9 @@
             
             $BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
             $BaseDatos->conectar();
-            $clase = $_GET["clase"];
-            $estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
-            
+            $codigo = $_GET["clase"];
+            $estudiantes = $BaseDatos->getEstudiantes(strtolower($codigo));
+
             /* Se muestran los datos de los alumnos en una tabla */
             if(!is_null($estudiantes)) {
                 while ($row = mysqli_fetch_assoc($estudiantes)) {
