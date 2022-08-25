@@ -43,7 +43,7 @@ include("../Utils/base_datos.php");
 			$i = 0;
 			if(!is_null($clases_codigo)){
 				while($row = mysqli_fetch_assoc($clases_codigo)){
-					$codigos[$i] = $row["Field"];
+					$codigos[$i] = strtolower($row["Field"]);
 					$i = $i + 1;
 				}
 			}

@@ -105,6 +105,7 @@ class base_datos {
 		return false;
 	}
 
+	
 	//Ingresa una sola nota de un alumno a un solo campo, además compara con las mayor y menor nota
 	function insnota($codcursoturn, $valor, $campo, $ident) {
 		if ($valor === NULL) {
