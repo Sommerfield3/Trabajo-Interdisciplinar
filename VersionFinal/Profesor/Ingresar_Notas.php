@@ -3,14 +3,14 @@
 <body>
 	<h2 style="text-align: center;">Estudiantes Registrados<br><br></h2>
 	<button onclick ="location='Calificaciones.php?clase=<?php echo $_GET['clase'] ?>'">Volver</button>
-	<form method="post" action="Proyecto_Calificaciones.php?clase=<?php echo $_GET['clase'] ?>">
+	<form method="post" action="Calificaciones.php?clase=<?php echo $_GET['clase'] ?>">
 		<button type="submit" id="btnTomarAssist"/>Guardar</button>
 		<table id="tablaUsuarios" class="tabla">
 			<?php
 			$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
 			$BaseDatos->conectar();
 			$clase = $_GET["clase"];
-			$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
+			$estudiantes = $BaseDatos->getEstudiantes($clase);
 
 			echo "<thead>";
 			echo "<tr>";
@@ -18,7 +18,7 @@
 			echo "<th>Nombre</th>";
 			echo "<th>Apellidos</th>";
 
-			$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+			$notas = $BaseDatos->getColumnasNotas($clase);
 			if(!is_null($notas)) {
 				while ($row = mysqli_fetch_assoc($notas)) {
 					if ($row['column_name'] != 'cui' && $row['column_name'] != 'NF') {
@@ -38,10 +38,10 @@
 					echo "<td class='nombre'>" . $row["nombre"] . "</td>";
 					echo "<td class='apellido'>" . $row["apellido"] . "</td>";
 					
-					$notxest = $BaseDatos->getinfoEstudiantes($clase . "_calificaciones", $row["cui"]);
+					$notxest = $BaseDatos->getCalifEstudiantes($clase, $row["cui"]);
 					if(!is_null($notxest)) {
 						$row_nxe = mysqli_fetch_assoc($notxest);
-						$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+						$notas = $BaseDatos->getColumnasNotas($clase);
 						while ($row_not = mysqli_fetch_assoc($notas)) {
 							if ($row_not['column_name'] != 'cui' && $row_not['column_name'] != 'NF') {
 								if ($row_not['column_name'] == 'NC_1') {

@@ -47,7 +47,7 @@
 				$BaseDatos->conectar();
 				$clase = $_GET["clase"];
 
-				$campnotas = $BaseDatos->getInfoNotas("notas","notaSuperior","porcentaje",$clase . "_informacion_y_estadistica");
+				$campnotas = $BaseDatos->getInfoNotas($clase);
 				if(!is_null($campnotas)) {
 					while ($row = mysqli_fetch_assoc($campnotas)) {
 						echo "<tr>";

@@ -46,44 +46,21 @@
             <li class="list__item list__item--click">
                 <div class="list__button list__button--click">
                     <img src="../../img/seguro.png" width="30" height="30">
-                    <a href="#" class="nav__link" >Asistencia</a>
+                    <a href="#" class="nav__link" onclick ="location='Historico_notas.php?clase=<?php echo $_GET['clase'] ?>'" >Historico de Notas</a>
                 </div>
-                <ul class="list__show">
-
-                <li class="list__inside">
-                        <a href="#" class="nav__link nav__link--inside" id="btnAsistencia" onclick ="location='Asistencia.php?clase=<?php echo $_GET['clase'] ?>'"/>Ver asistencia</a>
-                    </li>
-                    <li class="list__inside">
-                        <a href="#" class="nav__link nav__link--inside" id="btnTomarAssist" onclick ="location='Tomar_Asistencia.php?clase=<?php echo $_GET['clase'] ?>'"/>Tomar asitencia</a>
-                    </li>
-                     </ul>
-
             </li>
 
             <li class="list__item list__item--click">
                 <div class="list__button list__button--click">
                     <img src="../../img/tomar-nota.png" width="30" height="30">
-                    <a href="#" class="nav__link" >Notas</a>
+                    <a href="#" class="nav__link" onclick ="location='Cursos_falta.php?clase=<?php echo $_GET['clase'] ?>'">Cursos por año</a>
                 </div>
-
-                <ul class="list__show">
-                	<li class="list__inside">
-                        <a href="#" class="nav__link nav__link--inside" id="btnCalificaciones" onclick ="location='Calificaciones.php?clase=<?php echo $_GET['clase'] ?>'"/>Ver Notas</a>
-                    </li>
-                    <li class="list__inside">
-                        <a href="#" class="nav__link nav__link--inside" id="btnTomarAssist" onclick ="location='Ingresar_Notas.php?clase=<?php echo $_GET['clase'] ?>'"/>Ingresar Notas</a>
-                    </li>
-
-                    <li class="list__inside">
-                        <a href="#" class="nav__link nav__link--inside" id="btnTomarAssist" onclick ="location='Editar_Notas.php?clase=<?php echo $_GET['clase'] ?>'"/>Editar/Agregar Campos</a>
-                    </li>
-                </ul>
-
             </li>
+
             <li class="list__item">
                 <div class="list__button">
                     <img src="../../img/informe-de-ganancias.png" width="30" height="30">
-                    <a href="#" id="btnInforme" class="'<?php echo $_GET['clase'] ?>' nav_link"/>Informe</a>
+                   <a href="#" class="nav__link" onclick ="location='Cursos_sigsemest.php?clase=<?php echo $_GET['clase'] ?>'">Cursos próximos</a>
                 </div>
             </li>
 

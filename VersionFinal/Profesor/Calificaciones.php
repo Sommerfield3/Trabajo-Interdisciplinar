@@ -11,7 +11,7 @@
 		$BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
 		$BaseDatos->conectar();
 		$clase = $_GET["clase"];
-		$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
+		$estudiantes = $BaseDatos->getEstudiantes($clase);
 
 		echo "<thead>";
 		echo "<tr>";
@@ -22,7 +22,7 @@
 		if(!is_null($estudiantes)) {
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				while ($row = mysqli_fetch_assoc($estudiantes)) {
-					$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+					$notas = $BaseDatos->getColumnasNotas($clase);
 					if(!is_null($notas)) {
 						while ($row_not = mysqli_fetch_assoc($notas)) {
 							if ($row_not['column_name'] != 'cui' && $row_not['column_name'] != 'NF') {
@@ -78,16 +78,16 @@
 						}
 					}
 				}
-				$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
+				$estudiantes = $BaseDatos->getEstudiantes($clase);
 			}
 		}
 		/*Agregado*/
-		$contador=$BaseDatos->getCantClases($clase . "_calificaciones");
+		$contador=$BaseDatos->getCantClases($clase);
 		$cant_contador=mysqli_fetch_assoc($contador);
 		if ($cant_contador['COUNT(*)']>8){
-			$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+			$notas = $BaseDatos->getColumnasNotas($clase);
 			if(!is_null($notas)) {
-				$notasPorcent= $BaseDatos->getColumnasClases($clase . "_informacion_y_estadistica");
+				$notasPorcent= $BaseDatos->getColumnasInfoYEstad($clase);
 				while ($row4=mysqli_fetch_assoc($notas)){
 					if (!is_null($estudiantes)){
 						while ($row5= mysqli_fetch_assoc($estudiantes)){
@@ -157,14 +157,14 @@
 						}
 					}
 				}
-				$notasPorcent= $BaseDatos->getColumnasClases($clase . "_informacion_y_estadistica");	
+				$notasPorcent= $BaseDatos->getColumnasClases($clase);/*"_informacion_y_estadistica"*/	
 			}
 		}
-		$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
+		$estudiantes = $BaseDatos->getEstudiantes($clase);
 		/*Agregado*/
-		$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+		$notas = $BaseDatos->getColumnasClases($clase);/*"_calificaciones"*/
 		if(!is_null($notas)) {
-			$porcentajesNotas=$BaseDatos->getInfoCursos("cursos",$clase);
+			$porcentajesNotas=$BaseDatos->getInfoCursos($clase);/*"_cursos"*/
 			/**/
 				while($row=mysqli_fetch_assoc($notas)){
 					if(!is_null($porcentajesNotas)) {/*Por si se actualiza.*/
@@ -180,10 +180,10 @@
 					if(!is_null($estudiantes)) { 
 						while ($row3 = mysqli_fetch_assoc($estudiantes)) {
 							$notaFinalAux=0.00;/*Por cada alumno.*/
-							$notasDelEstudiante=$BaseDatos->getinfoEstudiantes($clase. "_calificaciones",$row3["cui"]);
+							$notasDelEstudiante=$BaseDatos->getCalifEstudiantes($clase,$row3["cui"]);
 							if (!is_null($notasDelEstudiante)){
 								$row_notasDelEstudiante=mysqli_fetch_assoc($notasDelEstudiante);
-								$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+								$notas = $BaseDatos->getColumnasNotas($clase);
 								while ($row_notas=mysqli_fetch_assoc($notas)){
 									if ($row_notas['column_name']!='cui' && $row_notas['column_name'] != 'NF'){
 										if (floatval($row_notasDelEstudiante[$row_notas['column_name']])!=NULL){
@@ -214,10 +214,10 @@
 						}
 					}
 				}
-			$estudiantes = $BaseDatos->getEstudiantes($clase . "_datos");
+			$estudiantes = $BaseDatos->getEstudiantes($clase);
 		}
 		/*Agregado*/
-		$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+		$notas = $BaseDatos->getColumnasNotas($clase);
 		if(!is_null($notas)) {
 			while ($row = mysqli_fetch_assoc($notas)) {
 				if ($row['column_name'] != 'cui') {
@@ -235,12 +235,12 @@
 				echo "<td class='CUI'>" . $row10["cui"] . "</td>";
 				echo "<td class='nombre'>" . $row10["nombre"] . "</td>";
 				echo "<td class='apellido'>" . $row10["apellido"] . "</td>";
-				$notxest = $BaseDatos->getinfoEstudiantes($clase . "_calificaciones", $row10["cui"]);
+				$notxest = $BaseDatos->getCalifEstudiantes($clase, $row10["cui"]);
 				if(!is_null($notxest)) {
 					/*EXTRA VLHADSA*/
 					$cont=0;
 					$row_nxe = mysqli_fetch_assoc($notxest);
-					$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+					$notas = $BaseDatos->getColumnasNotas($clase);
 					while ($row_not = mysqli_fetch_assoc($notas)) {
 						if ($row_not['column_name'] != 'cui') {
 							if($row_nxe[$row_not['column_name']]!=NULL){
@@ -266,9 +266,9 @@
 						}
 					}
 					$color="";
-					$notxest = $BaseDatos->getinfoEstudiantes($clase . "_calificaciones", $row10["cui"]);
+					$notxest = $BaseDatos->getCalifEstudiantes($clase, $row10["cui"]);
 					$row_nxe = mysqli_fetch_assoc($notxest);
-					$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+					$notas = $BaseDatos->getColumnasNotas($clase);
 					if ($row_nxe['NF']!=NULL){
 						if (((float)($row_nxe['NF']))>=10.5){
 							$color="#D4FFCB";
@@ -279,8 +279,8 @@
 					}
 					else{
 						if ($cont>=2){
-							$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
-							$porcentajesNotas=$BaseDatos->getInfoCursos("cursos",$clase);
+							$notas = $BaseDatos->getColumnasNotas($clase);
+							$porcentajesNotas=$BaseDatos->getInfoCursos($clase);
 							while($row=mysqli_fetch_assoc($notas)){
 								if(!is_null($porcentajesNotas)) {
 									while ($row2=mysqli_fetch_assoc($porcentajesNotas)){
@@ -296,9 +296,9 @@
 							$notaParcialTotal=0.00;
 							$PorcentajeCumplido=0.00;
 
-							$notxest = $BaseDatos->getinfoEstudiantes($clase . "_calificaciones", $row10["cui"]);
+							$notxest = $BaseDatos->getinfoEstudiantes($clase, $row10["cui"]);
 							$row_notas_del_estudiante=mysqli_fetch_assoc($notxest);
-							$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+							$notas = $BaseDatos->getColumnasNotas($clase);
 							while ($row_notas=mysqli_fetch_assoc($notas)){
 								if ($row_notas['column_name']!='cui' && floatval($row_notas_del_estudiante[$row_notas['column_name']])!=NULL){
 									if ($row_notas['column_name']=='NC_1'){
@@ -334,9 +334,9 @@
 						}
 					}
 					/*EXTRA VLHADSA*/
-					$notxest = $BaseDatos->getinfoEstudiantes($clase . "_calificaciones", $row10["cui"]);
+					$notxest = $BaseDatos->getCalifEstudiantes($clase, $row10["cui"]);
 					$row_nxe = mysqli_fetch_assoc($notxest);
-					$notas = $BaseDatos->getColumnasClases($clase . "_calificaciones");
+					$notas = $BaseDatos->getColumnasNotas($clase);
 					while ($row_not = mysqli_fetch_assoc($notas)) {
 						if ($row_not['column_name'] != 'cui') {
 							echo "<td bgcolor='$color'>".$row_nxe[$row_not['column_name']]."</td>";

@@ -1,4 +1,7 @@
-<?php include "Includes/Header.php" ?>
+<?php
+	session_start();
+	include "Includes/Header.php"
+?>
 
 <body>
 
@@ -18,12 +21,11 @@
 <!--	--------------->
 
 	<table id="tablaUsuarios" class="tabla">
-	    <h3 style="text-align: center;">Estudiantes Registrados</h3>
+	    <h3 style="text-align: center;">Notas Actuales</h3>
 		<thead>
 			<tr>
-				<th>Clase</th>
-				<th>Nota</th>
-                <th>Estado</th>
+				<th>Nombre de la nota</th>
+				<th>Valor de la nota</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -33,16 +35,30 @@
             $BaseDatos = new base_datos("localhost", "root", "", "ti_ciencias_computacion");
             $BaseDatos->conectar();
             $codigo = $_GET["clase"];
-            $estudiantes = $BaseDatos->getEstudiantes(strtolower($codigo));
+            $valnotas = $BaseDatos->getCalifEstudiantes($codigo,"est".$_SESSION["usuario"]);
+            $nomnotas = $BaseDatos->getEncabezados($codigo."_calificaciones");
+
+            $i = 0;
+			if (!is_null($nomnotas)) {
+				while($row = mysqli_fetch_assoc($nomnotas)) {
+					$nombresnotas[$i] = $row["Field"];
+					$i = $i + 1;
+				}
+			}
 
             /* Se muestran los datos de los alumnos en una tabla */
-            if(!is_null($estudiantes)) {
-                while ($row = mysqli_fetch_assoc($estudiantes)) {
-                    echo "<tr>";
-                    echo "<td class='CUI'>" . $row["cui"] . "</td>";
-                    echo "<td class='nombre'>" . $row["nombre"] . "</td>";
-                    echo "<td class='apellido'>" . $row["apellido"] . "</td>";
-                    echo "</tr>";
+            $i = 0;
+			if(!is_null($valnotas)){
+                while ($row = mysqli_fetch_assoc($valnotas)) {
+                	foreach ($row as $key => $value) {
+                		if ($nombresnotas[$i] != "cui") {
+	                    	echo "<tr>";
+	                   		echo "<td>" . $nombresnotas[$i] . "</td>";
+	                    	echo "<td>" . $row[$nombresnotas[$i]] . "</td>";
+	                    	echo "</tr>";
+	                    }
+                    	$i = $i + 1;
+                    }
                 }
             }
 

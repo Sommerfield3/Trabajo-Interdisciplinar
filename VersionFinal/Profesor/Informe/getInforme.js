@@ -3,7 +3,7 @@ window.addEventListener("load",e => {
     const btn = document.getElementById("btn-informe")
     btn.addEventListener("click",e=>{
         /* Se obtiene la clase */
-        let clase = btn.classList[0].slice(1),
+        let clase = btn.classList[0].slice(1,-1),
     
         /* Se obtienen las tablas de asistencia, cursos y calificaciones */
         tablaAsistencia = recibirDatos(clase,"asistencia"),
@@ -44,7 +44,7 @@ async function enviarDatos(tablaAsistencia,tablaCurso,tablaCalificaciones,tablaD
 async function recibirDatos(clase,tabla){
     try{
         /* Se necesita del archivo al que queremos acceder y también la correspondiente clase */
-        tabla ? path = `../Utils/getTabla.php?clase=${clase}&tabla=${tabla}` : path = `../Utils/getTabla.php?clase=${clase}`
+        tabla ? path = `../../php/getTabla.php?clase=${clase}&tabla=${tabla}` : path = `../../php/getTabla.php?clase=${clase}`
         const response = await fetch(path)
         const data = await response.json()
         return data;

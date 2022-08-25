@@ -14,63 +14,36 @@
 h1 {
 	text-align: center;
 }
-
-.campos {
-	width: 90%;
-}
-
-.col_50 {
-	float: left;
-	width: 50%;
-	padding: 5px 0px;
-}
-
-.col_50 .campos {
-	width: 90%;
-}
-
-.col_100 {
-	clear: left;
-	width: 100%;
-	padding: 5px 0px;
-}
-
-.col_100 .campos {
-	width: 95%
-}
-
 .tabla {
-	border-collapse: collapse;
-	border: gray 1px solid;
-	margin: auto;
-	width: 800px;
+	position: relative;
+    border-collapse: collapse;
+    margin: 25px 0;
+    left: 300px;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.tabla thead tr {
+    background-color: #922626;
+    color: #ffffff;
+    text-align: left;
 }
 
-.tabla thead {
-	background-color: blue;
-	color: white;
-}
-
-.tabla tr{
-    border-bottom: gray 1px solid;
-}
-
-.tabla th {
-	padding: 5px;
-}
-
+.tabla th,
 .tabla td {
-	text-align: left;
-	padding: 5px;
-	margin: auto;
+    padding:  6px;
+}
+.tabla tbody tr {
+    border-bottom: 1px solid #dddddd;
 }
 
-.tabla .nota {
-	text-align: center;
+.tabla tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
 }
 
-.tabla .CUI {
-	text-align: center;
+.tabla tbody tr:last-of-type {
+    border-bottom: 2px solid #922626;
 }
 
 .btn {
@@ -81,5 +54,33 @@ h1 {
 	background: purple;
 	color: white;
 	border: 0px;
+	border-radius: 5px;
+}
+#tomar{
+	position: relative;
+	left: 300px;
+	height: 50px;
+	color: white;
+	background: #9A9696;
+	border-color: #9A9696;
+	border-radius: 5px;
+}
+#volver{
+position: relative;
+	left: 300px;
+	top: 50px;
+	height: 50px;
+	color: white;
+	background: #9A9696;
+	border-color: #9A9696;
+	border-radius: 5px;
+}
+.guardar{
+	position: relative;
+	left: 400px;
+	height: 50px;
+	color: white;
+	background: #9A9696;
+	border-color: #9A9696;
 	border-radius: 5px;
 }

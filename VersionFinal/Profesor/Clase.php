@@ -14,6 +14,7 @@
 		?><br><br>
 	</h2>
 
+	<button id="btn-informe" class="<?php $_GET['clase']?>">Informe</button>
 
 	<div class="capa"></div>
 <!--	--------------->
@@ -35,7 +36,7 @@
             $BaseDatos->conectar();
             $codigo = $_GET["clase"];
             $estudiantes = $BaseDatos->getEstudiantes(strtolower($codigo));
-			
+
             /* Se muestran los datos de los alumnos en una tabla */
             if(!is_null($estudiantes)) {
                 while ($row = mysqli_fetch_assoc($estudiantes)) {
@@ -52,9 +53,6 @@
 		</tbody>
 	</table>
 
-	<?php
-		echo "<button id='btn-informe' class=".$_GET["clase"].">Informe</button>";
-	?>
 	<!--Archivo js necesario para mostrar el informe-->
 	<script src="Informe/getInforme.js"></script>
 </body>

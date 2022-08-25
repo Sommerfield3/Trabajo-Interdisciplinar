@@ -7,8 +7,10 @@
 	<script type="text/javascript" src="login.js"></script>
 </head>
 <body>
-	<div class="login-page">
-		<div class="form">
+	<div class="container">
+		 <div class="card"></div>
+		<div class="card">
+			<h1 class="title">Login</h1>
 			<form class="login-form">
 				<div class="col_100">
 					<input id="usuario" name="usuario" class="campos" type="text" placeholder="usuario"/>

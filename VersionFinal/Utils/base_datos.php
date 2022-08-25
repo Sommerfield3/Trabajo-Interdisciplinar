@@ -153,7 +153,7 @@ class base_datos {
 
 	//Obtiene los campos nota, nota superior y porcentaje de la tabla de de informacion y estadistica de un curso
 	function getInfoNotas($codcursoturn) {
-		$result = mysqli_query($this->conexion, "SELECT notas,notaSuperior,porcentaje FROM `" . $codcursoturn . "__informacion_y_estadistica`");
+		$result = mysqli_query($this->conexion, "SELECT notas,notaSuperior,porcentaje FROM `" . $codcursoturn . "_informacion_y_estadistica`");
 		$error = mysqli_error($this->conexion);
 		if (empty($error)) {
 			if (mysqli_num_rows($result) > 0) {
@@ -336,7 +336,19 @@ class base_datos {
 			echo "Error al obtener clases!";
 		}
 		return null;
+	}
 
+	function getHistoricoest($cui) {
+		$result = mysqli_query($this->conexion, "SELECT * FROM historico_notas WHERE cui = '$cui'");
+		$error = mysqli_error($this->conexion);
+		if (empty($error)) {
+			if (mysqli_num_rows($result) > 0) {
+				return $result;
+			}
+		} else {
+			echo "Error al obtener historico!";
+		}
+		return null;
 	}
 
 	function getHistoria($cui){
@@ -396,6 +408,32 @@ class base_datos {
 
 	function cerrar() {
 		mysqli_close($this->conexion);
+	}
+
+	function getColumnasNotas($codcursoturn) {
+		$result = mysqli_query($this->conexion, "SELECT column_name FROM information_schema.columns WHERE table_name='".$codcursoturn."_calificaciones'");
+		$error = mysqli_error($this->conexion);
+		if (empty($error)) {
+			if (mysqli_num_rows($result) > 0) {
+				return $result;
+			}
+		} else {
+			echo "Error al obtener clases!";
+		}
+		return null;
+	}
+
+	function getColumnasInfoYEstad($codcursoturn) {
+		$result = mysqli_query($this->conexion, "SELECT column_name FROM information_schema.columns WHERE table_name='".$codcursoturn."_informacion_y_estadistica'");
+		$error = mysqli_error($this->conexion);
+		if (empty($error)) {
+			if (mysqli_num_rows($result) > 0) {
+				return $result;
+			}
+		} else {
+			echo "Error al obtener clases!";
+		}
+		return null;
 	}
 }
 ?>

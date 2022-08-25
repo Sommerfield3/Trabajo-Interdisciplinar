@@ -43,20 +43,20 @@ include("../Utils/base_datos.php");
 			$i = 0;
 			if(!is_null($clases_codigo)){
 				while($row = mysqli_fetch_assoc($clases_codigo)){
-					$codigos[$i] = strtolower($row["Field"]);
+					$codigos[$i] = $row["Field"];
 					$i = $i + 1;
 				}
 			}
 
-			$i = 1;
+			$i = 0;
 			if(!is_null($clases_profesor)){
 				while ($row = mysqli_fetch_assoc($clases_profesor)) {
 					if($row["cui"] == $_SESSION["usuario"]){
 						foreach ($row as $key => $value) {
 							if($value == 1){
 								echo "<option value='" . $codigos[$i] . "'>" . $BaseDatos->getNombreClase($codigos[$i]) . "</option>";
-								$i = $i + 1;
 							}
+							$i = $i + 1;
 						}			
 					}
 				}

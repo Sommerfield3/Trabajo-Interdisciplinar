@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 if(!isset($_SESSION["usuario"])) {
 	header("Location: ../Login/login.php");
 	exit();
@@ -43,20 +42,20 @@ include("../Utils/base_datos.php");
 			$i = 0;
 			if(!is_null($clases_codigo)){
 				while($row = mysqli_fetch_assoc($clases_codigo)){
-					$codigos[$i] = strtolower($row["Field"]);
+					$codigos[$i] = $row["Field"];
 					$i = $i + 1;
 				}
 			}
 
-			$i = 1;
+			$i = 0;
 			if(!is_null($clases_estudiante)){
 				while ($row = mysqli_fetch_assoc($clases_estudiante)) {
 					if($row["cui"] == "est".$_SESSION["usuario"]){
 						foreach ($row as $key => $value) {
 							if($value == 1){
 								echo "<option value='" . $codigos[$i] . "'>" . $BaseDatos->getNombreClase($codigos[$i]) . "</option>";
-								$i = $i + 1;
 							}
+							$i = $i + 1;
 						}			
 					}
 				}
